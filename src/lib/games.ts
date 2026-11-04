@@ -5,6 +5,8 @@ export interface GameDefinition {
   id: string;
   title: string;
   description: string;
+  category: string;
+  image: string;
   icon: LucideIcon;
   badge?: string;
   gradient: string;
@@ -14,85 +16,109 @@ export interface GameDefinition {
   route: string;
   status: "ready" | "soon";
   storageBestKey?: string;
+  features?: string[];
 }
 
 export const GAMES_REGISTRY: GameDefinition[] = [
   {
     id: "quiz",
-    title: "تحدّي المعرفة",
-    description: "اختبر معلوماتك العامة، عواصم العالم، أعلام الدول، والشخصيات التاريخية والمعالم",
+    title: "تحدي المعرفة",
+    description:
+      "اختبر معلوماتك العامة، عواصم العالم، أعلام الدول، والشخصيات والمعالم التاريخية عبر أسئلة ذكية متجددة.",
+    category: "ثقافة عامة ومعلومات",
+    image: "/knowledge-challenge.webp",
     icon: Brain,
     badge: "مكتمل",
-    gradient: "from-emerald-500/20 via-teal-500/10 to-transparent",
-    accentBg: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30",
-    accentText: "text-emerald-600 dark:text-emerald-400",
-    accentBorder: "hover:border-emerald-500/50 hover:shadow-emerald-500/10",
+    gradient: "from-blue-600/20 via-indigo-600/10 to-transparent",
+    accentBg: "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/30",
+    accentText: "text-blue-600 dark:text-blue-400",
+    accentBorder: "hover:border-blue-500/50 hover:shadow-blue-500/10",
     route: "/quiz",
     status: "ready",
     storageBestKey: "tahaddi-best",
+    features: ["توليد ذكي للأسئلة", "٣ مستويات صعوبة", "مؤقت تفاعلي"],
   },
   {
     id: "words",
-    title: "ركّب الكلمة والجملة",
+    title: "ركب الكلمة والجملة",
     description:
-      "رتّب الحروف المبعثرة واجمع الكلمات والجمل العربية من خلال تلميحات ذكية وتحدي الوقت",
+      "رتّب الحروف المبعثرة واجمع الكلمات والجمل العربية بالاعتماد على تلميحات دقيقة وتحدي الزمن.",
+    category: "لغة ومفردات عربية",
+    image: "/word-builder.webp",
     icon: SpellCheck,
     badge: "جديد",
-    gradient: "from-violet-500/20 via-amber-500/10 to-transparent",
-    accentBg: "bg-violet-500/10 text-violet-600 dark:text-violet-400 border-violet-500/30",
-    accentText: "text-violet-600 dark:text-violet-400",
-    accentBorder: "hover:border-violet-500/50 hover:shadow-violet-500/10",
+    gradient: "from-amber-600/20 via-orange-600/10 to-transparent",
+    accentBg: "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30",
+    accentText: "text-amber-600 dark:text-amber-400",
+    accentBorder: "hover:border-amber-500/50 hover:shadow-amber-500/10",
     route: "/words",
     status: "ready",
     storageBestKey: "rakeb-best",
+    features: ["تلميحات لغوية", "سحب وإسقاط سلس", "تحدي السرعة"],
   },
   {
     id: "proverbs",
     title: "أكمل المثل",
-    description: "أكمل الأمثال الشعبية والعربية الشهيرة واختبر حفظك للحكمة والتراث",
+    description:
+      "أكمل الأمثال والحكم الشعبية والعربية الشهيرة واختبر سعة اطلاعك على الموروث البلاغي الأصيل.",
+    category: "تراث وأمثال",
+    image: "/games/proverbs.jpg",
     icon: Quote,
-    gradient: "from-amber-500/15 via-orange-500/5 to-transparent",
-    accentBg: "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30",
-    accentText: "text-amber-600 dark:text-amber-400",
-    accentBorder: "border-border/60",
+    gradient: "from-amber-700/20 via-yellow-600/10 to-transparent",
+    accentBg: "bg-amber-600/10 text-amber-700 dark:text-amber-400 border-amber-600/30",
+    accentText: "text-amber-700 dark:text-amber-400",
+    accentBorder: "hover:border-amber-600/50",
     route: "#",
     status: "soon",
-  },
-  {
-    id: "guess-word",
-    title: "خمّن الكلمة",
-    description: "خمّن الكلمة المخفية في ٦ محاولات مع إشارات لونية للحروف الصحيحة",
-    icon: HelpCircle,
-    gradient: "from-blue-500/15 via-indigo-500/5 to-transparent",
-    accentBg: "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/30",
-    accentText: "text-blue-600 dark:text-blue-400",
-    accentBorder: "border-border/60",
-    route: "#",
-    status: "soon",
-  },
-  {
-    id: "memory-cards",
-    title: "ذاكرة الكروت",
-    description: "اقلب الكروت وطابق الأزواج المتشابهة بأقل عدد من الحركات",
-    icon: Layers,
-    gradient: "from-fuchsia-500/15 via-pink-500/5 to-transparent",
-    accentBg: "bg-fuchsia-500/10 text-fuchsia-600 dark:text-fuchsia-400 border-fuchsia-500/30",
-    accentText: "text-fuchsia-600 dark:text-fuchsia-400",
-    accentBorder: "border-border/60",
-    route: "#",
-    status: "soon",
+    features: ["أمثال تراثية", "خيارات متعددة", "شرح معاني الأمثال"],
   },
   {
     id: "true-or-false",
     title: "صح أم خطأ",
-    description: "جولات سريعة ضد الوقت لتقييم صحة المعلومات والحقائق العلمية",
+    description:
+      "جولات سريعة ومثيرة لتقييم صحة المعلومات والحقائق العلمية والتاريخية تحت ضغط الوقت.",
+    category: "سرعة بديهة وتقييم",
+    image: "/games/true-or-false.jpg",
     icon: CheckCircle2,
-    gradient: "from-rose-500/15 via-red-500/5 to-transparent",
+    gradient: "from-rose-600/20 via-emerald-600/10 to-transparent",
     accentBg: "bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/30",
     accentText: "text-rose-600 dark:text-rose-400",
-    accentBorder: "border-border/60",
+    accentBorder: "hover:border-rose-500/50",
     route: "#",
     status: "soon",
+    features: ["جولات خاطفة", "تصحيح فوري", "معلومات دقيقة"],
+  },
+  {
+    id: "memory-cards",
+    title: "ذاكرة الكروت",
+    description:
+      "اقلب الكروت وطابق الرموز والأشكال المتطابقة بأقل عدد من المحاولات لتقوية الذاكرة البصرية.",
+    category: "قوة ملاحظة وتركيز",
+    image: "/games/memory-cards.jpg",
+    icon: Layers,
+    gradient: "from-purple-600/20 via-indigo-600/10 to-transparent",
+    accentBg: "bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/30",
+    accentText: "text-purple-600 dark:text-purple-400",
+    accentBorder: "hover:border-purple-500/50",
+    route: "#",
+    status: "soon",
+    features: ["مطابقة أزواج", "مستويات متدرجة", "تدريب بصري"],
+  },
+  {
+    id: "guess-word",
+    title: "خمن الكلمة",
+    description:
+      "خمّن الكلمة السرية في ست محاولات باستخدام إشارات لونية ذكية ترشدك إلى الحروف الصحيحة.",
+    category: "ذكاء واستنتاج",
+    image: "/games/guess-word.jpg",
+    icon: HelpCircle,
+    gradient: "from-teal-600/20 via-cyan-600/10 to-transparent",
+    accentBg: "bg-teal-500/10 text-teal-600 dark:text-teal-400 border-teal-500/30",
+    accentText: "text-teal-600 dark:text-teal-400",
+    accentBorder: "hover:border-teal-500/50",
+    route: "#",
+    status: "soon",
+    features: ["تحليل لوني", "كلمات يومية", "إحصائيات دقيقة"],
   },
 ];
 

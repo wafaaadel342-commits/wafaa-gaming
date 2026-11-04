@@ -1,0 +1,57 @@
+{
+  "name": "العب وتعلم",
+  "short_name": "العب وتعلم",
+  "description": "منصة عربية رائدة للألعاب الذهنية والتعليمية: تحدي المعرفة، ركب الكلمة والجملة، وألعاب ثقافية تفاعلية بالذكاء الاصطناعي.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui", "browser"],
+  "orientation": "portrait",
+  "theme_color": "#101a2c",
+  "background_color": "#fbfbf8",
+  "lang": "ar",
+  "dir": "rtl",
+  "categories": ["education", "games", "entertainment"],
+  "icons": [
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-maskable-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icons/icon-maskable-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "تحدي المعرفة",
+      "short_name": "تحدي المعرفة",
+      "description": "اختبر معلوماتك العامة والمسابقات الثقافية",
+      "url": "/quiz",
+      "icons": [{ "src": "/icons/icon-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "ركب الكلمة والجملة",
+      "short_name": "ركب الكلمة",
+      "description": "تحدي ترتيب الحروف والكلمات العربية",
+      "url": "/words",
+      "icons": [{ "src": "/icons/icon-192x192.png", "sizes": "192x192" }]
+    }
+  ]
+}

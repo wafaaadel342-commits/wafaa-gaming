@@ -12,7 +12,7 @@ import {
   type BankSentenceItem,
   type BankWordItem,
 } from "./anti-repeat";
-import { executeRawWithFailover } from "./providers";
+import { generateWordsParallel, generateSentencesParallel } from "./parallel-ai";
 import type { Settings } from "./quiz";
 
 // ============================================================================
@@ -1026,9 +1026,12 @@ export async function loadRoundWords(
           ...selectedBankItems.map((b) => b.word),
           ...bank.slice(-60).map((b) => b.word),
         ];
-        const prompt = buildWordsPrompt(level, shortfall + 5, avoidList);
-        const rawText = await executeRawWithFailover(settings, prompt, 22000);
-        const aiWords = parseWordsResponse(rawText, level);
+        // Parallel generation: distribute words across 4 models simultaneously
+        const aiWords = await generateWordsParallel(
+          (c) => buildWordsPrompt(level, c, avoidList),
+          shortfall + 5,
+          level,
+        );
 
         if (aiWords.length > 0) {
           const bankItems = aiWords.map((w) => rawWordToBankItem(w, level));
@@ -1107,9 +1110,11 @@ export async function loadRoundSentences(
           ...selectedBankItems.map((b) => b.sentence),
           ...bank.slice(-50).map((b) => b.sentence),
         ];
-        const prompt = buildSentencesPrompt(level, shortfall + 4, avoidList);
-        const rawText = await executeRawWithFailover(settings, prompt, 25000);
-        const aiSentences = parseSentencesResponse(rawText, level);
+        // Parallel generation: distribute sentences across 4 models simultaneously
+        const aiSentences = await generateSentencesParallel(
+          (c) => buildSentencesPrompt(level, c, avoidList),
+          shortfall + 4,
+        );
 
         if (aiSentences.length > 0) {
           const bankItems = aiSentences.map(rawSentenceToBankItem);

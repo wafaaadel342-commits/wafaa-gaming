@@ -1,15 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  Brain,
-  CheckCircle2,
-  HelpCircle,
-  Lightbulb,
-  Sparkles,
-  Trophy,
-  XCircle,
-  Zap,
-} from "lucide-react";
+import { Brain, CheckCircle2, Lightbulb, Sparkles, XCircle } from "lucide-react";
 import { sound } from "@/lib/sound";
 
 interface MiniQuestion {
@@ -115,166 +106,133 @@ export function InteractiveLoader({
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.3 }}
-        className="flex flex-col items-center text-center mb-6 space-y-3"
+        transition={{ duration: 0.35 }}
+        className="flex flex-col items-center text-center mb-8 space-y-4"
       >
+        {/* Loading Icon */}
         <div className="relative">
-          <motion.img
-            src="/logogame.png"
-            alt="العب وتعلم"
-            className="size-20 sm:size-24 object-contain drop-shadow-xl"
-            animate={{
-              y: [0, -6, 0],
-            }}
-            transition={{
-              duration: 2.2,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          />
           <motion.div
-            className="absolute -inset-1 rounded-2xl bg-primary/20 blur-lg -z-10"
-            animate={{
-              opacity: [0.3, 0.7, 0.3],
-              scale: [0.95, 1.05, 0.95],
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          />
-        </div>
-
-        <div>
-          <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-foreground flex items-center justify-center gap-2">
-            <span>العب وتعلم</span>
-            <Sparkles className="size-5 text-amber-400" />
-          </h2>
-          <p className="text-sm font-semibold text-primary mt-1">{message}</p>
-          <p className="text-xs text-muted-foreground mt-0.5">{progressText}</p>
-        </div>
-
-        {/* Animated Progress Pulse */}
-        <div className="w-48 h-1.5 rounded-full bg-secondary/80 overflow-hidden relative mt-1">
+            animate={{ rotate: 360 }}
+            transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+            className="size-20 rounded-3xl bg-gradient-to-br from-primary/20 to-quiz-primary/20 border-2 border-primary/30 flex items-center justify-center shadow-lg shadow-primary/15"
+          >
+            <Brain className="size-10 text-primary" />
+          </motion.div>
           <motion.div
-            className="h-full bg-gradient-to-r from-primary via-accent to-primary rounded-full w-24"
-            animate={{
-              x: ["-100%", "250%"],
-            }}
-            transition={{
-              duration: 1.6,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
+            animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.8, 0.5] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute inset-0 rounded-3xl bg-primary/20 blur-xl"
           />
         </div>
-      </motion.div>
 
-      {/* Interactive Mini Game / Trivia Card */}
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.35, delay: 0.1 }}
-        className="w-full rounded-3xl glass border border-primary/20 p-5 sm:p-6 shadow-lg shadow-primary/5 space-y-4"
-      >
-        <div className="flex items-center justify-between border-b border-border/50 pb-3">
-          <div className="flex items-center gap-2 text-xs font-bold text-foreground">
-            <span className="size-6 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
-              <Brain className="size-3.5" />
-            </span>
-            <span>لغز سريع أثناء الانتظار</span>
-          </div>
-          <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-accent/15 text-accent-foreground">
-            تسلية معرفية
-          </span>
-        </div>
+        {/* Main Message */}
+        <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground">
+          {message}
+        </h2>
 
-        {/* Question Text */}
-        <p className="text-base sm:text-lg font-bold text-center text-foreground py-1">
-          {currentTrivia.question}
+        {/* Progress Text */}
+        <p className="text-sm text-muted-foreground max-w-md leading-relaxed">
+          {progressText}
         </p>
-
-        {/* Options */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-          {currentTrivia.options.map((opt, idx) => {
-            let stateClass = "border-border/60 hover:bg-secondary/60 hover:border-primary/40";
-            if (answeredTrivia) {
-              if (idx === currentTrivia.correct) {
-                stateClass =
-                  "border-easy bg-easy/15 text-easy font-bold shadow-sm shadow-easy/20";
-              } else if (idx === selectedAnswer) {
-                stateClass =
-                  "border-destructive bg-destructive/15 text-destructive font-semibold";
-              } else {
-                stateClass = "opacity-50 border-border/40";
-              }
-            }
-
-            return (
-              <button
-                key={idx}
-                type="button"
-                disabled={answeredTrivia}
-                onClick={() => handleTriviaAnswer(idx)}
-                className={`py-2.5 px-3 rounded-2xl border text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer text-center ${stateClass}`}
-              >
-                {opt}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Fact & Next Question Button */}
-        <AnimatePresence>
-          {answeredTrivia && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              className="pt-2 space-y-2 border-t border-border/40"
-            >
-              <div className="flex items-start gap-2 text-xs text-muted-foreground bg-primary/5 p-3 rounded-xl">
-                {selectedAnswer === currentTrivia.correct ? (
-                  <CheckCircle2 className="size-4 text-easy shrink-0 mt-0.5" />
-                ) : (
-                  <XCircle className="size-4 text-destructive shrink-0 mt-0.5" />
-                )}
-                <div>
-                  <strong className="text-foreground block font-bold mb-0.5">
-                    {selectedAnswer === currentTrivia.correct ? "إجابة ممتازة! 🎉" : "معلومة إضافية:"}
-                  </strong>
-                  <span>{currentTrivia.fact}</span>
-                </div>
-              </div>
-
-              <div className="flex justify-end">
-                <button
-                  type="button"
-                  onClick={nextTrivia}
-                  className="text-xs font-bold text-primary hover:underline flex items-center gap-1 cursor-pointer"
-                >
-                  <span>لغز آخر ↻</span>
-                </button>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
       </motion.div>
 
-      {/* Rotating Educational Tip */}
+      {/* Rotating Tips */}
       <motion.div
         key={tipIndex}
-        initial={{ opacity: 0, y: 6 }}
+        initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -6 }}
-        transition={{ duration: 0.3 }}
-        className="mt-5 text-center px-4"
+        exit={{ opacity: 0, y: -10 }}
+        transition={{ duration: 0.4 }}
+        className="mb-8 w-full rounded-2xl border-2 border-accent/30 bg-accent/10 backdrop-blur-sm p-5 text-center"
       >
-        <p className="text-xs sm:text-sm text-muted-foreground font-medium leading-relaxed">
+        <p className="text-sm font-medium leading-relaxed text-accent-foreground">
           {LOADING_TIPS[tipIndex]}
         </p>
       </motion.div>
+
+      {/* Mini Trivia Challenge */}
+      <div className="w-full rounded-3xl border-2 border-border bg-card p-6 shadow-lg">
+        <div className="mb-5 flex items-center gap-3">
+          <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/15 text-primary">
+            <Lightbulb className="size-5" />
+          </span>
+          <h3 className="text-base font-bold text-foreground">
+            تحدي سريع أثناء الانتظار
+          </h3>
+        </div>
+
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={triviaIndex}
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.3 }}
+          >
+            <p className="text-base font-semibold leading-relaxed text-foreground mb-4">
+              {currentTrivia.question}
+            </p>
+
+            <div className="space-y-2.5">
+              {currentTrivia.options.map((opt, idx) => {
+                const isCorrect = idx === currentTrivia.correct;
+                const isSelected = idx === selectedAnswer;
+                const showResult = answeredTrivia;
+
+                return (
+                  <motion.button
+                    key={idx}
+                    disabled={answeredTrivia}
+                    onClick={() => handleTriviaAnswer(idx)}
+                    whileHover={!answeredTrivia ? { x: 4 } : {}}
+                    whileTap={!answeredTrivia ? { scale: 0.98 } : {}}
+                    className={`w-full rounded-xl border-2 px-4 py-3 text-start text-sm font-semibold transition-all disabled:cursor-default ${
+                      showResult && isCorrect
+                        ? "border-easy bg-easy text-easy-foreground shadow-md shadow-easy/20"
+                        : showResult && isSelected && !isCorrect
+                          ? "border-hard bg-hard text-hard-foreground shadow-md shadow-hard/20"
+                          : answeredTrivia
+                            ? "border-border/50 bg-card/50 opacity-50"
+                            : "border-border bg-card hover:border-primary hover:bg-primary/5 cursor-pointer"
+                    }`}
+                  >
+                    <span className="flex items-center justify-between gap-3">
+                      <span>{opt}</span>
+                      {showResult && isCorrect && <CheckCircle2 className="size-5 shrink-0" />}
+                      {showResult && isSelected && !isCorrect && <XCircle className="size-5 shrink-0" />}
+                    </span>
+                  </motion.button>
+                );
+              })}
+            </div>
+
+            {answeredTrivia && (
+              <motion.div
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+                className="mt-5"
+              >
+                <div className="rounded-xl border-2 border-primary/25 bg-primary/8 p-4">
+                  <div className="flex items-start gap-2.5">
+                    <Sparkles className="size-4 shrink-0 text-primary mt-0.5" />
+                    <p className="text-sm leading-relaxed text-foreground">
+                      {currentTrivia.fact}
+                    </p>
+                  </div>
+                </div>
+
+                <button
+                  onClick={nextTrivia}
+                  className="mt-4 w-full rounded-xl border-2 border-primary bg-primary px-4 py-2.5 text-sm font-bold text-primary-foreground transition-all hover:bg-primary/90 shadow-md cursor-pointer"
+                >
+                  سؤال آخر
+                </button>
+              </motion.div>
+            )}
+          </motion.div>
+        </AnimatePresence>
+      </div>
     </div>
   );
 }

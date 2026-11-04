@@ -21,6 +21,12 @@ import {
   type Question,
   type Settings,
 } from "./quiz";
+import {
+  generateQuestionsParallel,
+  distributeQuestions,
+  PARALLEL_FREE_MODELS,
+  type ParallelGenerationProgress,
+} from "./parallel-ai";
 
 export interface Candidate {
   provider: "openrouter";
@@ -312,9 +318,9 @@ export function bankItemToQuestion(item: BankQuizItem): Question {
 }
 
 /**
- * Step 1: Initial batch load (fast start).
+ * Step 1: Initial batch load (fast start with parallel AI generation).
  * First checks bank for 2-3 matching unseen questions.
- * If bank is short, generates 3 questions from AI and stores in bank.
+ * If bank is short, generates 3 questions using 4 AI models in parallel.
  * Starts immediately as soon as 2 questions are ready.
  */
 export async function fetchInitialBatch(
@@ -337,14 +343,21 @@ export async function fetchInitialBatch(
     }
   }
 
-  // 2. Shortfall: request 3 questions from AI for instant start
+  // 2. Shortfall: use parallel AI generation with 4 models
   const recent = getRecent();
   const avoidKeys = bank.slice(-60).map((b) => b.topicKey || b.question);
-  const prompt = buildPrompt(level, 3, categories, recent, avoidKeys);
 
   const tryFetch = async (): Promise<Question[]> => {
-    const raw = await executeWithFailover(settings, prompt, 18000, 1);
-    // Store in bank immediately before resolving images (so spares are preserved)
+    // Use parallel generation: 3 questions distributed across 4 models
+    // Distribution: [1, 1, 1, 0] - uses 3 fastest models simultaneously
+    const raw = await generateQuestionsParallel(
+      (count) => buildPrompt(level, count, categories, recent, avoidKeys),
+      3, // Generate 3 questions total
+      undefined, // No progress callback for initial batch
+      getQuestionDedupeKey,
+    );
+
+    // Store in bank immediately before resolving images
     addQuestionsToBank(raw.map((q) => questionToBankItem(q, level)));
     const prepared = await prepareRoundQuestions(raw, 2, 3500);
     return prepared;
@@ -357,7 +370,7 @@ export async function fetchInitialBatch(
       return result;
     }
 
-    // If 1 question prepared, supplement with least-recently-seen bank item to avoid waiting
+    // If 1 question prepared, supplement with least-recently-seen bank item
     if (result.length === 1) {
       const fallback = fillFromLeastRecentlySeen<BankQuizItem>(
         bank,
@@ -379,7 +392,7 @@ export async function fetchInitialBatch(
     rememberQuestions(result);
     return result;
   } catch (e) {
-    // If AI fails, check if we have any least-recently-seen bank items as fallback
+    // Fallback to least-recently-seen bank items if AI fails
     const fallbackBankItems = fillFromLeastRecentlySeen<BankQuizItem>(
       bank,
       level,
@@ -444,10 +457,9 @@ export async function fetchRemainingBatch(
 
   let stillNeeded = remainingNeeded - accumulated.length;
 
-  // 2. Fetch remaining shortfall in progressive chunks of 3-4 questions
-  while (stillNeeded > 0) {
-    const chunkSize = Math.min(4, stillNeeded);
-    const countToGenerate = chunkSize + 2; // +2 spares
+  // 2. Use parallel AI generation for remaining questions
+  // Distribute across all 4 models simultaneously for maximum speed
+  if (stillNeeded > 0) {
     const recent = getRecent();
     const avoidTitles = [
       ...existingQuestions.map((q) => q.question),
@@ -455,35 +467,53 @@ export async function fetchRemainingBatch(
       ...bank.slice(-60).map((b) => b.topicKey || b.question),
     ];
 
-    const prompt = buildPrompt(level, countToGenerate, categories, recent, avoidTitles);
-
     try {
-      const raw = await executeWithFailover(settings, prompt, 30000, 1);
+      // Generate all remaining questions in one parallel batch across 4 models
+      const raw = await generateQuestionsParallel(
+        (count) => buildPrompt(level, count, categories, recent, avoidTitles),
+        stillNeeded + 2, // +2 spares for deduplication
+        (progress) => {
+          // Progressively notify UI as models complete
+          if (progress.currentBatch.length > accumulated.length) {
+            const newQuestions = progress.currentBatch.slice(accumulated.length);
+            if (newQuestions.length > 0) {
+              prepareRoundQuestions(newQuestions, newQuestions.length, 3000).then((prepared) => {
+                const uniqueNew = prepared.filter((q) => !existingKeys.has(getQuestionDedupeKey(q)));
+                if (uniqueNew.length > 0) {
+                  for (const q of uniqueNew) {
+                    existingKeys.add(getQuestionDedupeKey(q));
+                    accumulated.push(q);
+                  }
+                  rememberQuestions(uniqueNew);
+                  onBatchReady?.(uniqueNew);
+                }
+              });
+            }
+          }
+        },
+        getQuestionDedupeKey,
+      );
+
       // Store to persistent bank
       addQuestionsToBank(raw.map((q) => questionToBankItem(q, level)));
 
-      // Prepare images with fast timeout
-      const prepared = await prepareRoundQuestions(raw, chunkSize, 3500);
-
-      // Filter duplicates
-      const uniqueNew = prepared.filter((q) => !existingKeys.has(getQuestionDedupeKey(q)));
+      // Prepare images and filter duplicates
+      const prepared = await prepareRoundQuestions(raw, stillNeeded, 3500);
+      const uniqueNew = prepared.filter(
+        (q) => !existingKeys.has(getQuestionDedupeKey(q)) && !accumulated.some((a) => getQuestionDedupeKey(a) === getQuestionDedupeKey(q)),
+      );
 
       if (uniqueNew.length > 0) {
         for (const q of uniqueNew) {
           existingKeys.add(getQuestionDedupeKey(q));
           accumulated.push(q);
         }
-        stillNeeded -= uniqueNew.length;
         rememberQuestions(uniqueNew);
-        // Progressively notify UI
         onBatchReady?.(uniqueNew);
-      } else {
-        // Break if AI returned only duplicates to avoid infinite loop
-        break;
       }
     } catch (err) {
-      console.warn("Background chunk fetch error:", err);
-      // Fallback from least-recently-seen bank if AI encounters rate limits or errors
+      console.warn("Parallel background fetch error:", err);
+      // Fallback from least-recently-seen bank if AI fails
       const fallback = fillFromLeastRecentlySeen<BankQuizItem>(
         bank,
         level,
@@ -504,7 +534,6 @@ export async function fetchRemainingBatch(
         rememberQuestions(preparedFallback);
         onBatchReady?.(preparedFallback);
       }
-      break;
     }
   }
 

@@ -12,6 +12,8 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { initPwa } from "../lib/pwa";
+import { OfflineStatusStrip, PwaUpdateBanner } from "../components/common/PwaInstallDialog";
 
 function NotFoundComponent() {
   return (
@@ -75,34 +77,53 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   head: () => ({
     meta: [
       { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
       { title: "العب وتعلم" },
       {
         name: "description",
         content:
-          "العب وتعلم — منصة ألعاب تعليمية تفاعلية باللغة العربية: تحدّي المعرفة، ركّب الكلمة، وألعاب تعليمية ممتعة",
+          "العب وتعلم — منصة ألعاب تعليمية وتفاعلية باللغة العربية: تحدّي المعرفة، ركّب الكلمة، وألعاب ثقافية بالذكاء الاصطناعي",
       },
-      { property: "og:title", content: "العب وتعلم" },
+      // PWA & Mobile Web App Meta Tags
+      { name: "theme-color", content: "#101a2c" },
+      { name: "mobile-web-app-capable", content: "yes" },
+      { name: "apple-mobile-web-app-capable", content: "yes" },
+      { name: "apple-mobile-web-app-status-bar-style", content: "black-translucent" },
+      { name: "apple-mobile-web-app-title", content: "العب وتعلم" },
+      { name: "application-name", content: "العب وتعلم" },
+      { name: "format-detection", content: "telephone=no" },
+      // Open Graph & Social
+      { property: "og:title", content: "العب وتعلم — منصة ألعاب تعليمية تفاعلية" },
       {
         property: "og:description",
         content:
-          "العب وتعلم — منصة ألعاب تعليمية تفاعلية باللغة العربية: تحدّي المعرفة، ركّب الكلمة، وألعاب تعليمية ممتعة",
+          "منصة ألعاب ذهنية وتعليمية باللغة العربية: تحدّي المعرفة، ركّب الكلمة والجملة، وألعاب ثقافية تفاعلية",
       },
       { property: "og:type", content: "website" },
+      { property: "og:image", content: "/icons/icon-512x512.png" },
       { name: "twitter:card", content: "summary" },
+      { name: "twitter:image", content: "/icons/icon-512x512.png" },
     ],
     links: [
+      // PWA Manifest
+      { rel: "manifest", href: "/manifest.webmanifest" },
+      // Apple Touch Icon
+      { rel: "apple-touch-icon", href: "/icons/apple-touch-icon.png" },
+      // Favicons
+      { rel: "icon", href: "/icons/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { rel: "icon", href: "/icons/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      // Fonts & Styles
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap",
       },
       {
         rel: "stylesheet",
         href: appCss,
       },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
   }),
   shellComponent: RootShell,
@@ -128,10 +149,15 @@ function RootShell({ children }: { children: ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
+  useEffect(() => {
+    initPwa();
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+      <OfflineStatusStrip />
       <Outlet />
+      <PwaUpdateBanner />
     </QueryClientProvider>
   );
 }

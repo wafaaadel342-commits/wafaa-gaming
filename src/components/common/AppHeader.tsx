@@ -1,17 +1,11 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import {
-  Gamepad2,
-  Home,
-  Moon,
-  Settings as SettingsIcon,
-  Sun,
-  Volume2,
-  VolumeX,
-} from "lucide-react";
+import { Download, Home, Moon, Settings as SettingsIcon, Sun, Volume2, VolumeX } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { sound } from "@/lib/sound";
 import { THEME_KEY } from "@/lib/quiz";
+import { getPwaState, subscribePwaState, type PwaState } from "@/lib/pwa";
+import { PwaInstallDialog } from "./PwaInstallDialog";
 
 interface AppHeaderProps {
   onOpenSettings?: () => void;
@@ -22,6 +16,13 @@ interface AppHeaderProps {
 export function AppHeader({ onOpenSettings, showHomeButton = false, gameTitle }: AppHeaderProps) {
   const [dark, setDark] = useState(false);
   const [muted, setMuted] = useState(false);
+  const [pwaState, setPwaState] = useState<PwaState>(() => getPwaState());
+  const [installDialogOpen, setInstallDialogOpen] = useState(false);
+
+  useEffect(() => {
+    const unsubPwa = subscribePwaState(setPwaState);
+    return unsubPwa;
+  }, []);
 
   useEffect(() => {
     const isDark = typeof window !== "undefined" && localStorage.getItem(THEME_KEY) === "dark";
@@ -29,7 +30,7 @@ export function AppHeader({ onOpenSettings, showHomeButton = false, gameTitle }:
     document.documentElement.classList.toggle("dark", isDark);
     setMuted(sound.isMuted());
 
-    // Auto unlock on first interaction
+    // Auto unlock audio on first interaction
     const unlockAudio = () => {
       sound.unlock();
       window.removeEventListener("pointerdown", unlockAudio);
@@ -67,19 +68,19 @@ export function AppHeader({ onOpenSettings, showHomeButton = false, gameTitle }:
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full px-4 py-3 border-b border-border/40 backdrop-blur-md bg-background/70">
-      <div className="max-w-5xl mx-auto flex items-center justify-between">
-        {/* Logo & App Name */}
+    <header className="sticky top-0 z-40 w-full border-b border-border/70 bg-background/85 backdrop-blur-md transition-colors">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+        {/* Brand Identity */}
         <div className="flex items-center gap-3">
           {showHomeButton && (
             <Link
               to="/"
-              aria-label="العودة للملعب الرئيسي"
+              aria-label="العودة للرئيسية"
               onClick={() => {
                 sound.unlock();
                 sound.playSwoosh();
               }}
-              className="inline-flex items-center justify-center size-9 rounded-full glass hover:bg-accent/80 transition-transform active:scale-95 text-foreground cursor-pointer"
+              className="inline-flex items-center justify-center size-9 rounded-lg border border-border/80 bg-card hover:bg-accent/15 text-foreground transition-all active:scale-95 cursor-pointer shadow-2xs"
             >
               <Home className="size-4" />
             </Link>
@@ -91,69 +92,109 @@ export function AppHeader({ onOpenSettings, showHomeButton = false, gameTitle }:
               sound.unlock();
               sound.playClick();
             }}
-            className="flex items-center gap-2.5 group cursor-pointer"
+            className="flex items-center gap-3 group cursor-pointer select-none"
           >
-            <img
-              src="/logogame.png"
-              alt="العب وتعلم"
-              className="size-10 rounded-xl shadow-md shadow-primary/20 transition-transform group-hover:scale-105 object-contain"
-            />
+            <div className="relative size-10 rounded-xl overflow-hidden bg-gradient-to-br from-primary/10 to-accent/15 border border-border/80 flex items-center justify-center p-1 shadow-2xs group-hover:border-primary/40 transition-colors">
+              <img
+                src="/logogame.png"
+                alt="شعار العب وتعلم"
+                className="w-full h-full object-contain transition-transform group-hover:scale-105 duration-200"
+              />
+            </div>
+
             <div className="flex flex-col">
-              <span className="text-lg font-bold tracking-tight text-foreground group-hover:text-primary transition-colors">
-                العب وتعلم
-              </span>
-              {gameTitle && (
-                <span className="text-xs font-medium text-muted-foreground -mt-1">{gameTitle}</span>
+              <div className="flex items-center gap-2">
+                <span className="text-lg font-extrabold tracking-tight text-foreground group-hover:text-primary transition-colors">
+                  العب وتعلم
+                </span>
+                <span className="hidden sm:inline-flex text-[11px] font-semibold px-2 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20">
+                  منصة تعليمية
+                </span>
+              </div>
+              {gameTitle ? (
+                <span className="text-xs font-medium text-muted-foreground -mt-0.5">
+                  {gameTitle}
+                </span>
+              ) : (
+                <span className="hidden sm:block text-[11px] text-muted-foreground">
+                  ألعاب تفاعلية وثقافية
+                </span>
               )}
             </div>
           </Link>
         </div>
 
-        {/* Global Controls: Sound, Theme, AI Settings */}
-        <div className="flex items-center gap-1.5 sm:gap-2">
+        {/* Global Controls */}
+        <nav aria-label="أدوات التحكم" className="flex items-center gap-2">
+          {!pwaState.isStandalone && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                sound.unlock();
+                sound.playClick();
+                setInstallDialogOpen(true);
+              }}
+              aria-label="تثبيت التطبيق"
+              title="تثبيت تطبيق العب وتعلم"
+              className="h-9 px-2.5 sm:px-3 rounded-lg border-primary/30 bg-primary/10 text-primary hover:bg-primary/20 transition-all font-bold text-xs gap-1.5 cursor-pointer shadow-2xs"
+            >
+              <Download className="size-4 shrink-0" />
+              <span className="hidden sm:inline">تثبيت التطبيق</span>
+            </Button>
+          )}
+
           {onOpenSettings && (
             <Button
-              variant="ghost"
+              variant="outline"
               size="icon"
               aria-label="إعدادات الذكاء الاصطناعي"
+              title="إعدادات المنصة والذكاء الاصطناعي"
               onClick={() => {
                 sound.unlock();
                 sound.playClick();
                 onOpenSettings();
               }}
-              className="glass size-9 rounded-full cursor-pointer hover:bg-accent/80 transition-transform active:scale-95"
+              className="size-9 rounded-lg border-border/80 bg-card/80 hover:bg-accent/15 text-foreground transition-all active:scale-95 cursor-pointer shadow-2xs"
             >
-              <SettingsIcon className="size-4.5 text-foreground" />
+              <SettingsIcon className="size-4 text-foreground/80" />
             </Button>
           )}
 
           <Button
-            variant="ghost"
+            variant="outline"
             size="icon"
-            aria-label={muted ? "تشغيل الصوت" : "كتم الصوت"}
+            aria-label={muted ? "تشغيل المؤثرات الصوتية" : "كتم المؤثرات الصوتية"}
+            title={muted ? "تشغيل الصوت" : "كتم الصوت"}
             onClick={toggleSound}
-            className={`glass size-9 rounded-full cursor-pointer hover:bg-accent/80 transition-transform active:scale-95 ${
-              muted ? "text-muted-foreground opacity-70" : "text-primary"
+            className={`size-9 rounded-lg border-border/80 bg-card/80 hover:bg-accent/15 transition-all active:scale-95 cursor-pointer shadow-2xs ${
+              muted ? "text-muted-foreground/60" : "text-primary"
             }`}
           >
-            {muted ? <VolumeX className="size-4.5" /> : <Volume2 className="size-4.5" />}
+            {muted ? <VolumeX className="size-4" /> : <Volume2 className="size-4" />}
           </Button>
 
           <Button
-            variant="ghost"
+            variant="outline"
             size="icon"
-            aria-label={dark ? "الوضع النهاري" : "الوضع الليلي"}
+            aria-label={dark ? "تفعيل الوضع النهاري" : "تفعيل الوضع الليلي"}
+            title={dark ? "الوضع النهاري" : "الوضع الليلي"}
             onClick={toggleTheme}
-            className="glass size-9 rounded-full cursor-pointer hover:bg-accent/80 transition-transform active:scale-95"
+            className="size-9 rounded-lg border-border/80 bg-card/80 hover:bg-accent/15 text-foreground transition-all active:scale-95 cursor-pointer shadow-2xs"
           >
             {dark ? (
-              <Sun className="size-4.5 text-amber-400" />
+              <Sun className="size-4 text-amber-500" />
             ) : (
-              <Moon className="size-4.5 text-foreground" />
+              <Moon className="size-4 text-foreground/80" />
             )}
           </Button>
-        </div>
+        </nav>
       </div>
+
+      <PwaInstallDialog
+        open={installDialogOpen}
+        onOpenChange={setInstallDialogOpen}
+      />
     </header>
   );
 }

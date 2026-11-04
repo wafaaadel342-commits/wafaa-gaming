@@ -8,6 +8,7 @@ import {
   Lightbulb,
   Maximize2,
   RotateCcw,
+  Trophy,
   X,
   XCircle,
 } from "lucide-react";
@@ -445,21 +446,21 @@ export function QuizScreen({ level, settings, setupOptions, onFinish, onExit }: 
 
   const optionClass = (i: number) => {
     if (!answered) {
-      return "glass hover:border-primary/50 hover:bg-primary/5 active:scale-[0.98] cursor-pointer";
+      return "border-2 border-border bg-card hover:border-primary hover:bg-primary/5 hover:shadow-md active:scale-[0.985] cursor-pointer";
     }
     if (i === q.correctIndex) {
-      return "bg-easy text-easy-foreground border-easy animate-pop font-bold";
+      return "bg-easy text-easy-foreground border-2 border-easy animate-pop font-bold shadow-lg shadow-easy/25";
     }
     if (i === selected) {
-      return "bg-hard text-hard-foreground border-hard animate-shake font-bold";
+      return "bg-hard text-hard-foreground border-2 border-hard animate-shake font-bold shadow-lg shadow-hard/25";
     }
-    return "glass opacity-50";
+    return "border-2 border-border/50 bg-card/50 opacity-45";
   };
 
   return (
-    <div className="mx-auto w-full max-w-2xl px-4 py-10 sm:py-14">
+    <div className="mx-auto w-full max-w-2xl px-4 py-8 sm:py-12">
       {/* Top Status Bar */}
-      <div className="flex items-center gap-2 text-sm font-semibold text-muted-foreground">
+      <div className="flex items-center gap-2.5">
         <Button
           variant="ghost"
           size="icon"
@@ -468,33 +469,36 @@ export function QuizScreen({ level, settings, setupOptions, onFinish, onExit }: 
             sound.unlock();
             onExit();
           }}
-          className="size-8 shrink-0 rounded-full"
+          className="size-10 shrink-0 rounded-2xl border-2 border-border bg-card hover:bg-accent cursor-pointer"
         >
-          <Home className="size-4" />
+          <Home className="size-4.5" />
         </Button>
-        <span>
-          السؤال {index + 1} من {effectiveTotal}
+        <span className="text-sm font-bold text-foreground">
+          {index + 1} / {effectiveTotal}
         </span>
-        <span className="ms-auto inline-flex items-center gap-1 rounded-full bg-secondary px-3 py-1 font-bold text-secondary-foreground">
-          النقاط: {score}
+        <span className="ms-auto inline-flex items-center gap-1.5 rounded-full bg-achievement/15 border-2 border-achievement/30 px-3.5 py-1.5 text-sm font-bold text-achievement">
+          <Trophy className="size-4" />
+          {score}
         </span>
         <span
-          className={`inline-flex items-center gap-1 rounded-full px-3 py-1 font-bold ${
+          className={`inline-flex items-center gap-1.5 rounded-full border-2 px-3.5 py-1.5 text-sm font-bold tabular-nums ${
             timeLeft <= 5 && !answered
-              ? "animate-pulse bg-hard text-hard-foreground"
-              : "bg-secondary text-secondary-foreground"
+              ? "animate-pulse border-hard bg-hard text-hard-foreground"
+              : "border-border bg-card text-foreground"
           }`}
         >
-          <Clock3 className="size-3.5" />
-          {answered ? "—" : !isQuestionVisible ? "..." : `${timeLeft} ث`}
+          <Clock3 className="size-4" />
+          {answered ? "—" : !isQuestionVisible ? "..." : `${timeLeft}ث`}
         </span>
       </div>
 
       {/* Progress Bar */}
-      <div className="mt-3 h-2.5 w-full overflow-hidden rounded-full bg-muted">
-        <div
-          className="h-full rounded-full bg-primary transition-all duration-500"
-          style={{ width: `${(index / effectiveTotal) * 100}%` }}
+      <div className="mt-4 h-3 w-full overflow-hidden rounded-full border-2 border-border/60 bg-muted">
+        <motion.div
+          className="h-full rounded-full bg-gradient-to-l from-primary to-quiz-primary"
+          initial={false}
+          animate={{ width: `${((index + (answered ? 1 : 0)) / effectiveTotal) * 100}%` }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
         />
       </div>
 
@@ -502,18 +506,18 @@ export function QuizScreen({ level, settings, setupOptions, onFinish, onExit }: 
       <AnimatePresence mode="wait">
         <motion.div
           key={index}
-          initial={{ opacity: 0, x: 24, scale: 0.98 }}
-          animate={{ opacity: 1, x: 0, scale: 1 }}
-          exit={{ opacity: 0, x: -24, scale: 0.98 }}
-          transition={{ duration: 0.3, ease: "easeOut" }}
-          className="glass mt-6 rounded-3xl p-6 sm:p-8"
+          initial={{ opacity: 0, y: 20, scale: 0.98 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: -16, scale: 0.98 }}
+          transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+          className="mt-6 rounded-3xl border-2 border-border bg-card p-6 shadow-lg sm:p-8"
         >
-          <div className="flex items-center justify-between">
-            <span className="inline-block rounded-full bg-accent px-3 py-1 text-xs font-bold text-accent-foreground">
+          <div className="flex items-center justify-between gap-3">
+            <span className="inline-block rounded-full border-2 border-accent/30 bg-accent/15 px-3.5 py-1 text-xs font-bold text-accent-foreground">
               {categoryLabel}
             </span>
             <span className="text-xs font-semibold text-muted-foreground">
-              {LEVELS[level].label} ({LEVELS[level].points} نقاط)
+              {LEVELS[level].label} · {LEVELS[level].points} نقاط
             </span>
           </div>
 
@@ -522,9 +526,9 @@ export function QuizScreen({ level, settings, setupOptions, onFinish, onExit }: 
             <motion.div
               key={q.imageUrl}
               onClick={() => setLightboxOpen(true)}
-              whileHover={{ scale: 1.01 }}
-              whileTap={{ scale: 0.99 }}
-              className="group relative mt-4 flex aspect-[16/10] cursor-pointer items-center justify-center overflow-hidden rounded-2xl border border-border/80 bg-muted/40 transition-shadow hover:shadow-md"
+              whileHover={{ scale: 1.008 }}
+              whileTap={{ scale: 0.995 }}
+              className="group relative mt-5 flex aspect-[16/10] cursor-pointer items-center justify-center overflow-hidden rounded-2xl border-2 border-border bg-muted/40 transition-shadow hover:shadow-md"
               title="انقر لتكبير الصورة"
             >
               {!imageLoaded && <Skeleton className="absolute inset-0 z-0 size-full rounded-2xl" />}
@@ -546,7 +550,7 @@ export function QuizScreen({ level, settings, setupOptions, onFinish, onExit }: 
                 } ${imageLoaded ? "opacity-100" : "opacity-0"}`}
               />
               <div
-                className={`absolute bottom-3 end-3 z-20 flex size-8 items-center justify-center rounded-full bg-black/60 text-white backdrop-blur-md transition-opacity ${
+                className={`absolute bottom-3 end-3 z-20 flex size-9 items-center justify-center rounded-xl bg-black/60 text-white backdrop-blur-md transition-opacity ${
                   imageLoaded ? "opacity-80 group-hover:opacity-100" : "opacity-0"
                 }`}
               >
@@ -555,9 +559,11 @@ export function QuizScreen({ level, settings, setupOptions, onFinish, onExit }: 
             </motion.div>
           )}
 
-          <h2 className="mt-4 text-xl font-bold leading-relaxed sm:text-2xl">{q.question}</h2>
+          <h2 className="mt-5 text-xl font-bold leading-relaxed text-foreground sm:text-2xl">
+            {q.question}
+          </h2>
 
-          {/* Options (Arabic Safety Net Applied with Motion) */}
+          {/* Options */}
           <div className="mt-6 grid gap-3 sm:grid-cols-2">
             {q.options.map((opt, i) => {
               const formatted = formatArabicOption(opt);
@@ -565,20 +571,33 @@ export function QuizScreen({ level, settings, setupOptions, onFinish, onExit }: 
                 <motion.button
                   key={i}
                   disabled={answered}
-                  initial={{ opacity: 0, y: 10 }}
+                  initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.04, duration: 0.2 }}
-                  whileHover={!answered ? { scale: 1.012 } : {}}
-                  whileTap={!answered ? { scale: 0.985 } : {}}
+                  transition={{ delay: i * 0.05, duration: 0.22 }}
+                  whileHover={!answered ? { y: -2 } : {}}
+                  whileTap={!answered ? { scale: 0.98 } : {}}
                   onClick={() => {
                     sound.unlock();
                     answer(i);
                   }}
-                  className={`flex min-h-16 items-center justify-between gap-3 rounded-2xl border px-5 py-4 text-start text-base font-semibold transition-all duration-200 disabled:cursor-default ${optionClass(
+                  className={`flex min-h-16 items-center justify-between gap-3 rounded-2xl px-5 py-4 text-start text-base font-semibold transition-all duration-200 disabled:cursor-default ${optionClass(
                     i,
                   )}`}
                 >
-                  <span>{formatted}</span>
+                  <span className="flex items-center gap-3">
+                    <span
+                      className={`flex size-7 shrink-0 items-center justify-center rounded-lg text-xs font-bold ${
+                        answered && i === q.correctIndex
+                          ? "bg-easy-foreground/20"
+                          : answered && i === selected
+                            ? "bg-hard-foreground/20"
+                            : "bg-muted text-muted-foreground"
+                      }`}
+                    >
+                      {["أ", "ب", "ج", "د"][i]}
+                    </span>
+                    <span>{formatted}</span>
+                  </span>
                   {answered && i === q.correctIndex && <CheckCircle2 className="size-5 shrink-0" />}
                   {answered && i === selected && i !== q.correctIndex && (
                     <XCircle className="size-5 shrink-0" />
@@ -591,25 +610,29 @@ export function QuizScreen({ level, settings, setupOptions, onFinish, onExit }: 
           {/* Explanation & Feedback */}
           {answered && (
             <motion.div
-              initial={{ opacity: 0, y: 8 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.25 }}
-              className="mt-6 rounded-2xl border border-accent bg-accent/60 p-4"
+              transition={{ duration: 0.28 }}
+              className="mt-6 rounded-2xl border-2 border-primary/25 bg-primary/8 p-4"
             >
-              <p className="flex items-start gap-2 text-sm leading-relaxed text-accent-foreground">
-                <Lightbulb className="mt-0.5 size-4 shrink-0 text-primary" />
-                {selected === -1 && <span className="font-bold">انتهى الوقت! </span>}
-                <span>{q.explanation}</span>
-              </p>
+              <div className="flex items-start gap-3">
+                <span className="flex size-8 shrink-0 items-center justify-center rounded-xl bg-primary/15 text-primary">
+                  <Lightbulb className="size-4" />
+                </span>
+                <p className="text-sm leading-relaxed text-foreground">
+                  {selected === -1 && <span className="font-bold text-hard">انتهى الوقت! </span>}
+                  {q.explanation}
+                </p>
+              </div>
             </motion.div>
           )}
 
-          {/* Next Button: Only shown on wrong answer or timeout. Hidden on correct auto-advance. */}
+          {/* Next Button: Only shown on wrong answer or timeout */}
           {answered && !isCorrectAnswer && (
-            <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>
+            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
               <Button
                 size="lg"
-                className="mt-6 w-full text-lg font-bold"
+                className="mt-6 w-full text-lg font-bold shadow-lg"
                 onClick={() => {
                   sound.unlock();
                   sound.playClick();

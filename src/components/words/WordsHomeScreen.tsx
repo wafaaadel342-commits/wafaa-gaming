@@ -95,28 +95,28 @@ export function WordsHomeScreen({
               sound.playTabSwitch();
               onModeChange("words");
             }}
-            className={`group relative flex flex-col items-center text-center p-4 sm:p-5 rounded-3xl border-2 transition-all cursor-pointer ${
+            className={`group relative flex flex-col items-center text-center p-5 sm:p-6 rounded-3xl border-2 transition-all cursor-pointer ${
               mode === "words"
-                ? "border-primary bg-primary/10 shadow-lg shadow-primary/10"
-                : "border-border/60 bg-card hover:border-primary/40 opacity-75 hover:opacity-100"
+                ? "border-primary bg-primary/10 shadow-lg shadow-primary/15"
+                : "border-border bg-card hover:border-primary/50"
             }`}
           >
             <div
-              className={`mb-2.5 flex size-12 items-center justify-center rounded-2xl transition-transform group-hover:scale-110 ${
+              className={`mb-3 flex size-14 items-center justify-center rounded-2xl transition-transform duration-200 group-hover:scale-110 ${
                 mode === "words"
                   ? "bg-primary text-primary-foreground shadow-md"
                   : "bg-muted text-muted-foreground"
               }`}
             >
-              <SpellCheck className="size-6" />
+              <SpellCheck className="size-7" />
             </div>
             <h3 className="font-extrabold text-base sm:text-lg text-foreground">جمع كلمة</h3>
-            <p className="mt-1 text-xs text-muted-foreground line-clamp-2">
+            <p className="mt-1.5 text-xs text-muted-foreground line-clamp-2">
               رتّب الحروف المبعثرة لاكتشاف الكلمة
             </p>
             {/* Best score badge */}
-            <div className="mt-3 flex items-center gap-1 text-[11px] font-bold text-amber-500">
-              <Trophy className="size-3" />
+            <div className="mt-3 flex items-center gap-1.5 text-xs font-bold text-achievement">
+              <Trophy className="size-3.5" />
               <span>
                 أعلى مجموع:{" "}
                 {Math.max(wordsBest.easy, wordsBest.medium, wordsBest.hard) > 0
@@ -134,28 +134,28 @@ export function WordsHomeScreen({
               sound.playTabSwitch();
               onModeChange("sentences");
             }}
-            className={`group relative flex flex-col items-center text-center p-4 sm:p-5 rounded-3xl border-2 transition-all cursor-pointer ${
+            className={`group relative flex flex-col items-center text-center p-5 sm:p-6 rounded-3xl border-2 transition-all cursor-pointer ${
               mode === "sentences"
-                ? "border-primary bg-primary/10 shadow-lg shadow-primary/10"
-                : "border-border/60 bg-card hover:border-primary/40 opacity-75 hover:opacity-100"
+                ? "border-primary bg-primary/10 shadow-lg shadow-primary/15"
+                : "border-border bg-card hover:border-primary/50"
             }`}
           >
             <div
-              className={`mb-2.5 flex size-12 items-center justify-center rounded-2xl transition-transform group-hover:scale-110 ${
+              className={`mb-3 flex size-14 items-center justify-center rounded-2xl transition-transform duration-200 group-hover:scale-110 ${
                 mode === "sentences"
                   ? "bg-primary text-primary-foreground shadow-md"
                   : "bg-muted text-muted-foreground"
               }`}
             >
-              <AlignLeft className="size-6" />
+              <AlignLeft className="size-7" />
             </div>
             <h3 className="font-extrabold text-base sm:text-lg text-foreground">جمع جملة</h3>
-            <p className="mt-1 text-xs text-muted-foreground line-clamp-2">
+            <p className="mt-1.5 text-xs text-muted-foreground line-clamp-2">
               رتّب الكلمات المبعثرة لتركيب الحكم والأمثال
             </p>
             {/* Best score badge */}
-            <div className="mt-3 flex items-center gap-1 text-[11px] font-bold text-amber-500">
-              <Trophy className="size-3" />
+            <div className="mt-3 flex items-center gap-1.5 text-xs font-bold text-achievement">
+              <Trophy className="size-3.5" />
               <span>
                 أعلى مجموع:{" "}
                 {Math.max(sentencesBest.easy, sentencesBest.medium, sentencesBest.hard) > 0
@@ -168,8 +168,8 @@ export function WordsHomeScreen({
       </div>
 
       {/* Level Selection Title */}
-      <div className="w-full text-center mb-3">
-        <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
+      <div className="w-full text-center mb-4">
+        <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
           اختر مستوى الصعوبة
         </span>
       </div>
@@ -207,33 +207,33 @@ export function WordsHomeScreen({
                   onSelectSentenceLevel(lvl);
                 }
               }}
-              className={`glass group relative flex flex-col items-center justify-between rounded-3xl p-6 text-center transition-all duration-200 cursor-pointer hover:-translate-y-1 ${style.borderHover}`}
+              className={`group relative flex flex-col items-center justify-between rounded-3xl border-2 border-border bg-card p-6 text-center transition-all duration-250 cursor-pointer hover:-translate-y-1.5 hover:shadow-lg ${style.borderHover}`}
             >
               <div className="flex flex-col items-center w-full">
                 <div
-                  className={`mb-4 flex size-14 items-center justify-center rounded-2xl transition-transform duration-200 group-hover:scale-110 ${style.iconBg}`}
+                  className={`mb-4 flex size-16 items-center justify-center rounded-2xl border-2 transition-transform duration-250 group-hover:scale-110 ${style.iconBg}`}
                 >
-                  <Icon className="size-7" />
+                  <Icon className="size-8" />
                 </div>
-                <h3 className="text-xl font-bold text-foreground">{info.label}</h3>
+                <h3 className="text-xl font-extrabold text-foreground">{info.label}</h3>
                 <span
-                  className={`mt-2 rounded-full border px-2.5 py-0.5 text-xs font-semibold ${style.badge}`}
+                  className={`mt-2 rounded-full border-2 px-3 py-1 text-xs font-semibold ${style.badge}`}
                 >
                   {rangeLabel}
                 </span>
-                <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
                   {info.description}
                 </p>
               </div>
 
               {/* Score / Points footer */}
-              <div className="mt-6 flex w-full items-center justify-between border-t border-border/40 pt-4 text-xs">
+              <div className="mt-6 flex w-full items-center justify-between border-t-2 border-border/60 pt-4 text-xs">
                 <span className="text-muted-foreground font-medium">
                   {info.points} نقطة {isWord ? "للكلمة" : "للجملة"}
                 </span>
                 {bestScore > 0 ? (
-                  <span className="inline-flex items-center gap-1 font-bold text-amber-500">
-                    <Trophy className="size-3.5" />
+                  <span className="inline-flex items-center gap-1.5 font-bold text-achievement">
+                    <Trophy className="size-4" />
                     {bestScore}
                   </span>
                 ) : (

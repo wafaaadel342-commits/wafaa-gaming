@@ -218,30 +218,30 @@ function WordsGamePage() {
           {view.name === "loading" && (
             <motion.div
               key="words-loading"
-              initial={{ opacity: 0, scale: 0.95 }}
+              initial={{ opacity: 0, scale: 0.96 }}
               animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
+              exit={{ opacity: 0, scale: 0.96 }}
               className="mx-auto flex min-h-[50vh] max-w-md flex-col items-center justify-center p-6 text-center my-auto"
             >
-              <div className="glass rounded-3xl p-8 border border-border/60 shadow-xl flex flex-col items-center">
+              <div className="rounded-3xl border-2 border-border bg-card p-8 shadow-lg flex flex-col items-center w-full">
                 {loadError ? (
                   <>
-                    <span className="size-14 rounded-2xl bg-destructive/15 text-destructive flex items-center justify-center mb-4">
+                    <span className="size-16 rounded-2xl bg-destructive/15 text-destructive flex items-center justify-center mb-5 border-2 border-destructive/30">
                       <AlertCircle className="size-8" />
                     </span>
-                    <h3 className="text-lg font-bold text-foreground">حدث خطأ</h3>
+                    <h3 className="text-lg font-extrabold text-foreground">حدث خطأ</h3>
                     <p className="mt-2 text-sm text-muted-foreground">{loadError}</p>
                     <div className="mt-6 flex gap-3">
                       <Button
                         variant="outline"
                         onClick={() => setView({ name: "home" })}
-                        className="rounded-xl cursor-pointer"
+                        className="rounded-xl border-2 cursor-pointer"
                       >
                         العودة
                       </Button>
                       <Button
                         onClick={() => handleStartGame(view.mode, view.level, setupOptions)}
-                        className="rounded-xl bg-violet-600 hover:bg-violet-700 text-white cursor-pointer"
+                        className="rounded-xl cursor-pointer"
                       >
                         إعادة المحاولة
                       </Button>
@@ -249,17 +249,37 @@ function WordsGamePage() {
                   </>
                 ) : (
                   <>
-                    <Loader2 className="size-12 animate-spin text-violet-500 mb-4" />
-                    <h3 className="text-lg font-bold text-foreground">
+                    <div className="relative mb-5">
+                      <motion.div
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                        className="size-16 rounded-2xl bg-gradient-to-br from-words-primary/20 to-primary/20 border-2 border-words-primary/30 flex items-center justify-center"
+                      >
+                        <Loader2 className="size-8 text-words-primary" />
+                      </motion.div>
+                      <motion.div
+                        animate={{ scale: [1, 1.25, 1], opacity: [0.4, 0.75, 0.4] }}
+                        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                        className="absolute inset-0 rounded-2xl bg-words-primary/20 blur-xl"
+                      />
+                    </div>
+                    <h3 className="text-lg font-extrabold text-foreground">
                       {view.mode === "words"
-                        ? "جاري تجهيز الكلمات وتحديات الحروف..."
-                        : "جاري تجهيز الجمل والأمثال البليغة..."}
+                        ? "جاري تجهيز الكلمات"
+                        : "جاري تجهيز الجمل والأمثال"}
                     </h3>
-                    <p className="mt-2 text-xs text-muted-foreground">
+                    <p className="mt-2 text-sm text-muted-foreground">
                       {view.mode === "words"
                         ? "نختار كلمات ذكية وفريدة تلائم مستواك"
                         : "نختار حكماً وعبارات مأثورة لاختبار مهاراتك اللغوية"}
                     </p>
+                    <div className="mt-6 h-2 w-full overflow-hidden rounded-full bg-muted">
+                      <motion.div
+                        className="h-full w-1/3 rounded-full bg-gradient-to-l from-words-primary to-primary"
+                        animate={{ x: ["-100%", "300%"] }}
+                        transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+                      />
+                    </div>
                   </>
                 )}
               </div>

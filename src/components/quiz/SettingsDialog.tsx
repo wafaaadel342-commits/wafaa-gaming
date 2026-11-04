@@ -24,7 +24,14 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { clearAllBanks, clearSeenHistory, getBankStats, type BankStats } from "@/lib/anti-repeat";
-import { runBankFilling, type FillProgress, type FillTarget } from "@/lib/bank-filler";
+import {
+  startGlobalBankFilling,
+  cancelGlobalBankFilling,
+  subscribeGlobalBankFiller,
+  getGlobalBankFillerState,
+  type FillProgress,
+  type FillTarget,
+} from "@/lib/bank-filler";
 import { type Settings } from "@/lib/quiz";
 import { sound } from "@/lib/sound";
 import { cn } from "@/lib/utils";
@@ -43,10 +50,9 @@ export function SettingsDialog({ open, onOpenChange, settings, onSave }: Props) 
   // Content Bank Manager State
   const [bankStats, setBankStats] = useState<BankStats>(() => getBankStats());
   const [fillTarget, setFillTarget] = useState<FillTarget>("all");
-  const [fillCount, setFillCount] = useState<number>(50);
+  const [fillCount, setFillCount] = useState<number>(200);
   const [isFilling, setIsFilling] = useState(false);
   const [fillProgress, setFillProgress] = useState<FillProgress | null>(null);
-  const cancelRef = useRef(false);
 
   const [confirmClearSeen, setConfirmClearSeen] = useState(false);
   const [confirmClearAll, setConfirmClearAll] = useState(false);
@@ -55,6 +61,20 @@ export function SettingsDialog({ open, onOpenChange, settings, onSave }: Props) 
     setBankStats(getBankStats());
   };
 
+  // Subscribe to global bank filler updates
+  useEffect(() => {
+    const unsub = subscribeGlobalBankFiller((st) => {
+      setIsFilling(st.isFilling);
+      setFillProgress(st.progress);
+      if (st.isFilling) {
+        setFillTarget(st.target);
+        setFillCount(st.totalRequested);
+      }
+      refreshStats();
+    });
+    return unsub;
+  }, []);
+
   // Resync draft and bank stats when dialog opens
   useEffect(() => {
     if (open) {
@@ -62,6 +82,9 @@ export function SettingsDialog({ open, onOpenChange, settings, onSave }: Props) 
       refreshStats();
       setConfirmClearSeen(false);
       setConfirmClearAll(false);
+      const currentGlobal = getGlobalBankFillerState();
+      setIsFilling(currentGlobal.isFilling);
+      setFillProgress(currentGlobal.progress);
     }
   }, [open, settings]);
 
@@ -83,27 +106,11 @@ export function SettingsDialog({ open, onOpenChange, settings, onSave }: Props) 
 
   // Content Bank Actions
   const handleStartFill = async () => {
-    setIsFilling(true);
-    cancelRef.current = false;
-    setFillProgress({
-      completed: 0,
-      total: fillCount,
-      currentTask: "جاري الاتصال بـ OpenRouter وبدء التعبئة التلقائية...",
-    });
-
     try {
-      const res = await runBankFilling(
-        draft,
-        fillTarget,
-        fillCount,
-        (p) => setFillProgress(p),
-        () => cancelRef.current,
-      );
+      const res = await startGlobalBankFilling(draft, fillTarget, fillCount);
       refreshStats();
       if (res.error) {
         toast.error(res.error);
-      } else if (cancelRef.current) {
-        toast.info(`تم إيقاف التعبئة. تمت إضافة ${res.added} عنصراً إلى البنك.`);
       } else {
         toast.success(`تمت تعبئة البنك بنجاح بإضافة ${res.added} عنصراً جديداً! 🎉`);
       }
@@ -111,15 +118,13 @@ export function SettingsDialog({ open, onOpenChange, settings, onSave }: Props) 
       console.error(err);
       toast.error("حدث خطأ أثناء تعبئة البنك.");
     } finally {
-      setIsFilling(false);
-      setFillProgress(null);
       refreshStats();
     }
   };
 
   const handleCancelFill = () => {
-    cancelRef.current = true;
-    toast.info("جاري إيقاف العملية بعد إنهاء الدفعة الحالية...");
+    cancelGlobalBankFilling();
+    toast.info("جاري إيقاف العملية...");
   };
 
   const handleClearSeen = () => {
@@ -399,8 +404,8 @@ export function SettingsDialog({ open, onOpenChange, settings, onSave }: Props) 
                   </h3>
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  توليد دفعات متتالية من الأسئلة والكلمات والجمل عبر نماذج OpenRouter المجانية وتخزينها
-                  مسبقاً لبدء فوري بدون أي انتظار.
+                  توليد دفعات متتالية من الأسئلة والكلمات والجمل عبر نماذج OpenRouter المجانية
+                  وتخزينها مسبقاً لبدء فوري بدون أي انتظار.
                 </p>
               </div>
 
