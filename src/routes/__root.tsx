@@ -14,6 +14,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { initPwa } from "../lib/pwa";
 import { OfflineStatusStrip, PwaUpdateBanner } from "../components/common/PwaInstallDialog";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 
 function NotFoundComponent() {
   return (
@@ -158,6 +159,7 @@ function RootComponent() {
       <OfflineStatusStrip />
       <Outlet />
       <PwaUpdateBanner />
+      <SpeedInsights />
     </QueryClientProvider>
   );
 }
