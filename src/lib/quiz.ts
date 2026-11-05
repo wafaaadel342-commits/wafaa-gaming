@@ -214,7 +214,7 @@ export const THEME_KEY = "tahaddi-theme";
 
 // Default OpenRouter API key from environment if available
 export const DEFAULT_OPENROUTER_KEY =
-  (typeof import.meta !== "undefined" && import.meta.env?.VITE_OPENROUTER_API_KEY) || "";
+  (typeof import.meta !== "undefined" && import.meta.env?.["VITE_OPENROUTER_API_KEY"]) || "";
 
 export const DEFAULT_SETTINGS: Settings = {
   openrouterKey: DEFAULT_OPENROUTER_KEY,
@@ -239,7 +239,7 @@ export function loadSettings(): Settings {
         ? parsed["openrouterKey"]
         : DEFAULT_OPENROUTER_KEY;
 
-    let openrouterModels: string[] = Array.isArray(parsed["openrouterModels"])
+    const openrouterModels: string[] = Array.isArray(parsed["openrouterModels"])
       ? (parsed["openrouterModels"] as string[])
       : [];
 

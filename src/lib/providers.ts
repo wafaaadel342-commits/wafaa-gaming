@@ -455,7 +455,7 @@ export async function fetchRemainingBatch(
     }
   }
 
-  let stillNeeded = remainingNeeded - accumulated.length;
+  const stillNeeded = remainingNeeded - accumulated.length;
 
   // 2. Use parallel AI generation for remaining questions
   // Distribute across all 4 models simultaneously for maximum speed

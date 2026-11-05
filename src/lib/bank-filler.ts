@@ -48,7 +48,7 @@ export interface GlobalBankFillerState {
   target: FillTarget;
   totalRequested: number;
   addedCount: number;
-  lastError?: string;
+  lastError?: string | undefined;
 }
 
 let globalFillerState: GlobalBankFillerState = {

@@ -45,7 +45,7 @@ export function getOpenRouterApiKey(): string {
     }
   }
   return (
-    (typeof import.meta !== "undefined" && import.meta.env?.VITE_OPENROUTER_API_KEY) ||
+    (typeof import.meta !== "undefined" && import.meta.env?.["VITE_OPENROUTER_API_KEY"]) ||
     ""
   );
 }
@@ -341,8 +341,7 @@ export async function generateQuestionsParallel(
   const results = await Promise.allSettled(modelPromises);
 
   // Process results in order
-  for (let i = 0; i < results.length; i++) {
-    const result = results[i];
+  for (const result of results) {
     modelsCompleted++;
 
     if (result.status === "fulfilled" && result.value.length > 0) {
