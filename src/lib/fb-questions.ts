@@ -30,6 +30,7 @@ import { db } from "./firebase";
 import {
   ALL_CATEGORY_KEYS,
   getQuestionDedupeKey,
+  shuffleOptionsWithMapping,
   type CategoryKey,
   type Level,
   type Question,
@@ -86,17 +87,24 @@ function docToQuestion(doc: QueryDocumentSnapshot<DocumentData>): Question {
     ? (categoryKey as CategoryKey)
     : "general_knowledge";
 
+  const rawOptions = Array.isArray(d.options)
+    ? d.options.filter((o) => typeof o === "string").slice(0, 4)
+    : [];
+  // Shuffle the displayed order once and keep the mapping to the stored order.
+  // `submitAnswer` receives the original index, so server-side validation and
+  // the correct answer returned by the function stay exact.
+  const { options, order } = shuffleOptionsWithMapping(rawOptions, -1);
+
   return {
     id: doc.id,
     category: safeCategory,
     question: typeof d.question === "string" ? d.question : "",
-    options: Array.isArray(d.options)
-      ? d.options.filter((o) => typeof o === "string").slice(0, 4)
-      : [],
+    options,
     explanation: typeof d.explanation === "string" ? d.explanation : "",
     // -1 means "not revealed yet": the real answer is resolved server-side by
     // the submitAnswer Cloud Function after the player answers.
     correctIndex: -1,
+    optionOrder: order,
     // The Firestore doc carries `level`; Question in quiz.ts has no level field,
     // so it is attached dynamically and read by the caller when needed.
     level: (d.level as Level) || "medium",

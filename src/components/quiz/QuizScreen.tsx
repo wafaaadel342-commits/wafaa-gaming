@@ -333,9 +333,12 @@ export function QuizScreen({ level, settings, setupOptions, onFinish, onExit }: 
       }
 
       // Firestore questions: correctness is verified server-side. The answer
-      // never exists in the browser before this call.
+      // never exists in the browser before this call. Send the ORIGINAL option
+      // index (not the shuffled display position) so validation stays exact.
       if (firestoreMode && q.id) {
-        void submitFirestoreAnswer(q.id, choice).then((result) => {
+        const originalChoice =
+          choice >= 0 && q.optionOrder ? (q.optionOrder[choice] ?? choice) : choice;
+        void submitFirestoreAnswer(q.id, originalChoice).then((result) => {
           // -1 marks "resolved without a server answer" so the round can
           // continue gracefully if the function is unreachable.
           if (!result) {
@@ -358,9 +361,12 @@ export function QuizScreen({ level, settings, setupOptions, onFinish, onExit }: 
           } else {
             if (choice !== -1) sound.playWrong();
             const categoryLabel = CATEGORIES[q.category as CategoryKey]?.label || q.category;
+            const correctDisplayIndex = q.optionOrder
+              ? q.optionOrder.indexOf(result.correctIndex)
+              : result.correctIndex;
             const entry: Missed = {
               question: q.question,
-              correct: formatArabicOption(q.options[result.correctIndex] ?? ""),
+              correct: formatArabicOption(q.options[correctDisplayIndex] ?? ""),
               category: categoryLabel,
             };
             const chosen = choice >= 0 ? formatArabicOption(q.options[choice] ?? "") : undefined;
@@ -514,7 +520,16 @@ export function QuizScreen({ level, settings, setupOptions, onFinish, onExit }: 
   if (!q) return null;
 
   const answered = phase === "answered";
-  const resolvedCorrectIndex = revealedAnswers[index] ?? q.correctIndex;
+  // Revealed answers arrive as ORIGINAL option indices (Firestore mode); map
+  // them to the shuffled display position. Local questions already carry a
+  // remapped correctIndex.
+  const revealed = revealedAnswers[index];
+  const resolvedCorrectIndex =
+    revealed === undefined
+      ? q.correctIndex
+      : q.optionOrder
+        ? q.optionOrder.indexOf(revealed)
+        : revealed;
   const awaitingServer =
     firestoreMode && Boolean(q.id) && revealedAnswers[index] === undefined && selected !== null;
   const isCorrectAnswer = selected !== null && selected === resolvedCorrectIndex;

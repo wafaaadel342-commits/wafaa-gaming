@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProverbsRouteImport } from './routes/proverbs'
 import { Route as QuizRouteImport } from './routes/quiz'
+import { Route as TrueOrFalseRouteImport } from './routes/true-or-false'
 import { Route as WordsRouteImport } from './routes/words'
 
 const IndexRoute = IndexRouteImport.update({
@@ -29,6 +30,11 @@ const QuizRoute = QuizRouteImport.update({
   path: '/quiz',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TrueOrFalseRoute = TrueOrFalseRouteImport.update({
+  id: '/true-or-false',
+  path: '/true-or-false',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const WordsRoute = WordsRouteImport.update({
   id: '/words',
   path: '/words',
@@ -39,12 +45,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/proverbs': typeof ProverbsRoute
   '/quiz': typeof QuizRoute
+  '/true-or-false': typeof TrueOrFalseRoute
   '/words': typeof WordsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/proverbs': typeof ProverbsRoute
   '/quiz': typeof QuizRoute
+  '/true-or-false': typeof TrueOrFalseRoute
   '/words': typeof WordsRoute
 }
 export interface FileRoutesById {
@@ -52,20 +60,22 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/proverbs': typeof ProverbsRoute
   '/quiz': typeof QuizRoute
+  '/true-or-false': typeof TrueOrFalseRoute
   '/words': typeof WordsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/proverbs' | '/quiz' | '/words'
+  fullPaths: '/' | '/proverbs' | '/quiz' | '/true-or-false' | '/words'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/proverbs' | '/quiz' | '/words'
-  id: '__root__' | '/' | '/proverbs' | '/quiz' | '/words'
+  to: '/' | '/proverbs' | '/quiz' | '/true-or-false' | '/words'
+  id: '__root__' | '/' | '/proverbs' | '/quiz' | '/true-or-false' | '/words'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ProverbsRoute: typeof ProverbsRoute
   QuizRoute: typeof QuizRoute
+  TrueOrFalseRoute: typeof TrueOrFalseRoute
   WordsRoute: typeof WordsRoute
 }
 
@@ -92,6 +102,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof QuizRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/true-or-false': {
+      id: '/true-or-false'
+      path: '/true-or-false'
+      fullPath: '/true-or-false'
+      preLoaderRoute: typeof TrueOrFalseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/words': {
       id: '/words'
       path: '/words'
@@ -106,6 +123,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ProverbsRoute: ProverbsRoute,
   QuizRoute: QuizRoute,
+  TrueOrFalseRoute: TrueOrFalseRoute,
   WordsRoute: WordsRoute,
 }
 export const routeTree = rootRouteImport

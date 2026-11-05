@@ -17,6 +17,7 @@ import {
   type Level,
   type Question,
   getQuestionDedupeKey,
+  shuffleQuestionOptions,
 } from "./quiz";
 
 export interface RawQuizDefinition {
@@ -678,7 +679,9 @@ export const FALLBACK_QUIZ_BANK: RawQuizDefinition[] = [
 /** Convert RawQuizDefinition to BankQuizItem */
 export function rawQuizToBankItem(def: RawQuizDefinition): BankQuizItem {
   const key = getQuestionDedupeKey(def);
-  return {
+  // The curated bank stores every correct answer at index 0. Shuffle on the
+  // way into the persistent bank so cached questions are not predictable.
+  return shuffleQuestionOptions({
     id: cyrb53(`${key}:${def.level}`),
     key,
     level: def.level,
@@ -691,12 +694,14 @@ export function rawQuizToBankItem(def: RawQuizDefinition): BankQuizItem {
     imageQuery: def.imageQuery,
     topicKey: def.topicKey,
     addedAt: Date.now(),
-  };
+  });
 }
 
 /** Convert RawQuizDefinition to Question */
 export function rawQuizToQuestion(def: RawQuizDefinition): Question {
-  return {
+  // Shuffle independently for every served question so the correct answer is
+  // at a random position each session.
+  return shuffleQuestionOptions({
     category: def.category,
     question: def.question,
     options: def.options,
@@ -705,7 +710,7 @@ export function rawQuizToQuestion(def: RawQuizDefinition): Question {
     countryCode: def.countryCode,
     imageQuery: def.imageQuery,
     topicKey: def.topicKey,
-  };
+  });
 }
 
 /**

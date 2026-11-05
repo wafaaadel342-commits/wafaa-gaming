@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Brain, CheckCircle2, Lightbulb, Sparkles, XCircle } from "lucide-react";
+import { shuffleOptionsWithMapping } from "@/lib/quiz";
 import { sound } from "@/lib/sound";
 
 interface MiniQuestion {
@@ -49,6 +50,11 @@ const MINI_TRIVIA: MiniQuestion[] = [
   },
 ];
 
+function shuffleMiniQuestion(q: MiniQuestion): MiniQuestion {
+  const { options, correctIndex } = shuffleOptionsWithMapping(q.options, q.correct);
+  return { ...q, options, correct: correctIndex };
+}
+
 const LOADING_TIPS = [
   "💡 التحميل التدريجي مفعّل: يمكنك البدء فور جاهزية أول سؤالين!",
   "⏱️ لديك 20 ثانية للإجابة على كل سؤال بعد ظهوره مباشرة.",
@@ -71,6 +77,9 @@ export function InteractiveLoader({
   const [triviaIndex, setTriviaIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [answeredTrivia, setAnsweredTrivia] = useState(false);
+  // Shuffle once per loader mount so positions are random per session but
+  // remain stable across re-renders while a question is on screen.
+  const [miniTrivia] = useState<MiniQuestion[]>(() => MINI_TRIVIA.map(shuffleMiniQuestion));
 
   // Rotate tips
   useEffect(() => {
@@ -80,7 +89,7 @@ export function InteractiveLoader({
     return () => clearInterval(timer);
   }, []);
 
-  const currentTrivia = MINI_TRIVIA[triviaIndex % MINI_TRIVIA.length]!;
+  const currentTrivia = miniTrivia[triviaIndex % miniTrivia.length]!;
 
   const handleTriviaAnswer = (idx: number) => {
     if (answeredTrivia) return;
@@ -97,7 +106,7 @@ export function InteractiveLoader({
   const nextTrivia = () => {
     setSelectedAnswer(null);
     setAnsweredTrivia(false);
-    setTriviaIndex((prev) => (prev + 1) % MINI_TRIVIA.length);
+    setTriviaIndex((prev) => (prev + 1) % miniTrivia.length);
   };
 
   return (

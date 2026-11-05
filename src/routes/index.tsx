@@ -351,7 +351,7 @@ function HubHomePage() {
                   : "text-muted-foreground hover:text-foreground"
                   }`}
               >
-                متاحة للعب (٣)
+                متاحة للعب (٤)
               </button>
               <button
                 type="button"
@@ -365,7 +365,7 @@ function HubHomePage() {
                   : "text-muted-foreground hover:text-foreground"
                   }`}
               >
-                قريباً (٣)
+                قريباً (٢)
               </button>
             </div>
           </div>

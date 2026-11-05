@@ -16,6 +16,7 @@ import {
   parseQuestions,
   QuizError,
   rememberQuestions,
+  shuffleQuestionOptions,
   type CategoryKey,
   type Level,
   type Question,
@@ -303,7 +304,9 @@ export function questionToBankItem(q: Question, level: Level): BankQuizItem {
 
 /** Convert BankQuizItem to Question */
 export function bankItemToQuestion(item: BankQuizItem): Question {
-  return {
+  // Shuffle once per served question; the bank may still hold a fixed order
+  // (e.g. older cached records with correctIndex 0).
+  return shuffleQuestionOptions({
     category: item.category,
     question: item.question,
     options: item.options,
@@ -312,7 +315,7 @@ export function bankItemToQuestion(item: BankQuizItem): Question {
     topicKey: item.topicKey,
     countryCode: item.countryCode,
     imageQuery: item.imageQuery,
-  };
+  });
 }
 
 /**

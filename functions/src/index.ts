@@ -59,6 +59,26 @@ async function btoaUrlSafe(input: string): Promise<string> {
   return btoa(input).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
 }
 
+/**
+ * Shuffle option order once and remap correctIndex accordingly.
+ * Questions are stored randomized so the answer position is never predictable.
+ * The dedupe hash is always computed from the canonical (pre-shuffle) order.
+ */
+function shuffleDraftOptions<T extends { options: string[]; correctIndex: number }>(draft: T): T {
+  const order = draft.options.map((_, i) => i);
+  for (let i = order.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const tmp = order[i]!;
+    order[i] = order[j]!;
+    order[j] = tmp;
+  }
+  return {
+    ...draft,
+    options: order.map((i) => draft.options[i]!),
+    correctIndex: order.indexOf(draft.correctIndex),
+  };
+}
+
 // ============================================================================
 // TYPES
 // ============================================================================
@@ -417,8 +437,8 @@ ${cat}
 قواعد صارمة:
 1. اللهجة المصرية الطبيعية والمفهومة لكل المصريين، بدون مبالغة أو ألفاظ محلية غامضة، وبدون ترجمة حرفية.
 2. أعد JSON صالح فقط بالشكل:
-{"questions": [{"categoryKey": "${category}", "category": "${category}", "topicKey": "slug-انجليزي-فريد", "question": "...", "options": ["خيار1","خيار2","خيار3","خيار4"], "correctIndex": 0, "explanation": "شرح قصير ومفيد", "level": "${level}"}]}
-3. أربعة اختيارات مختلفة، وإجابة صحيحة واحدة فقط، وcorrectIndex عدد صحيح من 0 إلى 3.
+{"questions": [{"categoryKey": "${category}", "category": "${category}", "topicKey": "slug-انجليزي-فريد", "question": "...", "options": ["خيار1","خيار2","خيار3","خيار4"], "correctIndex": 2, "explanation": "شرح قصير ومفيد", "level": "${level}"}]}
+3. أربعة اختيارات مختلفة، وإجابة صحيحة واحدة فقط، وcorrectIndex عدد صحيح من 0 إلى 3. وزّع موضع الإجابة الصحيحة عشوائياً بين 0 و3 في كل سؤال؛ لا تجعل الخيار الأول هو الصحيح دائماً.
 4. لا تلمح للإجابة الصحيحة في نص السؤال أو في الاختيارات الأخرى.
 5. تجنب الحقائق المتنازع عليها أو المتغيرة سريعاً، ولا تخترع مصادر أو أرقاماً.
 6. إذا لم تكن متأكداً من صحة الحقيقة، لا تضمّن السؤال.
@@ -605,6 +625,10 @@ async function writeQuestionsWithAnswers(
       const verification = await verifyQuestionWithAI(d);
       const status = verification.status;
 
+      // Randomize the stored option order and remap the answer. The hash above
+      // intentionally uses the canonical order so idempotency still works.
+      const stored = shuffleDraftOptions(d);
+
       // Idempotency + duplicate prevention via a transactional unique lock in
       // the dedicated questionDedup collection.
       let isDuplicate = false;
@@ -635,7 +659,7 @@ async function writeQuestionsWithAnswers(
         category: d.category,
         categoryKey: d.categoryKey,
         question: d.question,
-        options: d.options,
+        options: stored.options,
         explanation: d.explanation,
         level: d.level,
         topicKey: d.topicKey,
@@ -661,7 +685,7 @@ async function writeQuestionsWithAnswers(
       });
 
       await db.collection("questionAnswers").doc(hash).set({
-        correctIndex: d.correctIndex,
+        correctIndex: stored.correctIndex,
         explanationPrivate: d.explanation,
         createdAt: Date.now(),
         updatedAt: Date.now(),
@@ -748,6 +772,7 @@ async function runSeed(): Promise<{ ok: true; questionsSeeded: number }> {
     const countryCode = def.topicKey ? FLAG_CODES[def.topicKey] : undefined;
     const data = JSON.stringify([def.categoryKey, def.question, options.join("|"), def.explanation]);
     const hash = await btoaUrlSafe(data);
+    const stored = shuffleDraftOptions({ options, correctIndex: def.correctIndex });
 
     const ref = db.collection("questions").doc(hash);
     const snap = await ref.get();
@@ -757,7 +782,7 @@ async function runSeed(): Promise<{ ok: true; questionsSeeded: number }> {
       category: def.category,
       categoryKey: def.categoryKey,
       question: def.question,
-      options: options,
+      options: stored.options,
       explanation: def.explanation,
       level: def.level,
       topicKey: def.topicKey,
@@ -775,7 +800,7 @@ async function runSeed(): Promise<{ ok: true; questionsSeeded: number }> {
     });
 
     await db.collection("questionAnswers").doc(hash).set({
-      correctIndex: def.correctIndex,
+      correctIndex: stored.correctIndex,
       explanationPrivate: def.explanation,
       createdAt: Date.now(),
       updatedAt: Date.now(),

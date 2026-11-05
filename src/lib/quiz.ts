@@ -146,11 +146,60 @@ export interface Question {
   question: string;
   options: string[];
   correctIndex: number;
+  /**
+   * Firestore mode only: maps each displayed option position to its original
+   * position in the stored `questions.options` array. Answers are submitted and
+   * returned using original positions, so shuffling the display never breaks
+   * server-side validation.
+   */
+  optionOrder?: number[] | undefined;
   explanation: string;
   imageQuery?: string | undefined;
   countryCode?: string | undefined;
   topicKey?: string | undefined;
   imageUrl?: string | undefined;
+}
+
+/**
+ * Shuffle an option list once, returning the shuffled list plus the mapping
+ * from displayed position -> original position.
+ *
+ * Use the mapping for answer validation when the correct index lives elsewhere
+ * (e.g. Firestore `questionAnswers`). Never call this during render: shuffle
+ * once when the question is loaded so the displayed order stays stable.
+ */
+export function shuffleOptionsWithMapping(
+  options: string[],
+  correctIndex: number,
+): { options: string[]; order: number[]; correctIndex: number } {
+  const order = options.map((_, i) => i);
+  for (let i = order.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const tmp = order[i]!;
+    order[i] = order[j]!;
+    order[j] = tmp;
+  }
+  return {
+    options: order.map((i) => options[i]!),
+    order,
+    correctIndex: order.indexOf(correctIndex),
+  };
+}
+
+/**
+ * Randomize a question's options once and remap `correctIndex` to the new
+ * position, so scoring/validation keeps working. Returns a new object and never
+ * mutates the input.
+ */
+export function shuffleQuestionOptions<T extends { options: string[]; correctIndex: number }>(
+  question: T,
+): T {
+  const shuffled = shuffleOptionsWithMapping(question.options, question.correctIndex);
+  return {
+    ...question,
+    options: shuffled.options,
+    correctIndex: shuffled.correctIndex,
+  };
 }
 
 export function getQuestionDedupeKey(q: {
@@ -608,7 +657,7 @@ ${catGuidelines}
       "topicKey": "slug إنجليزي فريد ومحدد لموضوع السؤال (مثال: capital-peru, quote-mutanabbi, gk-black-holes, proverb-egyptian-common)",
       "question": "نص السؤال باللغة العربية الفصحى (يجب أن يكون السؤال متوقعاً لإكمال مثل معروف)",
       "options": ["خيار 1 بالعربية", "خيار 2 بالعربية", "خيار 3 بالعربية", "خيار 4 بالعربية"],
-      "correctIndex": 0,
+      "correctIndex": 2,
       "explanation": "جملة توضيحية قصيرة باللغة العربية",
       "imageQuery": "عنوان مقالة ويكيبيديا الإنجليزية فقط للتصنيفات المصورة",
       "countryCode": "رمز الدولة بحرفين صغيرين فقط لتصنيف flags مثل eg أو sa أو fr"
@@ -618,7 +667,7 @@ ${catGuidelines}
 2. اللغة العربية الفصحى إجبارية: جميع نصوص الأسئلة والخيارات والشروح يجب أن تكون باللغة العربية الفصحى واستخدام الهجاء والأسماء الشائعة في الثقافة العربية. لا تضع أي حروف أو كلمات لاتينية في خيارات الإجابة إطلاقاً.
 3. في تصنيف flags: الخيارات الأربعة يجب أن تكون أسماء الدول باللغة العربية كاملة. وممنوع وضع رموز الحروف مثل "ru" أو "es" في الخيارات.
 4. لا تذكر الإجابة الصحيحة أو تلمح لها أبداً في نص السؤال.
-5. خيار صحيح واحد فقط لكل سؤال (correctIndex بين 0 و3)، ونوّع موضع الإجابة الصحيحة بين 0 و3.
+5. خيار صحيح واحد فقط لكل سؤال (correctIndex بين 0 و3)، ووزّع موضع الإجابة الصحيحة عشوائياً بين 0 و3 في كل سؤال؛ لا تجعل الإجابة الصحيحة في الخيار الأول دائماً ولا تكرر الموضع نفسه.
 6. الخيارات الخاطئة الثلاثة يجب أن تكون من نفس الفئة والنوع وذات طول متقارب.
 7. في تصنيف flags: ضع countryCode بحرفينSmallين، ولا تضع imageQuery.
 8. في تصنيفات الصور: تأكد أن imageQuery هو عنوان مقالة ويكيبيديا الإنجليزية الدقيق بدون كلمات إضافية.
@@ -693,7 +742,10 @@ export function parseQuestions(raw: string, minCount = 1): Question[] {
   for (const item of arr) {
     const res = questionSchema.safeParse(item);
     if (res.success) {
-      result.push(sanitizeQuestion(res.data));
+      // AI models tend to put the correct answer first despite instructions.
+      // Shuffle once here and remap correctIndex before the question is stored
+      // or displayed.
+      result.push(shuffleQuestionOptions(sanitizeQuestion(res.data)));
     }
   }
 

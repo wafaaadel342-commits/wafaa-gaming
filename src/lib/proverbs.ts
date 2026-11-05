@@ -13,7 +13,7 @@
  * historical origin. Do not present folklore stories as proven history.
  */
 
-import { type Question } from "./quiz";
+import { shuffleQuestionOptions, type Question } from "./quiz";
 // Proverb dialect/origin types
 export type ProverbOrigin =
   "egyptian" | "classical" | "levantine" | "gulf" | "north-african" | "mixed" | "unknown";
@@ -345,7 +345,9 @@ export const SAMPLE_PROVERB_QUESTIONS: ProverbQuestion[] = [
  * Helper function to convert ProverbQuestion to Question (for existing quiz infrastructure).
  */
 export function proverbQuestionToQuestion(q: ProverbQuestion): Question {
-  return {
+  // Curated proverbs often share the same correct position; shuffle once per
+  // served question and remap correctIndex.
+  return shuffleQuestionOptions({
     category: q.origin,
     question: q.question,
     options: q.options,
@@ -354,7 +356,7 @@ export function proverbQuestionToQuestion(q: ProverbQuestion): Question {
     imageQuery: undefined,
     countryCode: undefined,
     topicKey: q.tags.join(","),
-  };
+  });
 }
 
 /**
