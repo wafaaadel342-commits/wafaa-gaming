@@ -16,25 +16,48 @@ import {
 } from "./words";
 
 // ============================================================================
-// CONFIGURATION: 4 FREE MODELS FOR PARALLEL GENERATION
+// CONFIGURATION: FREE MODELS FOR PARALLEL GENERATION
 // ============================================================================
 
-export const PARALLEL_FREE_MODELS = ["openrouter/free"] as const;
+export const PARALLEL_FREE_MODELS = [
+  "google/gemma-4-31b-it:free",
+  "nvidia/nemotron-3.5-lightning:free",
+  "google/gemma-4-26b-a4b-it:free",
+  "liquid/lfm-2.5-2.6b:free",
+  "openrouter/free",
+] as const;
 
-/** Forced parallel slots when only 1 model is available */
-export const FORCED_PARALLEL_SLOTS = 4;
+/** Controlled concurrency limit for free tier to prevent 429 rate limits */
+export const FORCED_PARALLEL_SLOTS = 2;
 
-const OPENROUTER_API_KEY =
-  "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";
-
-// Model failure tracking (5-minute cooldown)
-const failedModels = new Map<string, number>();
-
-function markModelFailed(modelId: string) {
-  failedModels.set(modelId, Date.now() + 5 * 60 * 1000);
+export function getOpenRouterApiKey(): string {
+  if (typeof window !== "undefined") {
+    try {
+      const raw = localStorage.getItem("tahaddi-settings");
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (typeof parsed?.openrouterKey === "string" && parsed.openrouterKey.trim()) {
+          return parsed.openrouterKey.trim();
+        }
+      }
+    } catch {
+      // ignore
+    }
+  }
+  return (
+    (typeof import.meta !== "undefined" && import.meta.env?.VITE_OPENROUTER_API_KEY) ||
+    ""
+  );
 }
 
-function isModelAvailable(modelId: string): boolean {
+// Model failure tracking (short 45s cooldown on rate limit)
+const failedModels = new Map<string, number>();
+
+export function markModelFailed(modelId: string, durationMs: number = 45 * 1000) {
+  failedModels.set(modelId, Date.now() + durationMs);
+}
+
+export function isModelAvailable(modelId: string): boolean {
   const until = failedModels.get(modelId);
   if (!until) return true;
   if (Date.now() > until) {
@@ -49,15 +72,10 @@ function isModelAvailable(modelId: string): boolean {
 // ============================================================================
 
 /**
- * Distributes N questions across 4 models dynamically.
- * Examples:
- * - 5 questions: [2, 2, 1, 0]
- * - 10 questions: [3, 3, 2, 2]
- * - 15 questions: [4, 4, 4, 3]
- * - 20 questions: [5, 5, 5, 5]
+ * Distributes N questions across models dynamically.
  */
-export function distributeQuestions(total: number, modelCount: number = 4): number[] {
-  const effectiveCount = Math.max(4, modelCount); // Always use at least 4 parallel slots
+export function distributeQuestions(total: number, modelCount: number = 2): number[] {
+  const effectiveCount = Math.max(1, modelCount);
   const distribution: number[] = [];
   const base = Math.floor(total / effectiveCount);
   const remainder = total % effectiveCount;
@@ -177,53 +195,91 @@ export function validateSentences(
 }
 
 // ============================================================================
-// SINGLE MODEL CALL WITH TIMEOUT
+// SINGLE MODEL CALL WITH RETRY & FALLBACK
 // ============================================================================
 
 async function callSingleModel(
   modelId: string,
   prompt: string,
-  timeoutMs: number = 20000,
+  timeoutMs: number = 22000,
+  maxRetries: number = 2,
 ): Promise<string> {
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), timeoutMs);
-
-  try {
-    const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${OPENROUTER_API_KEY}`,
-        "HTTP-Referer":
-          typeof window !== "undefined" ? window.location.origin : "http://localhost:3000",
-        "X-Title": "Alab-Wa-Talam Educational Games",
-      },
-      body: JSON.stringify({
-        model: modelId,
-        messages: [{ role: "user", content: prompt }],
-        temperature: 1.0,
-      }),
-      signal: controller.signal,
-    });
-
-    clearTimeout(timer);
-
-    if (!res.ok) {
-      throw new Error(`HTTP ${res.status}`);
-    }
-
-    const json = await res.json();
-    const text: string = json?.choices?.[0]?.message?.content ?? "";
-
-    if (!text.trim()) {
-      throw new Error("Empty response");
-    }
-
-    return text;
-  } catch (err) {
-    clearTimeout(timer);
-    throw err;
+  const apiKey = getOpenRouterApiKey();
+  if (!apiKey) {
+    throw new Error("No OpenRouter API key configured");
   }
+
+  let currentModel = modelId;
+  let attempts = 0;
+
+  while (attempts <= maxRetries) {
+    attempts++;
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), timeoutMs);
+
+    try {
+      const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${apiKey}`,
+          "HTTP-Referer":
+            typeof window !== "undefined" ? window.location.origin : "http://localhost:3000",
+          "X-Title": "Alab-Wa-Talam Educational Games",
+        },
+        body: JSON.stringify({
+          model: currentModel,
+          messages: [{ role: "user", content: prompt }],
+          temperature: 0.85,
+        }),
+        signal: controller.signal,
+      });
+
+      clearTimeout(timer);
+
+      if (res.status === 429) {
+        // Rate limited: cool down current model for 40 seconds
+        markModelFailed(currentModel, 40 * 1000);
+        if (attempts <= maxRetries) {
+          const fallback =
+            PARALLEL_FREE_MODELS.find((m) => m !== currentModel && isModelAvailable(m)) ||
+            "openrouter/free";
+          console.warn(
+            `[AI Rate-Limit 429] Model ${currentModel} reached rate limit. Retrying with ${fallback} in 2s...`,
+          );
+          currentModel = fallback;
+          await new Promise((resolve) => setTimeout(resolve, 2000));
+          continue;
+        }
+      }
+
+      if (!res.ok) {
+        throw new Error(`HTTP ${res.status}`);
+      }
+
+      const json = await res.json();
+      const text: string = json?.choices?.[0]?.message?.content ?? "";
+
+      if (!text.trim()) {
+        throw new Error("Empty response");
+      }
+
+      return text;
+    } catch (err: unknown) {
+      clearTimeout(timer);
+      if (attempts <= maxRetries && !(err instanceof DOMException && err.name === "AbortError")) {
+        const fallback =
+          PARALLEL_FREE_MODELS.find((m) => m !== currentModel && isModelAvailable(m)) ||
+          PARALLEL_FREE_MODELS[0];
+        currentModel = fallback;
+        await new Promise((resolve) => setTimeout(resolve, 1500));
+      } else {
+        throw err;
+      }
+    }
+  }
+
+  throw new Error("All AI retries exhausted");
 }
 
 // ============================================================================
@@ -253,11 +309,8 @@ export async function generateQuestionsParallel(
     availableModels.push(...PARALLEL_FREE_MODELS);
   }
 
-  // Ensure we use at least FORCED_PARALLEL_SLOTS concurrent slots
-  const effectiveSlots: string[] =
-    availableModels.length === 1
-      ? Array(FORCED_PARALLEL_SLOTS).fill(availableModels[0])
-      : availableModels;
+  // Use up to FORCED_PARALLEL_SLOTS distinct models to stay well within free limits
+  const effectiveSlots: string[] = availableModels.slice(0, FORCED_PARALLEL_SLOTS);
 
   const distribution = distributeQuestions(totalCount, effectiveSlots.length);
   const existingKeys = new Set<string>();
@@ -329,10 +382,7 @@ export async function generateWordsParallel(
     availableModels.push(...PARALLEL_FREE_MODELS);
   }
 
-  const effectiveSlots: string[] =
-    availableModels.length === 1
-      ? Array(FORCED_PARALLEL_SLOTS).fill(availableModels[0])
-      : availableModels;
+  const effectiveSlots: string[] = availableModels.slice(0, FORCED_PARALLEL_SLOTS);
 
   const distribution = distributeQuestions(totalCount, effectiveSlots.length);
   const existingKeys = new Set<string>();
@@ -388,10 +438,7 @@ export async function generateSentencesParallel(
     availableModels.push(...PARALLEL_FREE_MODELS);
   }
 
-  const effectiveSlots: string[] =
-    availableModels.length === 1
-      ? Array(FORCED_PARALLEL_SLOTS).fill(availableModels[0])
-      : availableModels;
+  const effectiveSlots: string[] = availableModels.slice(0, FORCED_PARALLEL_SLOTS);
 
   const distribution = distributeQuestions(totalCount, effectiveSlots.length);
   const existingKeys = new Set<string>();

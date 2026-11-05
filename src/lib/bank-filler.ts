@@ -175,8 +175,9 @@ export async function runBankFilling(
   let cycleIndex = 0;
 
   if (target === "all") {
-    // PARALLEL ALL: Generate quiz + words + sentences simultaneously in each round
-    const perCategoryBatch = 12; // 12 of each = 36 items per parallel cycle
+    // PACED ALL: Generate quiz -> words -> sentences in round-robin batches
+    // Keeps requests well below OpenRouter free rate limits
+    const perCategoryBatch = 4; // 4 items per category = 12 items per cycle
 
     while (completed < totalRequested) {
       if (isCancelled()) {
@@ -188,87 +189,119 @@ export async function runBankFilling(
 
       const remainingNeeded = totalRequested - completed;
       const thisBatchCount = Math.min(perCategoryBatch, Math.ceil(remainingNeeded / 3));
-
-      onProgress({
-        completed,
-        total: totalRequested,
-        currentTask: `توليد متوازي: أسئلة، كلمات، وجمل (${currentLevel})...`,
-      });
-
-      // Prepare avoidance sets
-      const quizBank = loadQuizBank();
-      const quizAvoid = quizBank.slice(-60).map((q) => q.topicKey || q.question);
-      const categories: CategoryKey[] = ALL_CATEGORY_KEYS;
-
-      const wordsBank = loadWordsBank();
-      const wordsAvoid = wordsBank.slice(-60).map((w) => w.word);
-
-      const sentencesBank = loadSentencesBank();
-      const sentencesAvoid = sentencesBank.slice(-50).map((s) => s.sentence);
-
-      // Launch all 3 category requests simultaneously
-      const [quizResult, wordsResult, sentencesResult] = await Promise.allSettled([
-        // 1. Quiz
-        generateQuestionsParallel(
-          (c) => buildPrompt(currentLevel as Level, c, categories, [], quizAvoid),
-          thisBatchCount,
-        ),
-        // 2. Words
-        generateWordsParallel(
-          (c) => buildWordsPrompt(currentLevel as WordLevel, c, wordsAvoid),
-          thisBatchCount,
-          currentLevel as WordLevel,
-        ),
-        // 3. Sentences
-        generateSentencesParallel(
-          (c) => buildSentencesPrompt(currentLevel as SentenceLevel, c, sentencesAvoid),
-          thisBatchCount,
-          currentLevel as SentenceLevel,
-        ),
-      ]);
-
       let batchAdded = 0;
 
-      // Save Quiz questions
-      if (quizResult.status === "fulfilled" && quizResult.value.length > 0) {
-        const bankItems = quizResult.value.map((q) => questionToBankItem(q, currentLevel as Level));
-        addQuestionsToBank(bankItems);
-        batchAdded += bankItems.length;
+      // 1. Quiz Questions
+      if (!isCancelled() && completed < totalRequested) {
+        onProgress({
+          completed,
+          total: totalRequested,
+          currentTask: `توليد أسئلة المعرفة (${currentLevel})...`,
+        });
+
+        try {
+          const quizBank = loadQuizBank();
+          const quizAvoid = quizBank.slice(-60).map((q) => q.topicKey || q.question);
+          const categories: CategoryKey[] = ALL_CATEGORY_KEYS;
+
+          const quizQuestions = await generateQuestionsParallel(
+            (c) => buildPrompt(currentLevel as Level, c, categories, [], quizAvoid),
+            thisBatchCount,
+          );
+
+          if (quizQuestions.length > 0) {
+            const bankItems = quizQuestions.map((q) => questionToBankItem(q, currentLevel as Level));
+            addQuestionsToBank(bankItems);
+            batchAdded += bankItems.length;
+            completed += bankItems.length;
+          }
+        } catch (err) {
+          console.warn("Quiz batch in all-target had error (continuing):", err);
+        }
       }
 
-      // Save Words
-      if (wordsResult.status === "fulfilled" && wordsResult.value.length > 0) {
-        const bankItems = wordsResult.value.map((w) =>
-          rawWordToBankItem(w, currentLevel as WordLevel),
-        );
-        addWordsToBank(bankItems);
-        batchAdded += bankItems.length;
+      // Small pause between categories to prevent rate limits
+      if (completed < totalRequested && !isCancelled()) {
+        await new Promise((resolve) => setTimeout(resolve, 800));
       }
 
-      // Save Sentences
-      if (sentencesResult.status === "fulfilled" && sentencesResult.value.length > 0) {
-        const bankItems = sentencesResult.value.map(rawSentenceToBankItem);
-        addSentencesToBank(bankItems);
-        batchAdded += bankItems.length;
+      // 2. Words
+      if (!isCancelled() && completed < totalRequested) {
+        onProgress({
+          completed,
+          total: totalRequested,
+          currentTask: `توليد كلمات (${currentLevel})...`,
+        });
+
+        try {
+          const wordsBank = loadWordsBank();
+          const wordsAvoid = wordsBank.slice(-60).map((w) => w.word);
+
+          const words = await generateWordsParallel(
+            (c) => buildWordsPrompt(currentLevel as WordLevel, c, wordsAvoid),
+            thisBatchCount,
+            currentLevel as WordLevel,
+          );
+
+          if (words.length > 0) {
+            const bankItems = words.map((w) =>
+              rawWordToBankItem(w, currentLevel as WordLevel),
+            );
+            addWordsToBank(bankItems);
+            batchAdded += bankItems.length;
+            completed += bankItems.length;
+          }
+        } catch (err) {
+          console.warn("Words batch in all-target had error (continuing):", err);
+        }
       }
 
-      if (batchAdded === 0) {
-        console.warn("Parallel cycle produced 0 items, retrying next cycle...");
-        // If consecutive complete failure, wait slightly
-        await new Promise((resolve) => setTimeout(resolve, 1500));
-      } else {
-        completed += batchAdded;
+      // Small pause between categories
+      if (completed < totalRequested && !isCancelled()) {
+        await new Promise((resolve) => setTimeout(resolve, 800));
+      }
+
+      // 3. Sentences
+      if (!isCancelled() && completed < totalRequested) {
+        onProgress({
+          completed,
+          total: totalRequested,
+          currentTask: `توليد جمل (${currentLevel})...`,
+        });
+
+        try {
+          const sentencesBank = loadSentencesBank();
+          const sentencesAvoid = sentencesBank.slice(-50).map((s) => s.sentence);
+
+          const sentences = await generateSentencesParallel(
+            (c) => buildSentencesPrompt(currentLevel as SentenceLevel, c, sentencesAvoid),
+            thisBatchCount,
+            currentLevel as SentenceLevel,
+          );
+
+          if (sentences.length > 0) {
+            const bankItems = sentences.map(rawSentenceToBankItem);
+            addSentencesToBank(bankItems);
+            batchAdded += bankItems.length;
+            completed += bankItems.length;
+          }
+        } catch (err) {
+          console.warn("Sentences batch in all-target had error (continuing):", err);
+        }
       }
 
       onProgress({
         completed: Math.min(completed, totalRequested),
         total: totalRequested,
-        currentTask: `تم حفظ ${batchAdded} عنصراً متوازياً في البنك. الاستعداد للدفعة التالية...`,
+        currentTask: `تم حفظ ${batchAdded} عنصراً في البنك. الاستعداد للمستوى التالي...`,
       });
 
-      // Brief breather between cycles
-      if (completed < totalRequested && !isCancelled()) {
-        await new Promise((resolve) => setTimeout(resolve, 800));
+      if (batchAdded === 0) {
+        // If nothing was generated in this cycle, wait 3 seconds before next cycle
+        await new Promise((resolve) => setTimeout(resolve, 3000));
+      } else if (completed < totalRequested && !isCancelled()) {
+        // Normal breather between cycles
+        await new Promise((resolve) => setTimeout(resolve, 1200));
       }
     }
 
@@ -276,7 +309,7 @@ export async function runBankFilling(
   }
 
   // SINGLE TARGET MODE (quiz, words, or sentences)
-  const batchSize = 15;
+  const batchSize = 6;
   while (completed < totalRequested) {
     if (isCancelled()) {
       return { added: completed };

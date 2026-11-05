@@ -64,7 +64,13 @@ class SoundManager {
   }
 
   public unlock() {
-    this.getContext();
+    try {
+      if (this.ctx && this.ctx.state === "suspended") {
+        void this.ctx.resume().catch(() => {});
+      }
+    } catch {
+      // ignore
+    }
   }
 
   private getContext(): AudioContext | null {
@@ -74,12 +80,16 @@ class SoundManager {
         window.AudioContext ||
         (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
       if (AudioCtx) {
-        this.ctx = new AudioCtx();
-        this.initReverb(this.ctx);
+        try {
+          this.ctx = new AudioCtx();
+          this.initReverb(this.ctx);
+        } catch {
+          // ignore
+        }
       }
     }
     if (this.ctx && this.ctx.state === "suspended") {
-      void this.ctx.resume();
+      void this.ctx.resume().catch(() => {});
     }
     return this.ctx;
   }

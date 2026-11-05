@@ -212,8 +212,9 @@ const SETUP_KEY = "tahaddi-setup";
 const BEST_KEY = "tahaddi-best";
 export const THEME_KEY = "tahaddi-theme";
 
-// Hardcoded OpenRouter API key for automatic operation
-export const DEFAULT_OPENROUTER_KEY = "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";
+// Default OpenRouter API key from environment if available
+export const DEFAULT_OPENROUTER_KEY =
+  (typeof import.meta !== "undefined" && import.meta.env?.VITE_OPENROUTER_API_KEY) || "";
 
 export const DEFAULT_SETTINGS: Settings = {
   openrouterKey: DEFAULT_OPENROUTER_KEY,
