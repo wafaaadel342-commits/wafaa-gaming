@@ -40,6 +40,12 @@ const CATEGORY_ICONS: Record<CategoryKey, typeof BookOpen> = {
   landmarks: Landmark,
   aerial_city: Plane,
   general_knowledge: BookOpen,
+  egyptian: BookOpen,
+  classical: BookOpen,
+  levantine: Quote,
+  gulf: Quote,
+  "north-african": BookOpen,
+  mixed: BookOpen,
 };
 
 interface Props {

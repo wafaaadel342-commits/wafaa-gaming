@@ -15,14 +15,21 @@ import {
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { markItemSeen } from "@/lib/anti-repeat";
+import { submitFirestoreAnswer } from "@/lib/fb-answers";
 import { InteractiveLoader } from "./InteractiveLoader";
 import { preloadImage } from "@/lib/images";
 import { fetchInitialBatch, fetchRemainingBatch } from "@/lib/providers";
+import {
+  fetchQuestionsBatch,
+  prefetchQuestions,
+  requestBackgroundGeneration,
+} from "@/lib/question-provider";
 import {
   CATEGORIES,
   ERROR_MESSAGES,
   formatArabicOption,
   getQuestionDedupeKey,
+  isFirestoreMode,
   LEVELS,
   QuizError,
   type CategoryKey,
@@ -52,6 +59,7 @@ interface Props {
 export function QuizScreen({ level, settings, setupOptions, onFinish, onExit }: Props) {
   const targetTotal = setupOptions.questionCount;
   const categories = setupOptions.categories;
+  const firestoreMode = isFirestoreMode(settings);
 
   const [questions, setQuestions] = useState<Question[] | null>(null);
   const [phase, setPhase] = useState<Phase>("initial_loading");
@@ -64,6 +72,8 @@ export function QuizScreen({ level, settings, setupOptions, onFinish, onExit }: 
   const [missed, setMissed] = useState<Missed[]>([]);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [lightboxOpen, setLightboxOpen] = useState(false);
+  /** Server-revealed correct indices for Firestore questions (by question index). */
+  const [revealedAnswers, setRevealedAnswers] = useState<Record<number, number>>({});
 
   const initialLoadingRef = useRef(false);
   const bgFetchTriggeredRef = useRef(false);
@@ -89,24 +99,39 @@ export function QuizScreen({ level, settings, setupOptions, onFinish, onExit }: 
 
       setBgStatus("loading");
       try {
-        const remainingBatch = await fetchRemainingBatch(
-          level,
-          settings,
-          remainingNeeded,
-          categories,
-          currentQuestions,
-          // Progressive callback: append new questions as they arrive
-          (batch: Question[]) => {
-            setQuestions((prev) => {
-              if (!prev) return batch;
-              const existingKeys = new Set(prev.map(getQuestionDedupeKey));
-              const newItems = batch.filter((q) => !existingKeys.has(getQuestionDedupeKey(q)));
-              if (newItems.length === 0) return prev;
-              const combined = [...prev, ...newItems];
-              return combined.slice(0, targetTotal);
-            });
-          },
-        );
+        const remainingBatch = firestoreMode
+          ? await prefetchQuestions(
+              { level, categories, count: targetTotal },
+              settings,
+              currentQuestions,
+              (batch: Question[]) => {
+                setQuestions((prev) => {
+                  if (!prev) return batch;
+                  const existingKeys = new Set(prev.map(getQuestionDedupeKey));
+                  const newItems = batch.filter((q) => !existingKeys.has(getQuestionDedupeKey(q)));
+                  if (newItems.length === 0) return prev;
+                  return [...prev, ...newItems].slice(0, targetTotal);
+                });
+              },
+            )
+          : await fetchRemainingBatch(
+              level,
+              settings,
+              remainingNeeded,
+              categories,
+              currentQuestions,
+              // Progressive callback: append new questions as they arrive
+              (batch: Question[]) => {
+                setQuestions((prev) => {
+                  if (!prev) return batch;
+                  const existingKeys = new Set(prev.map(getQuestionDedupeKey));
+                  const newItems = batch.filter((q) => !existingKeys.has(getQuestionDedupeKey(q)));
+                  if (newItems.length === 0) return prev;
+                  const combined = [...prev, ...newItems];
+                  return combined.slice(0, targetTotal);
+                });
+              },
+            );
         if (remainingBatch.length > 0) {
           setBgStatus("ready");
         } else {
@@ -116,7 +141,7 @@ export function QuizScreen({ level, settings, setupOptions, onFinish, onExit }: 
         setBgStatus("error");
       }
     },
-    [categories, level, settings, targetTotal],
+    [categories, firestoreMode, level, settings, targetTotal],
   );
 
   // Step 1: Initial small batch load (fast start with 2 usable questions)
@@ -130,12 +155,18 @@ export function QuizScreen({ level, settings, setupOptions, onFinish, onExit }: 
     setBgStatus("idle");
 
     try {
-      const initial = await fetchInitialBatch(level, settings, categories);
+      const initial = firestoreMode
+        ? await fetchQuestionsBatch(
+            { level, categories, count: Math.min(3, targetTotal) },
+            settings,
+          )
+        : await fetchInitialBatch(level, settings, categories);
       setQuestions(initial);
       setIndex(0);
       setScore(0);
       setMissed([]);
       setSelected(null);
+      setRevealedAnswers({});
       setTimeLeft(TIMER);
       setImageLoaded(false);
       setPhase("playing");
@@ -146,13 +177,20 @@ export function QuizScreen({ level, settings, setupOptions, onFinish, onExit }: 
         bgFetchTriggeredRef.current = true;
         void triggerBackgroundFetch(initial);
       }
+
+      // Step 3 (Firestore mode only): fire-and-forget inventory refill so new
+      // approved questions are generated while the player is answering.
+      // This never blocks the UI and failures are ignored.
+      if (firestoreMode) {
+        requestBackgroundGeneration(level, categories);
+      }
     } catch (e) {
       setError(e instanceof QuizError ? e.code : "SERVER");
       setPhase("initial_error");
     } finally {
       initialLoadingRef.current = false;
     }
-  }, [categories, level, settings, triggerBackgroundFetch]);
+  }, [categories, firestoreMode, level, settings, targetTotal, triggerBackgroundFetch]);
 
   useEffect(() => {
     void startInitialLoad();
@@ -294,6 +332,45 @@ export function QuizScreen({ level, settings, setupOptions, onFinish, onExit }: 
         sound.playClick();
       }
 
+      // Firestore questions: correctness is verified server-side. The answer
+      // never exists in the browser before this call.
+      if (firestoreMode && q.id) {
+        void submitFirestoreAnswer(q.id, choice).then((result) => {
+          // -1 marks "resolved without a server answer" so the round can
+          // continue gracefully if the function is unreachable.
+          if (!result) {
+            setRevealedAnswers((prev) => ({ ...prev, [index]: -1 }));
+            return;
+          }
+
+          setRevealedAnswers((prev) => ({ ...prev, [index]: result.correctIndex }));
+
+          if (result.isCorrect) {
+            sound.playCorrect();
+            setScore((s) => s + LEVELS[level].points);
+
+            if (autoAdvanceTimerRef.current) {
+              clearTimeout(autoAdvanceTimerRef.current);
+            }
+            autoAdvanceTimerRef.current = setTimeout(() => {
+              advanceToNext();
+            }, 1200);
+          } else {
+            if (choice !== -1) sound.playWrong();
+            const categoryLabel = CATEGORIES[q.category as CategoryKey]?.label || q.category;
+            const entry: Missed = {
+              question: q.question,
+              correct: formatArabicOption(q.options[result.correctIndex] ?? ""),
+              category: categoryLabel,
+            };
+            const chosen = choice >= 0 ? formatArabicOption(q.options[choice] ?? "") : undefined;
+            if (chosen) entry.chosen = chosen;
+            setMissed((m) => [...m, entry]);
+          }
+        });
+        return;
+      }
+
       if (choice === q.correctIndex) {
         sound.playCorrect();
         setScore((s) => s + LEVELS[level].points);
@@ -320,7 +397,7 @@ export function QuizScreen({ level, settings, setupOptions, onFinish, onExit }: 
         setMissed((m) => [...m, entry]);
       }
     },
-    [advanceToNext, index, level, phase, questions],
+    [advanceToNext, firestoreMode, index, level, phase, questions],
   );
 
   // Timer countdown: starts ONLY when question and image are visible
@@ -437,7 +514,10 @@ export function QuizScreen({ level, settings, setupOptions, onFinish, onExit }: 
   if (!q) return null;
 
   const answered = phase === "answered";
-  const isCorrectAnswer = selected === q.correctIndex;
+  const resolvedCorrectIndex = revealedAnswers[index] ?? q.correctIndex;
+  const awaitingServer =
+    firestoreMode && Boolean(q.id) && revealedAnswers[index] === undefined && selected !== null;
+  const isCorrectAnswer = selected !== null && selected === resolvedCorrectIndex;
   const effectiveTotal =
     bgStatus === "ready" || bgStatus === "error" ? questions.length : targetTotal;
   const isLastQuestion = index + 1 >= effectiveTotal;
@@ -448,7 +528,7 @@ export function QuizScreen({ level, settings, setupOptions, onFinish, onExit }: 
     if (!answered) {
       return "border-2 border-border bg-card hover:border-primary hover:bg-primary/5 hover:shadow-md active:scale-[0.985] cursor-pointer";
     }
-    if (i === q.correctIndex) {
+    if (i === resolvedCorrectIndex) {
       return "bg-easy text-easy-foreground border-2 border-easy animate-pop font-bold shadow-lg shadow-easy/25";
     }
     if (i === selected) {
@@ -587,7 +667,7 @@ export function QuizScreen({ level, settings, setupOptions, onFinish, onExit }: 
                   <span className="flex items-center gap-3">
                     <span
                       className={`flex size-7 shrink-0 items-center justify-center rounded-lg text-xs font-bold ${
-                        answered && i === q.correctIndex
+                        answered && i === resolvedCorrectIndex
                           ? "bg-easy-foreground/20"
                           : answered && i === selected
                             ? "bg-hard-foreground/20"
@@ -598,8 +678,10 @@ export function QuizScreen({ level, settings, setupOptions, onFinish, onExit }: 
                     </span>
                     <span>{formatted}</span>
                   </span>
-                  {answered && i === q.correctIndex && <CheckCircle2 className="size-5 shrink-0" />}
-                  {answered && i === selected && i !== q.correctIndex && (
+                  {answered && i === resolvedCorrectIndex && (
+                    <CheckCircle2 className="size-5 shrink-0" />
+                  )}
+                  {answered && i === selected && i !== resolvedCorrectIndex && (
                     <XCircle className="size-5 shrink-0" />
                   )}
                 </motion.button>
@@ -608,7 +690,7 @@ export function QuizScreen({ level, settings, setupOptions, onFinish, onExit }: 
           </div>
 
           {/* Explanation & Feedback */}
-          {answered && (
+          {answered && !awaitingServer && (
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -628,7 +710,7 @@ export function QuizScreen({ level, settings, setupOptions, onFinish, onExit }: 
           )}
 
           {/* Next Button: Only shown on wrong answer or timeout */}
-          {answered && !isCorrectAnswer && (
+          {answered && !isCorrectAnswer && !awaitingServer && (
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
               <Button
                 size="lg"

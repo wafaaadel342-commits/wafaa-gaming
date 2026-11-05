@@ -10,12 +10,18 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ProverbsRouteImport } from './routes/proverbs'
 import { Route as QuizRouteImport } from './routes/quiz'
 import { Route as WordsRouteImport } from './routes/words'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProverbsRoute = ProverbsRouteImport.update({
+  id: '/proverbs',
+  path: '/proverbs',
   getParentRoute: () => rootRouteImport,
 } as any)
 const QuizRoute = QuizRouteImport.update({
@@ -31,30 +37,34 @@ const WordsRoute = WordsRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/proverbs': typeof ProverbsRoute
   '/quiz': typeof QuizRoute
   '/words': typeof WordsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/proverbs': typeof ProverbsRoute
   '/quiz': typeof QuizRoute
   '/words': typeof WordsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/proverbs': typeof ProverbsRoute
   '/quiz': typeof QuizRoute
   '/words': typeof WordsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/quiz' | '/words'
+  fullPaths: '/' | '/proverbs' | '/quiz' | '/words'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/quiz' | '/words'
-  id: '__root__' | '/' | '/quiz' | '/words'
+  to: '/' | '/proverbs' | '/quiz' | '/words'
+  id: '__root__' | '/' | '/proverbs' | '/quiz' | '/words'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ProverbsRoute: typeof ProverbsRoute
   QuizRoute: typeof QuizRoute
   WordsRoute: typeof WordsRoute
 }
@@ -66,6 +76,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/proverbs': {
+      id: '/proverbs'
+      path: '/proverbs'
+      fullPath: '/proverbs'
+      preLoaderRoute: typeof ProverbsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/quiz': {
@@ -87,6 +104,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ProverbsRoute: ProverbsRoute,
   QuizRoute: QuizRoute,
   WordsRoute: WordsRoute,
 }

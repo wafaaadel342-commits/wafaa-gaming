@@ -639,6 +639,26 @@ export function WordsPlayScreen({ level, words, onFinish, onHome }: Props) {
             <SkipForward className="size-3.5" />
             <span>تخطّي</span>
           </Button>
+
+          {/* Retry for wrong answers */}
+          {status === "wrong" && (
+            <Button
+              type="button"
+              variant="destructive"
+              size="sm"
+              onClick={() => {
+                // Reset the current word state
+                setStatus("playing");
+                // Re-initialize the word with fresh slots
+                if (currentWord) initWord(currentWord);
+              }}
+              className="rounded-xl border-destructive text-destructive cursor-pointer text-xs gap-1.5 px-3 py-2"
+            >
+              <RotateCcw className="size-3.5" />
+              <span>إعادة المحاولة</span>
+            </Button>
+          )}
+
         </div>
 
         {/* Scrambled Letter Tiles in Tray */}

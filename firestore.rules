@@ -1,0 +1,160 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // --------------------------------------------------------------------
+    // Helper: is unauthenticated client (no Firebase Auth on app yet).
+    // --------------------------------------------------------------------
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      // Admin role granted via Firebase Auth Custom Claims or a users/{uid}.role doc.
+      // The client-side role is never trusted; custom claims/doc are verified here.
+      return isAuthenticated()
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    // --------------------------------------------------------------------
+    // categories/{slug}
+    // Readable by everyone; writable only by admin.
+    // --------------------------------------------------------------------
+    match /categories/{slug} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // --------------------------------------------------------------------
+    // questionSources/{sourceId}
+    // Sources are read for attribution display; creation/modification is admin only.
+    // --------------------------------------------------------------------
+    match /questionSources/{sourceId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // --------------------------------------------------------------------
+    // questions/{questionId}
+    // Client-visible document. NEVER contains correct_index or private explanation.
+    // Clients may only READ approved questions.
+    // --------------------------------------------------------------------
+    match /questions/{questionId} {
+      // Read: approved questions only.
+      allow read: if resource != null && resource.data.status == 'approved';
+
+      // Write: never from a client. Only the Admin SDK (Cloud Functions/seed)
+      // writes questions, and Admin SDK bypasses these rules.
+      allow write: if false;
+    }
+
+    // --------------------------------------------------------------------
+    // questionAnswers/{questionId}
+    // PRIVATE: contains correct_index + private explanation.
+    // BLOCK ALL client read/write. Server-side access happens through
+    // Firebase Admin SDK inside Cloud Functions, which bypasses rules —
+    // authorization is enforced inside each function instead.
+    // --------------------------------------------------------------------
+    match /questionAnswers/{questionId} {
+      allow read: if false;
+      allow write: if false;
+    }
+
+    // --------------------------------------------------------------------
+    // questionDedup/{contentHash}
+    // Unique-lock docs used by workers to prevent duplicate imports.
+    // --------------------------------------------------------------------
+    match /questionDedup/{contentHash} {
+      allow read: if false;
+      allow write: if isAdmin();
+    }
+
+    // --------------------------------------------------------------------
+    // generationJobs/{jobId}
+    // Internal tracking; not visible to players.
+    // --------------------------------------------------------------------
+    match /generationJobs/{jobId} {
+      allow read: if false;
+      allow write: if false;
+    }
+
+    // --------------------------------------------------------------------
+    // generationBatches/{batchId}
+    // Internal batch tracking; players must not see it.
+    // --------------------------------------------------------------------
+    match /generationBatches/{batchId} {
+      allow read: if false;
+      allow write: if false;
+    }
+
+    // --------------------------------------------------------------------
+    // questionUsage/{usageId}
+    // Usage analytics; players cannot read/write.
+    // --------------------------------------------------------------------
+    match /questionUsage/{usageId} {
+      allow read: if false;
+      allow write: if false;
+    }
+
+    // --------------------------------------------------------------------
+    // questionReports/{reportId}
+    // Players can submit reports for questions they saw in their own session.
+    // Rate-limited inside the Cloud Function that creates them.
+    // --------------------------------------------------------------------
+    match /questionReports/{reportId} {
+      allow read: if false;
+      allow create: if isAuthenticated();
+      allow update, delete: if request.auth.uid == resource.data.player_id
+                            || isAdmin();
+    }
+
+    // --------------------------------------------------------------------
+    // questionReviewLogs/{logId}
+    // Audit log of question status changes — server/audit only.
+    // --------------------------------------------------------------------
+    match /questionReviewLogs/{logId} {
+      allow read: if false;
+      allow write: if false;
+    }
+
+    // --------------------------------------------------------------------
+    // gameSessions/{sessionId}  (preserve existing structure where used)
+    // Players own their sessions; may read their own + write own answers.
+    // Answer correctness is resolved server-side (never from client).
+    // --------------------------------------------------------------------
+    match /gameSessions/{sessionId} {
+      allow read: if isAuthenticated()
+                   && (resource != null ? resource.data.player_id == request.auth.uid : false);
+      allow create: if isAuthenticated();
+      allow update: if isAuthenticated()
+                    && (resource == null || resource.data.player_id == request.auth.uid);
+      allow delete: if isAuthenticated()
+                    && (resource == null || resource.data.player_id == request.auth.uid);
+
+      // Subcollection: items shown in the session. Players may read their own items.
+      match /items/{itemId} {
+        allow read: if isAuthenticated()
+                     && (resource != null ? resource.data.session_id == sessionId : false);
+        allow create: if isAuthenticated();
+        allow update: if isAuthenticated()
+                      && (resource == null || resource.data.session_id == sessionId);
+        allow delete: if isAuthenticated()
+                      && (resource == null || resource.data.session_id == sessionId);
+      }
+    }
+
+    // --------------------------------------------------------------------
+    // privateGameSessions/{sessionId}/answers/{itemId}
+    // CORRECT-ANSWER STORAGE: players can NEVER read or write this.
+    // Correctness is validated inside Cloud Functions using Admin SDK.
+    // --------------------------------------------------------------------
+    match /privateGameSessions/{sessionId} {
+      allow read: if false;
+
+      match /answers/{itemId} {
+        allow read: if false;
+        allow write: if false;
+      }
+    }
+  }
+}

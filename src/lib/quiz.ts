@@ -13,7 +13,13 @@ export type CategoryKey =
   | "football_players"
   | "landmarks"
   | "aerial_city"
-  | "general_knowledge";
+  | "general_knowledge"
+  | "egyptian"
+  | "classical"
+  | "levantine"
+  | "gulf"
+  | "north-african"
+  | "mixed";
 
 export interface CategoryInfo {
   key: CategoryKey;
@@ -57,7 +63,7 @@ export const CATEGORIES: Record<CategoryKey, CategoryInfo> = {
     key: "football_players",
     label: "لاعبو كرة القدم",
     hasImage: true,
-    description: "صورة لاعب كرة قدم وتخمينه",
+    description: "صورة لاعب كرة القدم وتخمينه",
   },
   landmarks: {
     key: "landmarks",
@@ -77,6 +83,42 @@ export const CATEGORIES: Record<CategoryKey, CategoryInfo> = {
     hasImage: false,
     description: "تاريخ، جغرافيا، علوم، أدب، وتكنولوجيا",
   },
+  egyptian: {
+    key: "egyptian",
+    label: "أمثال مصرية",
+    hasImage: false,
+    description: "أشهر الأمثال والحكم الشعبية المصرية",
+  },
+  classical: {
+    key: "classical",
+    label: "أمثال عربية",
+    hasImage: false,
+    description: "أمثال عربية فصحى كلاسيكية",
+  },
+  levantine: {
+    key: "levantine",
+    label: "أمثال شامية",
+    hasImage: false,
+    description: "أشهر الأمثال السورية المصرية والشتامية",
+  },
+  gulf: {
+    key: "gulf",
+    label: "أمثال خليجية",
+    hasImage: false,
+    description: "أشهر الأمثال الخليجية من بلاد الخليج",
+  },
+  "north-african": {
+    key: "north-african",
+    label: "أمثال شمال أفريقيا",
+    hasImage: false,
+    description: "أشهر الأمثال من بلاد المغرب والجزيرة العربية",
+  },
+  mixed: {
+    key: "mixed",
+    label: "مختلط",
+    hasImage: false,
+    description: "مجموعة مختلطة من الأمثال العربية",
+  },
 };
 
 export const ALL_CATEGORY_KEYS: CategoryKey[] = [
@@ -89,9 +131,17 @@ export const ALL_CATEGORY_KEYS: CategoryKey[] = [
   "landmarks",
   "aerial_city",
   "general_knowledge",
+  "egyptian",
+  "classical",
+  "levantine",
+  "gulf",
+  "north-african",
+  "mixed",
 ];
 
 export interface Question {
+  /** Firestore document id (present only for database-backed questions). */
+  id?: string;
   category: CategoryKey | string;
   question: string;
   options: string[];
@@ -140,6 +190,15 @@ export interface Settings {
   volume: number;
   muted: boolean;
   lastUsedModel?: string | undefined;
+  /**
+   * Question delivery backend.
+   *  - "localStorage": the current offline-first behavior (local bank + OpenRouter
+   *    parallel generation). Default and safest for existing users.
+   *  - "firestore":    database-first: approved questions are read from Firebase
+   *    Cloud Firestore. OpenRouter continues generating in the background.
+   *    Opt-in; requires Firestore categories + questions to be seeded.
+   */
+  questionBackend: "localStorage" | "firestore";
 }
 
 export interface QuizSetupOptions {
@@ -223,11 +282,12 @@ export const DEFAULT_SETTINGS: Settings = {
   openrouterModels: [],
   volume: 80,
   muted: false,
+  questionBackend: "localStorage",
 };
 
 export const DEFAULT_SETUP_OPTIONS: QuizSetupOptions = {
   questionCount: 10,
-  categories: ALL_CATEGORY_KEYS,
+  categories: ["egyptian", "classical", "levantine", "gulf", "north-african", "mixed"],
 };
 
 export function loadSettings(): Settings {
@@ -249,6 +309,10 @@ export function loadSettings(): Settings {
     const muted = typeof parsed["muted"] === "boolean" ? parsed["muted"] : false;
     const lastUsedModel =
       typeof parsed["lastUsedModel"] === "string" ? parsed["lastUsedModel"] : undefined;
+    const questionBackend =
+      parsed["questionBackend"] === "localStorage" || parsed["questionBackend"] === "firestore"
+        ? (parsed["questionBackend"] as "localStorage" | "firestore")
+        : "localStorage";
 
     return {
       openrouterKey,
@@ -256,6 +320,7 @@ export function loadSettings(): Settings {
       volume,
       muted,
       lastUsedModel,
+      questionBackend,
     };
   } catch {
     return DEFAULT_SETTINGS;
@@ -340,7 +405,6 @@ export const FOCUS_SUBTOPICS: Record<CategoryKey, string[]> = {
     "capital-caribbean",
     "capital-scandinavia",
     "capital-balkans",
-    "capital-central-europe",
     "capital-caucasus",
     "capital-central-asia",
     "capital-southeast-asia",
@@ -431,6 +495,35 @@ export const FOCUS_SUBTOPICS: Record<CategoryKey, string[]> = {
     "gk-inventions-industrial-revolution",
     "gk-biology-flora-fauna",
   ],
+  egyptian: [
+    "proverb-egyptian-common",
+    "proverb-egyptian-humorous",
+    "proverb-egyptian-agricultural",
+  ],
+  classical: [
+    "proverb-classical-common",
+    "proverb-classical-wisdom",
+    "proverb-classical-ethical",
+  ],
+  levantine: [
+    "proverb-levantine-common",
+    "proverb-levantine-familial",
+    "proverb-levantine-agricultural",
+  ],
+  gulf: [
+    "proverb-gulf-common",
+    "proverb-gulf-maritime",
+    "proverb-gulf-desert",
+  ],
+  "north-african": [
+    "proverb-northafrican-common",
+    "proverb-northafrican-bedouin",
+    "proverb-northafrican-urban",
+  ],
+  mixed: [
+    "proverb-mixed-general",
+    "proverb-mixed-comparative",
+  ],
 };
 
 // ---------- Prompt ----------
@@ -454,7 +547,7 @@ export function buildPrompt(
         case "capitals":
           return `- عواصم الدول ("capitals"): سؤال نصي مثل: "ما هي عاصمة دولة كذا؟". الخيارات 4 عواصم مدن باللغة العربية. بدون صور. topicKey: اسم الدولة أو العاصمة بالإنجليزية slug (مثال: "capital-spain").`;
         case "flags":
-          return `- أعلام الدول ("flags"): سؤال عن علم دولة مثل: "علم أي دولة هذا؟". الخيارات الأربعة يجب أن تكون أسماء الدول باللغة العربية الفصحى حصراً (مثال: روسيا، إسبانيا، إيطاليا، البرتغال). يُمنع منعاً باتاً كتابة رموز حروف مثل ru أو es أو it كخيارات. وضع رمز الدولة المكون من حرفين صغيرين فقط في خاصية countryCode بنظام ISO 3166-1 alpha-2 lowercase لجلب صورة العلم (مثال: "sa", "eg", "fr", "es", "ru"). لا تضع imageQuery.`;
+          return `- أعلام الدول ("flags"): سؤال عن علم دولة مثل: "علم أي دولة هذا؟". الخيارات الأربعة يجب أن تكون أسماء الدول باللغة العربية الفصحى حصراً (مثال: روسيا، إسبانيا، إيطاليا، البرتغال). يُمنع منعاً باتى كتابة رموز حروف مثل ru أو es أو it كخيارات. وضع رمز الدولة المكون من حرفين صغيرين فقط في خاصية countryCode بنظام ISO 3166-1 alpha-2 lowercase لجلب صورة العلم (مثال: "sa", "eg", "fr", "es", "ru"). لا تضع imageQuery.`;
         case "quotes":
           return `- أقوال مأثورة ("quotes"): "من قائل هذه العبارة: '...'؟" لأقوال مشهورة وموثقة يقيناً لحكماء وأدباء وفلاسفة وعلماء قدامى. الخيارات 4 أسماء شخصيات فكرية باللغة العربية. بدون صور. topicKey: اسم القائل بالإنجليزية (مثال: "al-mutanabbi").`;
         case "historical_figures":
@@ -468,7 +561,19 @@ export function buildPrompt(
         case "aerial_city":
           return `- مدينة من الأعلى ("aerial_city"): سؤال للتعرف على مدينة من صورة جوية مثل: "أي مدينة تظهر في هذه الصورة الجوية؟". الخيارات 4 مدن باللغة العربية. imageQuery: اسم المدينة متبوعاً بـ aerial view بالإنجليزية (مثال: "Dubai aerial view", "Paris aerial view", "Cairo aerial view"). topicKey: اسم المدينة بالإنجليزية.`;
         case "general_knowledge":
-          return `- ثقافة عامة ("general_knowledge"): سؤال نصي متعدد الخيارات في التاريخ أو الجغرافيا أو العلوم أو الأدب أو الرياضة أو التكنولوجيا. خيارات متجانسة باللغة العربية. بدون صور. topicKey: موضوع السؤال slug (مثال: "gk-photosynthesis").`;
+          return `- Cultura General ("general_knowledge"): سؤال نصي متعدد الخيارات في التاريخ أو الجغرافيا أو العلوم أو الأدب أو الرياضة أو التكنولوجيا. خيارات متجانسة باللغة العربية. بدون صور. topicKey: موضوع السؤال slug (مثال: "gk-photosynthesis").`;
+        case "egyptian":
+          return `- أمثال مصرية ("egyptian"): سؤال لاستكمال مثل شعبي مصري مثل: "اكمل مثل: '...'. الخيارات 4 completions بالعربية الفصحى. قد تكون الإجابة الصحيحة من نفس اللهجة المصرية أو متعارف عليها. topicKey: اسم مثل بالإنجليزية (مثال: "proverb-egyptian-common").`;
+        case "classical":
+          return `- أمثال عربية ("classical"): سؤال لاستكمال مثل عربي فصيح مثل: "اكمل مثل: '...'. الخيارات 4 completions بالعربية الفصحى. الإجابات تعتمد على الترسبات اللغوية المشتركة. topicKey: اسم مثل بالإنجليزية (مثال: "proverb-classical-common").`;
+        case "levantine":
+          return `- أمثال شامية ("levantine"): سؤال لاستكمال مثل شعبي شامي مثل: "اكمل مثل: '...'. الخيارات 4 completions بالعربية. اللهجة الشامية معروفة بتنوع الأمثال. topicKey: اسم مثل بالإنجليزية (مثال: "proverb-levantine-common").`;
+        case "gulf":
+          return `- أمثال خليجية ("gulf"): سؤال لاستكمال مثل خليجي مثل: "اكمل مثل: '...'. الخيارات 4 completions باللهجة الخليجية أو العربية الفصحى. topicKey: اسم مثل بالإنجليزية (مثال: "proverb-gulf-common").`;
+        case "north-african":
+          return `- أمثال شمال أفريقيا ("north-african"): سؤال لاستكمال مثل من بلاد المغرب والجزيرة العربية مثل: "اكمل مثل: '...'. الخيارات 4 completions. topicKey: اسم مثل بالإنجليزية (مثال: "proverb-northafrican-common").`;
+        case "mixed":
+          return `- أمثال Mixed ("mixed"): سؤال لاستكمال مثل عربي من تراث مختلف مثل: "اكمل مثل: '...'. الخيارات 4 completions بتركيبة متنوعة. topicKey: اسم مثل بالإنجليزية (مثال: "proverb-mixed-general").`;
       }
     })
     .join("\n");
@@ -485,7 +590,7 @@ export function buildPrompt(
 
   const allToAvoid = Array.from(new Set([...recent, ...avoidQuestions])).slice(-80);
 
-  return `أنت مولّد أسئلة مسابقات ثقافية عربية فصحى عالي الدقة والتنوع والاحتراف.
+  return `أنت مولد أسئلة مسابقات ثقافية عربية عالية الدقة والتنوع والاحتراف.
 المطلوب إنشاء بالضبط ${countToGenerate} سؤالاً بمستوى صعوبة "${levelLabels[level]}".
 
 التوجيهات الموزعة للأسئلة المطلوبة (التزم بهذا التوزيع التنوعي):
@@ -499,9 +604,9 @@ ${catGuidelines}
 {
   "questions": [
     {
-      "category": "مفتاح التصنيف بالإنجليزية (capitals, flags, quotes, historical_figures, cartoons, football_players, landmarks, aerial_city, general_knowledge)",
-      "topicKey": "slug إنجليزي فريد ومحدد لموضوع السؤال (مثال: capital-peru, quote-mutanabbi, gk-black-holes)",
-      "question": "نص السؤال باللغة العربية الفصحى",
+      "category": "مفتاح التصنيف بالإنجليزية (capitals, flags, quotes, historical_figures, cartoons, football_players, landmarks, aerial_city, general_knowledge, egyptian, classical, levantine, gulf, north-african, mixed)",
+      "topicKey": "slug إنجليزي فريد ومحدد لموضوع السؤال (مثال: capital-peru, quote-mutanabbi, gk-black-holes, proverb-egyptian-common)",
+      "question": "نص السؤال باللغة العربية الفصحى (يجب أن يكون السؤال متوقعاً لإكمال مثل معروف)",
       "options": ["خيار 1 بالعربية", "خيار 2 بالعربية", "خيار 3 بالعربية", "خيار 4 بالعربية"],
       "correctIndex": 0,
       "explanation": "جملة توضيحية قصيرة باللغة العربية",
@@ -515,7 +620,7 @@ ${catGuidelines}
 4. لا تذكر الإجابة الصحيحة أو تلمح لها أبداً في نص السؤال.
 5. خيار صحيح واحد فقط لكل سؤال (correctIndex بين 0 و3)، ونوّع موضع الإجابة الصحيحة بين 0 و3.
 6. الخيارات الخاطئة الثلاثة يجب أن تكون من نفس الفئة والنوع وذات طول متقارب.
-7. في تصنيف flags: ضع countryCode بحرفين صغيرين، ولا تضع imageQuery.
+7. في تصنيف flags: ضع countryCode بحرفينSmallين، ولا تضع imageQuery.
 8. في تصنيفات الصور: تأكد أن imageQuery هو عنوان مقالة ويكيبيديا الإنجليزية الدقيق بدون كلمات إضافية.
 ${
   allToAvoid.length
@@ -597,4 +702,13 @@ export function parseQuestions(raw: string, minCount = 1): Question[] {
   }
 
   return result;
+}
+
+// ============================================================================
+// FIREBASE MODE HELPERS
+// ============================================================================
+
+/** True when the user has opted into Firestore-backed question delivery. */
+export function isFirestoreMode(s?: Settings | null): boolean {
+  return (s?.questionBackend ?? "localStorage") === "firestore";
 }

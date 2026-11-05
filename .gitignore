@@ -36,3 +36,14 @@ dist-ssr
 
 # Nested git repos (skills)
 .claude/skills/ui-ux-pro-max/
+
+# Firebase
+.firebase/
+firebase-debug.log
+firebase-debug.*.log
+functions/lib/
+functions/node_modules/
+functions/.env
+functions/.env.*
+!functions/.env.example
+*.serviceAccount.json

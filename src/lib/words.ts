@@ -1114,6 +1114,7 @@ export async function loadRoundSentences(
         const aiSentences = await generateSentencesParallel(
           (c) => buildSentencesPrompt(level, c, avoidList),
           shortfall + 4,
+          level,
         );
 
         if (aiSentences.length > 0) {

@@ -191,7 +191,7 @@ export function PwaUpdateBanner() {
   return (
     <aside
       aria-live="polite"
-      className="fixed bottom-4 start-4 end-4 sm:end-auto sm:start-6 z-50 flex items-center gap-3 p-3.5 rounded-2xl border border-amber-500/35 bg-card/95 backdrop-blur-xl shadow-2xl max-w-sm sm:max-w-md animate-rise"
+      className="fixed top-20 sm:top-24 start-4 end-4 sm:end-auto sm:start-6 z-50 flex items-center gap-3 p-3.5 rounded-2xl border border-amber-500/35 bg-card/95 backdrop-blur-xl shadow-2xl max-w-sm sm:max-w-md animate-rise"
     >
       <div className="size-9 rounded-xl bg-amber-500/10 text-amber-500 flex items-center justify-center shrink-0 border border-amber-500/20">
         <RefreshCw className="size-4.5 animate-spin" />

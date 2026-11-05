@@ -264,9 +264,7 @@ function WordsGamePage() {
                       />
                     </div>
                     <h3 className="text-lg font-extrabold text-foreground">
-                      {view.mode === "words"
-                        ? "جاري تجهيز الكلمات"
-                        : "جاري تجهيز الجمل والأمثال"}
+                      {view.mode === "words" ? "جاري تجهيز الكلمات" : "جاري تجهيز الجمل والأمثال"}
                     </h3>
                     <p className="mt-2 text-sm text-muted-foreground">
                       {view.mode === "words"
@@ -374,7 +372,7 @@ function WordsGamePage() {
         />
       )}
 
-      <Toaster position="bottom-center" />
+      <Toaster position="top-center" offset={80} />
     </main>
   );
 }

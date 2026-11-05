@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -53,6 +53,7 @@ export const Route = createFileRoute("/")({
 type FilterType = "all" | "ready" | "soon";
 
 function HubHomePage() {
+  const navigate = useNavigate();
   const [settings, setSettings] = useState<Settings | null>(null);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [bestScores, setBestScores] = useState<Record<string, number | null>>({});
@@ -331,11 +332,10 @@ function HubHomePage() {
                   sound.playClick();
                   setActiveFilter("all");
                 }}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                  activeFilter === "all"
-                    ? "bg-primary text-primary-foreground shadow-2xs"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
+                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${activeFilter === "all"
+                  ? "bg-primary text-primary-foreground shadow-2xs"
+                  : "text-muted-foreground hover:text-foreground"
+                  }`}
               >
                 الكل (٦)
               </button>
@@ -346,13 +346,12 @@ function HubHomePage() {
                   sound.playClick();
                   setActiveFilter("ready");
                 }}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                  activeFilter === "ready"
-                    ? "bg-primary text-primary-foreground shadow-2xs"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
+                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${activeFilter === "ready"
+                  ? "bg-primary text-primary-foreground shadow-2xs"
+                  : "text-muted-foreground hover:text-foreground"
+                  }`}
               >
-                متاحة للعب (٢)
+                متاحة للعب (٣)
               </button>
               <button
                 type="button"
@@ -361,13 +360,12 @@ function HubHomePage() {
                   sound.playClick();
                   setActiveFilter("soon");
                 }}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                  activeFilter === "soon"
-                    ? "bg-primary text-primary-foreground shadow-2xs"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
+                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${activeFilter === "soon"
+                  ? "bg-primary text-primary-foreground shadow-2xs"
+                  : "text-muted-foreground hover:text-foreground"
+                  }`}
               >
-                قريباً (٤)
+                قريباً (٣)
               </button>
             </div>
           </div>
@@ -385,7 +383,34 @@ function HubHomePage() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.35, delay: idx * 0.06, ease: [0.22, 1, 0.36, 1] }}
-                  className="group relative flex flex-col rounded-2xl border border-border/80 bg-card overflow-hidden shadow-2xs hover:shadow-xl hover:border-primary/40 transition-all duration-300"
+                  onClick={
+                    isReady
+                      ? () => {
+                        sound.unlock();
+                        sound.playCardPress();
+                        navigate({ to: game.route });
+                      }
+                      : undefined
+                  }
+                  onKeyDown={
+                    isReady
+                      ? (event) => {
+                        if (event.key === "Enter" || event.key === " ") {
+                          event.preventDefault();
+                          sound.unlock();
+                          sound.playCardPress();
+                          navigate({ to: game.route });
+                        }
+                      }
+                      : undefined
+                  }
+                  role={isReady ? "link" : undefined}
+                  tabIndex={isReady ? 0 : undefined}
+                  aria-label={isReady ? `العب ${game.title}` : undefined}
+                  className={`group relative flex flex-col rounded-2xl border border-border/80 bg-card overflow-hidden shadow-2xs hover:shadow-xl hover:border-primary/40 transition-all duration-300 ${isReady
+                    ? "cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
+                    : ""
+                    }`}
                 >
                   {/* Artwork Container */}
                   <div className="relative aspect-[16/10] overflow-hidden bg-muted/40">
@@ -476,24 +501,12 @@ function HubHomePage() {
                         )}
                       </div>
 
-                      {/* Play or Soon Button */}
+                      {/* Play or Soon Action */}
                       {isReady ? (
-                        <Button
-                          asChild
-                          size="sm"
-                          className="font-bold gap-1.5 rounded-lg px-4 shadow-2xs hover:shadow-sm cursor-pointer"
-                        >
-                          <Link
-                            to={game.route}
-                            onClick={() => {
-                              sound.unlock();
-                              sound.playCardPress();
-                            }}
-                          >
-                            <span>العب الآن</span>
-                            <ArrowLeft className="size-3.5 transition-transform group-hover:-translate-x-1" />
-                          </Link>
-                        </Button>
+                        <span className="inline-flex items-center justify-center gap-1.5 rounded-lg bg-primary px-4 py-2 text-sm font-bold text-primary-foreground shadow-2xs transition-shadow group-hover:shadow-sm">
+                          <span>العب الآن</span>
+                          <ArrowLeft className="size-3.5 transition-transform group-hover:-translate-x-1" />
+                        </span>
                       ) : (
                         <Button
                           type="button"
@@ -519,11 +532,11 @@ function HubHomePage() {
         {/* Floating Live Bank Filling Progress Pill */}
         {fillerState.isFilling && fillerState.progress && (
           <motion.aside
-            initial={{ opacity: 0, y: 30, scale: 0.95 }}
+            initial={{ opacity: 0, y: -30, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 30, scale: 0.95 }}
+            exit={{ opacity: 0, y: -30, scale: 0.95 }}
             aria-live="polite"
-            className="fixed bottom-4 sm:bottom-6 start-4 sm:start-6 z-50 flex items-center gap-3.5 p-3.5 sm:p-4 rounded-2xl border border-primary/35 bg-card/95 backdrop-blur-xl shadow-2xl max-w-sm sm:max-w-md"
+            className="fixed top-20 sm:top-24 start-4 sm:start-6 z-50 flex items-center gap-3.5 p-3.5 sm:p-4 rounded-2xl border border-primary/35 bg-card/95 backdrop-blur-xl shadow-2xl max-w-sm sm:max-w-md"
           >
             <div className="relative size-9 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0 border border-primary/20">
               <RefreshCw className="size-4.5 animate-spin" />
@@ -548,7 +561,7 @@ function HubHomePage() {
                       100,
                       Math.round(
                         (fillerState.progress.completed / Math.max(1, fillerState.progress.total)) *
-                          100,
+                        100,
                       ),
                     )}%`,
                   }}
@@ -585,7 +598,7 @@ function HubHomePage() {
           />
         )}
 
-        <Toaster position="bottom-center" richColors />
+        <Toaster position="top-center" offset={80} richColors />
       </div>
     </main>
   );

@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { AlertCircle, Brain, Flame, KeyRound, Scale, Sparkles, Trophy, Zap } from "lucide-react";
+import { Brain, Flame, KeyRound, Sparkles, Trophy, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LEVELS, type Best, type Level } from "@/lib/quiz";
 import { sound } from "@/lib/sound";
@@ -7,15 +7,18 @@ import { sound } from "@/lib/sound";
 const ICONS: Record<Level, typeof Sparkles> = {
   easy: Sparkles,
   medium: Zap,
-  hard: Flame
+  hard: Flame,
 };
 
-const TONE: Record<Level, {
-  icon: string;
-  card: string;
-  gradient: string;
-  shadow: string;
-}> = {
+const TONE: Record<
+  Level,
+  {
+    icon: string;
+    card: string;
+    gradient: string;
+    shadow: string;
+  }
+> = {
   easy: {
     icon: "bg-easy/15 text-easy border-2 border-easy/30",
     card: "border-easy/40 hover:border-easy/70 hover:shadow-easy/20",
@@ -66,9 +69,12 @@ export function HomeScreen({ best, hasApiKey, onSelectLevel, onOpenSettings }: P
                 <Sparkles className="size-6" />
               </span>
               <div>
-                <p className="font-bold text-foreground text-lg">اللعبة جاهزة للبدء (بنك الأسئلة المدمج)</p>
+                <p className="font-bold text-foreground text-lg">
+                  اللعبة جاهزة للبدء (بنك الأسئلة المدمج)
+                </p>
                 <p className="text-sm text-muted-foreground mt-1">
-                  يمكنك اللعب مباشرة الآن بالأسئلة المدمجة، أو إضافة مفتاح OpenRouter في الإعدادات لتوليد أسئلة غير محدودة بالذكاء الاصطناعي.
+                  يمكنك اللعب مباشرة الآن بالأسئلة المدمجة، أو إضافة مفتاح OpenRouter في الإعدادات
+                  لتوليد أسئلة غير محدودة بالذكاء الاصطناعي.
                 </p>
               </div>
             </div>
@@ -136,7 +142,7 @@ export function HomeScreen({ best, hasApiKey, onSelectLevel, onOpenSettings }: P
               transition={{
                 delay: 0.28 + idx * 0.1,
                 duration: 0.4,
-                ease: [0.22, 1, 0.36, 1]
+                ease: [0.22, 1, 0.36, 1],
               }}
               whileHover={{ y: -6, scale: 1.02 }}
               whileTap={{ scale: 0.97 }}
@@ -144,7 +150,9 @@ export function HomeScreen({ best, hasApiKey, onSelectLevel, onOpenSettings }: P
               className={`group relative overflow-hidden rounded-3xl border-2 bg-card p-7 text-center transition-all duration-250 cursor-pointer hover:shadow-xl ${tone.card}`}
             >
               {/* Gradient Background */}
-              <div className={`absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-250 ${tone.gradient}`} />
+              <div
+                className={`absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-250 ${tone.gradient}`}
+              />
 
               {/* Content */}
               <div className="relative z-10">
@@ -160,7 +168,9 @@ export function HomeScreen({ best, hasApiKey, onSelectLevel, onOpenSettings }: P
                   {meta.description}
                 </p>
 
-                <div className={`mt-5 inline-flex items-center gap-2 rounded-full bg-secondary/80 backdrop-blur-sm px-4 py-2 text-sm font-bold text-secondary-foreground border border-border/50 ${tone.shadow}`}>
+                <div
+                  className={`mt-5 inline-flex items-center gap-2 rounded-full bg-secondary/80 backdrop-blur-sm px-4 py-2 text-sm font-bold text-secondary-foreground border border-border/50 ${tone.shadow}`}
+                >
                   <Trophy className="size-4" />
                   {best[level] > 0 ? `${best[level]} نقطة` : "ابدأ الآن"}
                 </div>

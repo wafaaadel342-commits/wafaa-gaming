@@ -144,7 +144,8 @@ export function initPwa(): void {
   });
 
   // 3. Android / Chromium beforeinstallprompt event
-  window.addEventListener("beforeinstallprompt", (e) => {
+  window.addEventListener("beforeinstallprompt", (event) => {
+    const e = event as BeforeInstallPromptEvent;
     e.preventDefault();
     deferredPrompt = e;
     pwaState = {

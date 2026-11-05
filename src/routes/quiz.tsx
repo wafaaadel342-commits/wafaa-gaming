@@ -190,7 +190,7 @@ function QuizGamePage() {
         />
       )}
 
-      <Toaster position="bottom-center" />
+      <Toaster position="top-center" offset={80} />
     </main>
   );
 }

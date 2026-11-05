@@ -67,6 +67,7 @@ export function SentencePlayScreen({ level, sentences, onFinish, onHome }: Props
 
   const [timeLeft, setTimeLeft] = useState(() => calculateTimer(currentSentence));
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
   // Stable ref for advance timer – avoids cancelling it on re-render
   const advanceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   // Stable ref for advanceToNext so the check-sentence effect doesn't re-run
@@ -184,10 +185,11 @@ export function SentencePlayScreen({ level, sentences, onFinish, onHome }: Props
     advanceToNextRef.current = advanceToNext;
   });
 
-  // Cleanup advance timer on unmount
+  // Cleanup advance/wrong timers on unmount
   useEffect(() => {
     return () => {
       if (advanceTimerRef.current) clearTimeout(advanceTimerRef.current);
+      if (timerRef.current) clearInterval(timerRef.current);
     };
   }, []);
 
@@ -234,25 +236,40 @@ export function SentencePlayScreen({ level, sentences, onFinish, onHome }: Props
         },
       ]);
 
-      // Auto-advance after 1.2s – use stable refs so React effect cleanup
-      // on rapid re-renders doesn't cancel the timer prematurely.
+      // Auto-advance after 1.2s
       if (advanceTimerRef.current) clearTimeout(advanceTimerRef.current);
       advanceTimerRef.current = setTimeout(() => {
         advanceTimerRef.current = null;
         advanceToNextRef.current();
       }, 1200);
-    } else {
-      // Wrong arrangement
-      setStatus("wrong");
-      sound.playWrong();
-      setWrongAttempts((w) => w + 1);
 
-      // Reset status to playing after a brief shake
-      const wrongTimer = setTimeout(() => {
-        setStatus("playing");
-      }, 800);
-      advanceTimerRef.current = wrongTimer;
+      return;
     }
+
+    // Wrong arrangement - FIX: clear slots and reset status
+    setStatus("wrong");
+    sound.playWrong();
+    setWrongAttempts((w) => w + 1);
+
+    // Clear all unlocked slots back to tray, then reset status after shake
+    const unlocked = slots.filter((s) => !s.isLocked && s.word !== null);
+    const returned: TrayChip[] = unlocked.map((s) => ({
+      id: s.chipId || `chip-return-${Math.random()}`,
+      word: s.word!,
+    }));
+
+    setTray((prev) => [...prev, ...returned]);
+    setSlots((prevSlots) =>
+      prevSlots.map((s) => (s.isLocked ? s : { word: null, chipId: null, isLocked: false })),
+    );
+
+    // Reset status to playing after brief shake (800ms)
+    const wrongTimer = setTimeout(() => {
+      setStatus("playing");
+    }, 800);
+
+    // Store so we can cancel if the component unmounts during the shake
+    advanceTimerRef.current = wrongTimer;
   }, [
     slots,
     status,
@@ -566,20 +583,16 @@ export function SentencePlayScreen({ level, sentences, onFinish, onHome }: Props
         </div>
 
         {/* Wrong-answer feedback banner */}
-        <AnimatePresence>
-          {status === "wrong" && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              transition={{ duration: 0.2 }}
-              className="flex items-center justify-center gap-2 px-4 py-2 rounded-xl bg-destructive/15 border border-destructive/30 text-destructive font-bold text-sm"
-            >
-              <span>❌</span>
-              <span>ترتيب خاطئ! حاول مرة أخرى</span>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {status === "wrong" && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-destructive/15 border border-destructive/30 text-destructive font-bold text-sm mb-4"
+          >
+            <span>❌</span>
+            <span>ترتيب خاطئ! حاول مرة أخرى</span>
+          </motion.div>
+        )}
 
         {/* Revealed/Timeout alert */}
         {status === "revealed" && (
@@ -641,11 +654,10 @@ export function SentencePlayScreen({ level, sentences, onFinish, onHome }: Props
             </div>
           </div>
         )}
-      </div>
 
-      {/* Bottom Controls / Action Bar */}
-      {status !== "revealed" && (
-        <div className="flex flex-wrap items-center justify-center gap-2 pt-3 border-t border-border/40">
+        {/* Bottom Controls / Action Bar */}
+        {status !== "revealed" && (
+          <div className="flex flex-wrap items-center justify-center gap-2 pt-3 border-t border-border/40">
           <Button
             type="button"
             variant="outline"
@@ -694,8 +706,29 @@ export function SentencePlayScreen({ level, sentences, onFinish, onHome }: Props
             <SkipForward className="size-3.5" />
             <span>تخطّي</span>
           </Button>
+
+          {/* Retry button for wrong answers */}
+          {status === "wrong" && (
+            <Button
+              type="button"
+              variant="destructive"
+              size="sm"
+              onClick={() => {
+                // Reset the current question state
+                setStatus("playing");
+                // Re-initialize the sentence with fresh slots
+                initSentence(currentSentence);
+              }}
+              className="h-9 gap-1.5 text-xs font-bold bg-destructive text-destructive"
+            >
+              <RotateCcw className="size-3.5" />
+              <span>إعادة المحاولة</span>
+            </Button>
+          )}
+
         </div>
       )}
+      </div>
     </div>
   );
 }

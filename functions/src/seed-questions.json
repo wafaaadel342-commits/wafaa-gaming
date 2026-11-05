@@ -1,0 +1,602 @@
+{
+  "categories": [
+    {
+      "slug": "general_knowledge",
+      "nameAr": "معلومات عامة",
+      "description": "تاريخ، جغرافيا، علوم، أدب، وتكنولوجيا",
+      "sortOrder": 1,
+      "isActive": true
+    },
+    {
+      "slug": "history_geography",
+      "nameAr": "تاريخ وجغرافيا",
+      "description": "أحداث تاريخية ومعالم وجغرافيا العالم",
+      "sortOrder": 2,
+      "isActive": true
+    },
+    {
+      "slug": "sports",
+      "nameAr": "رياضة",
+      "description": "كرة القدم والرياضات العالمية",
+      "sortOrder": 3,
+      "isActive": true
+    },
+    {
+      "slug": "science_technology",
+      "nameAr": "علوم وتكنولوجيا",
+      "description": "العلوم الطبيعية والتقنيات الحديثة",
+      "sortOrder": 4,
+      "isActive": true
+    },
+    {
+      "slug": "egyptian_culture",
+      "nameAr": "ثقافة مصرية",
+      "description": "التاريخ والحضارة والثقافة المصرية",
+      "sortOrder": 5,
+      "isActive": true
+    },
+    {
+      "slug": "arts_entertainment",
+      "nameAr": "فن وأفلام ومسلسلات",
+      "description": "الفنون والأفلام والمسلسلات والموسيقى",
+      "sortOrder": 6,
+      "isActive": true
+    },
+    {
+      "slug": "puzzles_riddles",
+      "nameAr": "ألغاز وذكاء",
+      "description": "الألغاز وألعاب الذكاء والتفكير",
+      "sortOrder": 7,
+      "isActive": true
+    },
+    {
+      "slug": "religious_knowledge",
+      "nameAr": "أسئلة دينية",
+      "description": "معلومات دينية موثقة من مصادر معتمدة",
+      "sortOrder": 8,
+      "isActive": true
+    }
+  ],
+  "questions": [
+    {
+      "level": "easy",
+      "category": "general_knowledge",
+      "categoryKey": "general_knowledge",
+      "topicKey": "longest_river",
+      "correctIndex": 0,
+      "question": "ما هو أطول نهر في العالم؟",
+      "options": [
+        "نهر النيل",
+        "نهر الأمازون",
+        "نهر المسيسيبي",
+        "نهر الدانوب"
+      ],
+      "explanation": "نهر النيل في قارة أفريقيا يُعد أطول نهر في العالم."
+    },
+    {
+      "level": "easy",
+      "category": "general_knowledge",
+      "categoryKey": "general_knowledge",
+      "topicKey": "largest_planet",
+      "correctIndex": 0,
+      "question": "ما هو أكبر كوكب في مجموعتنا الشمسية؟",
+      "options": [
+        "المشتري",
+        "زحل",
+        "نبتون",
+        "الأرض"
+      ],
+      "explanation": "كوكب المشتري هو الأضخم حجماً وكتلة في المجموعة الشمسية."
+    },
+    {
+      "level": "easy",
+      "category": "general_knowledge",
+      "categoryKey": "general_knowledge",
+      "topicKey": "fastest_animal",
+      "correctIndex": 0,
+      "question": "ما هو أسرع حيوان بري على وجه الأرض؟",
+      "options": [
+        "الفهد (الشيتا)",
+        "الأسد",
+        "الغزال",
+        "الحصان"
+      ],
+      "explanation": "الفهد يستطيع الوصول لسرعة تفوق 100 كم في الساعة."
+    },
+    {
+      "level": "easy",
+      "category": "general_knowledge",
+      "categoryKey": "general_knowledge",
+      "topicKey": "continents",
+      "correctIndex": 0,
+      "question": "كم عدد قارات العالم المعترف بها جغرافياً؟",
+      "options": [
+        "7 قارات",
+        "5 قارات",
+        "6 قارات",
+        "8 قارات"
+      ],
+      "explanation": "القارات السبع: آسيا، أفريقيا، أوروبا، أمريكا الشمالية، أمريكا الجنوبية، أستراليا، والقارة القطبية."
+    },
+    {
+      "level": "easy",
+      "category": "general_knowledge",
+      "categoryKey": "general_knowledge",
+      "topicKey": "liquid_metal",
+      "correctIndex": 0,
+      "question": "ما هو المعدن السائل في درجة حرارة الغرفة؟",
+      "options": [
+        "الزئبق",
+        "الحديد",
+        "الرصاص",
+        "النحاس"
+      ],
+      "explanation": "الزئبق هو العنصر الفلزي الوحيد السائل في الظروف القياسية."
+    },
+    {
+      "level": "easy",
+      "category": "general_knowledge",
+      "categoryKey": "general_knowledge",
+      "topicKey": "largest_continent",
+      "correctIndex": 0,
+      "question": "ما هي أكبر قارة في العالم مساحةً وسكاناً؟",
+      "options": [
+        "آسيا",
+        "أفريقيا",
+        "أوروبا",
+        "أمريكا الشمالية"
+      ],
+      "explanation": "آسيا أكبر القارات مساحةً وتضم أكثر من 60% من سكان العالم."
+    },
+    {
+      "level": "easy",
+      "category": "capitals",
+      "categoryKey": "capitals",
+      "topicKey": "capital_saudi",
+      "correctIndex": 0,
+      "question": "ما هي عاصمة المملكة العربية السعودية؟",
+      "options": [
+        "الرياض",
+        "جدة",
+        "مكة المكرمة",
+        "الدمام"
+      ],
+      "explanation": "الرياض هي العاصمة وأكبر مدن المملكة العربية السعودية."
+    },
+    {
+      "level": "easy",
+      "category": "capitals",
+      "categoryKey": "capitals",
+      "topicKey": "capital_egypt",
+      "correctIndex": 0,
+      "question": "ما هي عاصمة جمهورية مصر العربية؟",
+      "options": [
+        "القاهرة",
+        "الإسكندرية",
+        "الجيزة",
+        "الأقصر"
+      ],
+      "explanation": "القاهرة هي عاصمة مصر وأكبر مدن العالم العربي."
+    },
+    {
+      "level": "easy",
+      "category": "quotes",
+      "categoryKey": "quotes",
+      "topicKey": "quote_mutanabbi_kheil",
+      "correctIndex": 0,
+      "question": "من قائل: 'الخيل والليل والبيداء تعرفني'؟",
+      "options": [
+        "أبو الطيب المتنبي",
+        "أحمد شوقي",
+        "عنترة بن شداد",
+        "امرؤ القيس"
+      ],
+      "explanation": "من أشهر قصائد المتنبي في الفروسية."
+    },
+    {
+      "level": "easy",
+      "category": "quotes",
+      "categoryKey": "quotes",
+      "topicKey": "quote_shabi_irada",
+      "correctIndex": 0,
+      "question": "من قائل: 'إذا الشعب يوماً أراد الحياة'؟",
+      "options": [
+        "أبو القاسم الشابي",
+        "محمود درويش",
+        "نزار قباني",
+        "إيليا أبو ماضي"
+      ],
+      "explanation": "من قصيدة إرادة الحياة للشابي."
+    },
+    {
+      "level": "easy",
+      "category": "flags",
+      "categoryKey": "flags",
+      "topicKey": "flag_egypt",
+      "correctIndex": 0,
+      "question": "ما هي الدولة التي يمثلها علم أحمر وأبيض وأسود ونسر؟",
+      "options": [
+        "مصر",
+        "سوريا",
+        "العراق",
+        "اليمن"
+      ],
+      "explanation": "علم جمهورية مصر العربية بألوانه الثلاثة ونسر صلاح الدين."
+    },
+    {
+      "level": "easy",
+      "category": "flags",
+      "categoryKey": "flags",
+      "topicKey": "flag_saudi",
+      "correctIndex": 0,
+      "question": "ما هي الدولة التي يمثلها علم أخضر يتوسطه الشهادة وسيف؟",
+      "options": [
+        "المملكة العربية السعودية",
+        "الجزائر",
+        "باكستان",
+        "موريتانيا"
+      ],
+      "explanation": "علم السعودية أخضر يتوسطه الشهادتان وسيف مسلول."
+    },
+    {
+      "level": "easy",
+      "category": "historical_figures",
+      "categoryKey": "historical_figures",
+      "topicKey": "saladin",
+      "correctIndex": 0,
+      "question": "من هو القائد الذي انتصر في معركة حطين وحرر القدس؟",
+      "options": [
+        "صلاح الدين الأيوبي",
+        "سيف الدين قطز",
+        "طارق بن زياد",
+        "خالد بن الوليد"
+      ],
+      "explanation": "صلاح الدين الأيوبي انتصر في حطين عام 1187م."
+    },
+    {
+      "level": "medium",
+      "category": "capitals",
+      "categoryKey": "capitals",
+      "topicKey": "capital_australia",
+      "correctIndex": 0,
+      "question": "ما هي العاصمة السياسية لأستراليا؟",
+      "options": [
+        "كانبرا",
+        "سيدني",
+        "ملبورن",
+        "بيرث"
+      ],
+      "explanation": "كانبرا عاصمة أستراليا كحل وسط تاريخي بين سيدني وملبورن."
+    },
+    {
+      "level": "medium",
+      "category": "capitals",
+      "categoryKey": "capitals",
+      "topicKey": "capital_canada",
+      "correctIndex": 0,
+      "question": "ما هي عاصمة كندا؟",
+      "options": [
+        "أوتاوا",
+        "تورنتو",
+        "مونتريال",
+        "فانكوفر"
+      ],
+      "explanation": "أوتاوا هي العاصمة الفيدرالية لكندا."
+    },
+    {
+      "level": "medium",
+      "category": "capitals",
+      "categoryKey": "capitals",
+      "topicKey": "capital_brazil",
+      "correctIndex": 0,
+      "question": "ما هي عاصمة البرازيل؟",
+      "options": [
+        "برازيليا",
+        "ريو دي جانيرو",
+        "ساو باولو",
+        "سالفادور"
+      ],
+      "explanation": "برازيليا العاصمة المخططة للبرازيل منذ عام 1960."
+    },
+    {
+      "level": "medium",
+      "category": "general_knowledge",
+      "categoryKey": "general_knowledge",
+      "topicKey": "deepest_point",
+      "correctIndex": 0,
+      "question": "ما هي أعمق نقطة معروفة في محيطات العالم؟",
+      "options": [
+        "خندق ماريانا",
+        "خندق بويرتوريكو",
+        "خندق جاوه",
+        "خندق تونغا"
+      ],
+      "explanation": "خندق ماريانا يصل عمقه لنحو 11,000 متر."
+    },
+    {
+      "level": "medium",
+      "category": "general_knowledge",
+      "categoryKey": "general_knowledge",
+      "topicKey": "adult_bones",
+      "correctIndex": 0,
+      "question": "كم عدد العظام في هيكل بالغ؟",
+      "options": [
+        "206 عظمة",
+        "300 عظمة",
+        "180 عظمة",
+        "250 عظمة"
+      ],
+      "explanation": "يندمج الأطفال من نحو 270 عظمة لتصبح 206 عند البلوغ."
+    },
+    {
+      "level": "medium",
+      "category": "general_knowledge",
+      "categoryKey": "general_knowledge",
+      "topicKey": "smallest_country",
+      "correctIndex": 0,
+      "question": "ما هي أصغر دولة مستقلة في العالم من حيث المساحة؟",
+      "options": [
+        "الفاتيكان",
+        "موناكو",
+        "سان مارينو",
+        "ليختنشتاين"
+      ],
+      "explanation": "الفاتيكان أصغر دولة بمساحة لا تتجاوز نصف كيلومتر مربع."
+    },
+    {
+      "level": "medium",
+      "category": "historical_figures",
+      "categoryKey": "historical_figures",
+      "topicKey": "ibn_khaldun",
+      "correctIndex": 0,
+      "question": "من هو مؤلف 'المقدمة' ومؤسس علم الاجتماع؟",
+      "options": [
+        "ابن خلدون",
+        "ابن رشد",
+        "الإدريسي",
+        "الفارابي"
+      ],
+      "explanation": "ابن خلدون وضع أسس علم العمران البشري والاجتماع."
+    },
+    {
+      "level": "medium",
+      "category": "landmarks",
+      "categoryKey": "landmarks",
+      "topicKey": "petra",
+      "correctIndex": 0,
+      "question": "ما هي المدينة الوردية المنحوتة في الصخر بالأردن؟",
+      "options": [
+        "البتراء",
+        "جرش",
+        "تدمر",
+        "بعلبك"
+      ],
+      "explanation": "البتراء عاصمة الأنباط وعجائب الدنيا الجديدة."
+    },
+    {
+      "level": "medium",
+      "category": "landmarks",
+      "categoryKey": "landmarks",
+      "topicKey": "taj_mahal",
+      "correctIndex": 0,
+      "question": "ما هو الصرح المعماري الرخامي الأبيض في الهند؟",
+      "options": [
+        "تاج محل",
+        "قلعة أغرا",
+        "قطب منار",
+        "بوابة الهند"
+      ],
+      "explanation": "تاج محل بناه شاه جهان تخليداً لذكرى زوجته."
+    },
+    {
+      "level": "hard",
+      "category": "capitals",
+      "categoryKey": "capitals",
+      "topicKey": "capital_switzerland",
+      "correctIndex": 0,
+      "question": "ما هي العاصمة الفعلية لسويسرا؟",
+      "options": [
+        "برن",
+        "جنيف",
+        "زيورخ",
+        "بازل"
+      ],
+      "explanation": "برن المقر الفيدرالي الفعلي للحكومة السويسرية."
+    },
+    {
+      "level": "hard",
+      "category": "general_knowledge",
+      "categoryKey": "general_knowledge",
+      "topicKey": "berlin_wall",
+      "correctIndex": 0,
+      "question": "في أي عام سقط جدار برلين؟",
+      "options": [
+        "1989م",
+        "1991م",
+        "1985م",
+        "1979م"
+      ],
+      "explanation": "سقط جدار برلين في 9 نوفمبر 1989."
+    },
+    {
+      "level": "hard",
+      "category": "general_knowledge",
+      "categoryKey": "general_knowledge",
+      "topicKey": "longest_range",
+      "correctIndex": 0,
+      "question": "ما هي أطول سلسلة جبال قارية برية متصلة في العالم؟",
+      "options": [
+        "الأنديز",
+        "الهيمالايا",
+        "الروكي",
+        "الألب"
+      ],
+      "explanation": "جبال الأنديز تمتد لأكثر من 7,000 كم."
+    },
+    {
+      "level": "hard",
+      "category": "general_knowledge",
+      "categoryKey": "general_knowledge",
+      "topicKey": "most_moons",
+      "correctIndex": 0,
+      "question": "ما هو الكوكب الذي يمتلك أكبر عدد من الأقمار المؤكدة؟",
+      "options": [
+        "زحل",
+        "المشتري",
+        "أورانوس",
+        "نبتون"
+      ],
+      "explanation": "زحل يمتلك أكثر من 140 قمراً معتمداً."
+    },
+    {
+      "level": "hard",
+      "category": "quotes",
+      "categoryKey": "quotes",
+      "topicKey": "quote_shafii_zaman",
+      "correctIndex": 0,
+      "question": "من قائل: 'نعيب زماننا والعيب فينا'؟",
+      "options": [
+        "الإمام الشافعي",
+        "علي بن أبي طالب",
+        "الحسن البصري",
+        "أبو العتاهية"
+      ],
+      "explanation": "من ديوان الإمام الشافعي رحمه الله."
+    },
+    {
+      "level": "hard",
+      "category": "landmarks",
+      "categoryKey": "landmarks",
+      "topicKey": "machu_picchu",
+      "correctIndex": 0,
+      "question": "ما هي المدينة الأثرية الضائعة للإنكا في بيرو؟",
+      "options": [
+        "ماتشو بيتشو",
+        "تيواناكو",
+        "كوسكو",
+        "تشيتشن إيتزا"
+      ],
+      "explanation": "ماتشو بيتشو أعظم تحفة معمارية لحضارة الإنكا."
+    },
+    {
+      "level": "hard",
+      "category": "historical_figures",
+      "categoryKey": "historical_figures",
+      "topicKey": "al_khwarizmi",
+      "correctIndex": 0,
+      "question": "من مؤلف علم الجبر واشتُق منه مصطلح الخوارزمية؟",
+      "options": [
+        "محمد بن موسى الخوارزمي",
+        "عمر الخيام",
+        "نصير الدين الطوسي",
+        "البوزجاني"
+      ],
+      "explanation": "الخوارزمي ألف 'المختصر في حساب الجبر والمقابلة'."
+    },
+    {
+      "level": "medium",
+      "category": "flags",
+      "categoryKey": "flags",
+      "topicKey": "flag_canada",
+      "correctIndex": 0,
+      "question": "ما هي الدولة التي يمثلها علم الورقة الحمراء والأبيض؟",
+      "options": [
+        "كندا",
+        "سويسرا",
+        "النمسا",
+        "الدنمارك"
+      ],
+      "explanation": "علم كندا يتوسطه ورق القيقب الأحمر."
+    },
+    {
+      "level": "medium",
+      "category": "flags",
+      "categoryKey": "flags",
+      "topicKey": "flag_germany",
+      "correctIndex": 0,
+      "question": "ما هي الدولة التي يمثلها علم الأسود والأحمر والذهبي؟",
+      "options": [
+        "ألمانيا",
+        "بلجيكا",
+        "هولندا",
+        "إسبانيا"
+      ],
+      "explanation": "علم ألمانيا يتكون من ثلاثة أشرطة أفقية."
+    },
+    {
+      "level": "hard",
+      "category": "flags",
+      "categoryKey": "flags",
+      "topicKey": "flag_nepal",
+      "correctIndex": 0,
+      "question": "ما هي الدولة الوحيدة التي لا يتخذ علمها شكلاً رباعياً؟",
+      "options": [
+        "نيبال",
+        "سويسرا",
+        "الفاتيكان",
+        "بوتان"
+      ],
+      "explanation": "علم نيبال هو العلم الوطني الوحيد غير المستطيل."
+    },
+    {
+      "level": "easy",
+      "category": "historical_figures",
+      "categoryKey": "historical_figures",
+      "topicKey": "conan",
+      "correctIndex": 0,
+      "question": "من هو المحقق الذكي الذي تقلص جسده إلى طفل؟",
+      "options": [
+        "المحقق كونان",
+        "كابتن ماجد",
+        "ناروتو",
+        "لوفي"
+      ],
+      "explanation": "سينشي كودو تحول إلى كونان إيدوغاوا."
+    },
+    {
+      "level": "easy",
+      "category": "cartoons",
+      "categoryKey": "cartoons",
+      "topicKey": "mickey",
+      "correctIndex": 0,
+      "question": "من هو الفأر الشهير بذات الأذنين الدائريتين؟",
+      "options": [
+        "ميكي ماوس",
+        "بوب سبونج",
+        "بطل الرسوم",
+        "توم"
+      ],
+      "explanation": "ميكي ماوس رمز ستوديوهات ديزني العالمي."
+    },
+    {
+      "level": "medium",
+      "category": "football_players",
+      "categoryKey": "football_players",
+      "topicKey": "messi",
+      "correctIndex": 0,
+      "question": "من هو اللاعب الأرجنتيني بطل كأس العالم 2022؟",
+      "options": [
+        "ليونيل ميسي",
+        "كريستيانو رونالدو",
+        "كيليان مبابي",
+        "نيمار"
+      ],
+      "explanation": "ميسي قاد الأرجنتين للفوز بمونديال 2022."
+    },
+    {
+      "level": "medium",
+      "category": "football_players",
+      "categoryKey": "football_players",
+      "topicKey": "mo_salah",
+      "correctIndex": 0,
+      "question": "من هو النجم المصري الملقب بـ'فخر العرب'؟",
+      "options": [
+        "محمد صلاح",
+        "رياض محرز",
+        "ساديو ماني",
+        "أشرف حكيمي"
+      ],
+      "explanation": "محمد صلاح حطم أرقاماً قياسيّة في الدوري الإنجليزي."
+    }
+  ]
+}

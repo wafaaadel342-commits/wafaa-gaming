@@ -68,9 +68,10 @@ export const GAMES_REGISTRY: GameDefinition[] = [
     accentBg: "bg-amber-600/10 text-amber-700 dark:text-amber-400 border-amber-600/30",
     accentText: "text-amber-700 dark:text-amber-400",
     accentBorder: "hover:border-amber-600/50",
-    route: "#",
-    status: "soon",
-    features: ["أمثال تراثية", "خيارات متعددة", "شرح معاني الأمثال"],
+    route: "/proverbs",
+    status: "ready",
+    storageBestKey: "proverbs-best",
+    features: ["أمثال تراثية", "خيارات متعددة", "شرح معاني الأمثال", "مصدر كل مثل"],
   },
   {
     id: "true-or-false",

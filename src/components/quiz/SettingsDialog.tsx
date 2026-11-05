@@ -281,7 +281,9 @@ export function SettingsDialog({ open, onOpenChange, settings, onSave }: Props) 
                   dir="ltr"
                   placeholder="sk-or-v1-..."
                   value={draft.openrouterKey}
-                  onChange={(e) => setDraft((d) => ({ ...d, openrouterKey: e.target.value.trim() }))}
+                  onChange={(e) =>
+                    setDraft((d) => ({ ...d, openrouterKey: e.target.value.trim() }))
+                  }
                   className="font-mono text-xs bg-background/60"
                 />
                 <p className="text-[11px] text-muted-foreground leading-relaxed">
@@ -294,7 +296,8 @@ export function SettingsDialog({ open, onOpenChange, settings, onSave }: Props) 
                   >
                     OpenRouter.ai <ExternalLink className="size-3" />
                   </a>{" "}
-                  لتوليد أسئلة غير محدودة مجاناً. إذا تركته فارغاً ستعتمد اللعبة على بنك الأسئلة المدمج دون الحاجة لأي مفتاح.
+                  لتوليد أسئلة غير محدودة مجاناً. إذا تركته فارغاً ستعتمد اللعبة على بنك الأسئلة
+                  المدمج دون الحاجة لأي مفتاح.
                 </p>
               </div>
             </div>
@@ -325,6 +328,85 @@ export function SettingsDialog({ open, onOpenChange, settings, onSave }: Props) 
                 >
                   تجربة الصوت 🔊
                 </Button>
+              </div>
+            </div>
+
+            {/* Firestore Question Bank Toggle Card */}
+            <div className="space-y-3 rounded-2xl bg-accent/10 p-4 border border-accent/40">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Database className="size-5 text-accent-foreground" />
+                  <div>
+                    <Label className="font-bold text-sm text-foreground">
+                      مصدر الأسئلة: بنك اللعبة المحلي
+                    </Label>
+                    <p className="text-[11px] text-muted-foreground">
+                      البنك المدمج + توليد OpenRouter (الأداء الأسرع، أوفلاين أولاً)
+                    </p>
+                  </div>
+                </div>
+                <Button
+                  type="button"
+                  variant={draft.questionBackend === "localStorage" ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setDraft((d) => ({ ...d, questionBackend: "localStorage" }))}
+                  className={cn(
+                    "text-xs px-3",
+                    draft.questionBackend === "localStorage"
+                      ? "bg-accent text-accent-foreground"
+                      : "border-accent/40 text-accent-foreground hover:bg-accent/20",
+                  )}
+                >
+                  Local
+                </Button>
+              </div>
+
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Sparkles className="size-5 text-primary" />
+                  <div>
+                    <Label className="font-bold text-sm text-foreground">
+                      مصدر الأسئلة: Firestore (قاعدة بيانات)
+                    </Label>
+                    <p className="text-[11px] text-muted-foreground">
+                      أسئلة معتمدة من Firebase Cloud Firestore + توليد في الخلفية (يتطلب إعداد
+                      Firestore أولاً)
+                    </p>
+                  </div>
+                </div>
+                <Button
+                  type="button"
+                  variant={draft.questionBackend === "firestore" ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setDraft((d) => ({ ...d, questionBackend: "firestore" }))}
+                  className={cn(
+                    "text-xs px-3",
+                    draft.questionBackend === "firestore"
+                      ? "bg-primary text-primary-foreground"
+                      : "border-primary/40 text-primary hover:bg-primary/20",
+                  )}
+                >
+                  Firestore
+                </Button>
+              </div>
+
+              <div className="rounded-xl bg-background/50 border border-border/60 p-3 text-xs space-y-2">
+                <p className="font-medium text-foreground">الفرق بين الخيارين:</p>
+                <ul className="list-disc list-inside space-y-1 text-muted-foreground leading-relaxed">
+                  <li>
+                    <strong>البنك المحلي:</strong> يعمل تماماً كما تعمل اللعبة الآن — الأسئلة
+                    المخزنة في متصفحك + OpenRouter للتوليد في الخلفية.
+                  </li>
+                  <li>
+                    <strong>Firestore:</strong> تُقرأ الأسئلة من Firebase Cloud Firestore مباشرة
+                    (بنك مركزي معتمد). يظل OpenRouter يُولّد أسئلة جديدة في الخلفية أثناء اللعب. لا
+                    يتطلب مفاتيح إضافية من اللاعب.
+                  </li>
+                </ul>
+                <p className="text-[10px] text-muted-foreground leading-relaxed">
+                  ملاحظة: التغيير يتطلب إعادة تحميل الصفحة ليصبح ساري المفعول. الوضع الافتراضي
+                  (البنك المحلي) لا يتأثر بأي إعدادات Firebase ويظل يعمل أوفلاين.
+                </p>
               </div>
             </div>
 
@@ -468,7 +550,8 @@ export function SettingsDialog({ open, onOpenChange, settings, onSave }: Props) 
                 </span>
               </div>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                استيراد عشرات الأسئلة المجهزة مسبقاً لجميع المستويات والتصنيفات في بنكك المحلي بنقرة واحدة، لتتمكن من اللعب فوراً دون الحاجة للاتصال بالذكاء الاصطناعي.
+                استيراد عشرات الأسئلة المجهزة مسبقاً لجميع المستويات والتصنيفات في بنكك المحلي بنقرة
+                واحدة، لتتمكن من اللعب فوراً دون الحاجة للاتصال بالذكاء الاصطناعي.
               </p>
               <Button
                 type="button"
