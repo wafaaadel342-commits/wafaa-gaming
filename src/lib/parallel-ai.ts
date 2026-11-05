@@ -20,10 +20,6 @@ import {
 // ============================================================================
 
 export const PARALLEL_FREE_MODELS = [
-  "google/gemma-4-31b-it:free",
-  "nvidia/nemotron-3.5-lightning:free",
-  "google/gemma-4-26b-a4b-it:free",
-  "liquid/lfm-2.5-2.6b:free",
   "openrouter/free",
 ] as const;
 
@@ -36,7 +32,7 @@ export function getOpenRouterApiKey(): string {
       const raw = localStorage.getItem("tahaddi-settings");
       if (raw) {
         const parsed = JSON.parse(raw);
-        if (typeof parsed?.openrouterKey === "string" && parsed.openrouterKey.trim()) {
+        if (typeof parsed?.openrouterKey === "string") {
           return parsed.openrouterKey.trim();
         }
       }
@@ -45,7 +41,8 @@ export function getOpenRouterApiKey(): string {
     }
   }
   return (
-    (typeof import.meta !== "undefined" && import.meta.env?.["VITE_OPENROUTER_API_KEY"]) ||
+    (typeof import.meta !== "undefined" &&
+      (import.meta.env?.["VITE_OPENROUTER_API_KEY"] || import.meta.env?.["OPENROUTER_API_KEY"])) ||
     ""
   );
 }
@@ -253,6 +250,10 @@ async function callSingleModel(
         }
       }
 
+      if (res.status === 401 || res.status === 403) {
+        throw new Error(`HTTP ${res.status}: Invalid or expired OpenRouter API key`);
+      }
+
       if (!res.ok) {
         throw new Error(`HTTP ${res.status}`);
       }
@@ -267,6 +268,14 @@ async function callSingleModel(
       return text;
     } catch (err: unknown) {
       clearTimeout(timer);
+      if (
+        err instanceof Error &&
+        (err.message.includes("401") ||
+          err.message.includes("403") ||
+          err.message.includes("No OpenRouter API key configured"))
+      ) {
+        throw err;
+      }
       if (attempts <= maxRetries && !(err instanceof DOMException && err.name === "AbortError")) {
         const fallback =
           PARALLEL_FREE_MODELS.find((m) => m !== currentModel && isModelAvailable(m)) ||

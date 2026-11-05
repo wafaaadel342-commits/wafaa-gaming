@@ -55,6 +55,8 @@ export function WordsPlayScreen({ level, words, onFinish, onHome }: Props) {
   // 60-second timer
   const [timeLeft, setTimeLeft] = useState(60);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+  // Stable ref for advance timer – avoids cancelling it on re-render
+  const advanceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Initialize word state whenever currentIndex changes
   const initWord = useCallback((item: WordItem) => {

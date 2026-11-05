@@ -17,6 +17,7 @@ export default defineConfig({
     },
   },
   vite: {
+    envPrefix: ["VITE_", "OPENROUTER_"],
     server: {
       host: "0.0.0.0",
       port: 3000,

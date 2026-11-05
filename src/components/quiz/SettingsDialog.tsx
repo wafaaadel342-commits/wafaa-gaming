@@ -4,6 +4,9 @@ import {
   AlertTriangle,
   CheckCircle2,
   Database,
+  Download,
+  ExternalLink,
+  KeyRound,
   Layers,
   RefreshCw,
   RotateCcw,
@@ -21,9 +24,11 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { clearAllBanks, clearSeenHistory, getBankStats, type BankStats } from "@/lib/anti-repeat";
+import { seedAllFallbackToBank } from "@/lib/quiz-fallback";
 import {
   startGlobalBankFilling,
   cancelGlobalBankFilling,
@@ -125,6 +130,16 @@ export function SettingsDialog({ open, onOpenChange, settings, onSave }: Props) 
   const handleCancelFill = () => {
     cancelGlobalBankFilling();
     toast.info("جاري إيقاف العملية...");
+  };
+
+  const handleImportFallback = () => {
+    const added = seedAllFallbackToBank();
+    refreshStats();
+    if (added > 0) {
+      toast.success(`تم استيراد ${added} سؤالاً مدمجاً إلى بنك الأسئلة بنجاح! 🎉`);
+    } else {
+      toast.info("جميع الأسئلة المدمجة موجودة بالفعل في البنك.");
+    }
   };
 
   const handleClearSeen = () => {
@@ -236,6 +251,51 @@ export function SettingsDialog({ open, onOpenChange, settings, onSave }: Props) 
                     </span>
                   </p>
                 )}
+              </div>
+            </div>
+
+            {/* OpenRouter API Key Input Card */}
+            <div className="space-y-3 rounded-2xl bg-secondary/30 p-4 border border-border/60">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <KeyRound className="size-5 text-primary" />
+                  <Label htmlFor="openrouter-key" className="font-bold text-sm">
+                    مفتاح OpenRouter API (اختياري)
+                  </Label>
+                </div>
+                {draft.openrouterKey.trim() ? (
+                  <span className="inline-flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-full bg-easy/15 text-easy">
+                    <CheckCircle2 className="size-3" /> مفتاح مخصص
+                  </span>
+                ) : (
+                  <span className="inline-flex items-center gap-1 text-[11px] font-medium px-2 py-0.5 rounded-full bg-secondary text-muted-foreground">
+                    البنك المدمج نشط
+                  </span>
+                )}
+              </div>
+
+              <div className="space-y-1.5">
+                <Input
+                  id="openrouter-key"
+                  type="password"
+                  dir="ltr"
+                  placeholder="sk-or-v1-..."
+                  value={draft.openrouterKey}
+                  onChange={(e) => setDraft((d) => ({ ...d, openrouterKey: e.target.value.trim() }))}
+                  className="font-mono text-xs bg-background/60"
+                />
+                <p className="text-[11px] text-muted-foreground leading-relaxed">
+                  يمكنك إدخال مفتاح مجاني من{" "}
+                  <a
+                    href="https://openrouter.ai/keys"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-primary underline font-medium hover:text-primary/80 inline-flex items-center gap-0.5"
+                  >
+                    OpenRouter.ai <ExternalLink className="size-3" />
+                  </a>{" "}
+                  لتوليد أسئلة غير محدودة مجاناً. إذا تركته فارغاً ستعتمد اللعبة على بنك الأسئلة المدمج دون الحاجة لأي مفتاح.
+                </p>
               </div>
             </div>
 
@@ -392,6 +452,34 @@ export function SettingsDialog({ open, onOpenChange, settings, onSave }: Props) 
                   </div>
                 </div>
               </div>
+            </div>
+
+            {/* Built-in Content Import Card */}
+            <div className="rounded-2xl border border-easy/30 bg-easy/5 p-4 space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Download className="size-5 text-easy" />
+                  <h3 className="font-bold text-sm text-foreground">
+                    بنك الأسئلة المدمج مسبقاً (أوفلاين)
+                  </h3>
+                </div>
+                <span className="text-xs font-bold text-easy bg-easy/10 px-2.5 py-0.5 rounded-full">
+                  70+ سؤال مجهز
+                </span>
+              </div>
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                استيراد عشرات الأسئلة المجهزة مسبقاً لجميع المستويات والتصنيفات في بنكك المحلي بنقرة واحدة، لتتمكن من اللعب فوراً دون الحاجة للاتصال بالذكاء الاصطناعي.
+              </p>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={handleImportFallback}
+                className="w-full text-xs font-bold gap-2 border-easy/40 hover:bg-easy/10 text-foreground"
+              >
+                <Download className="size-3.5 text-easy" />
+                استيراد بنك الأسئلة المدمج الآن
+              </Button>
             </div>
 
             {/* Filling Tool */}

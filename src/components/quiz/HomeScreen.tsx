@@ -47,10 +47,6 @@ export function HomeScreen({ best, hasApiKey, onSelectLevel, onOpenSettings }: P
   const handleLevelClick = (level: Level) => {
     sound.unlock();
     sound.playClick();
-    if (!hasApiKey) {
-      onOpenSettings();
-      return;
-    }
     onSelectLevel(level);
   };
 
@@ -64,28 +60,29 @@ export function HomeScreen({ best, hasApiKey, onSelectLevel, onOpenSettings }: P
           transition={{ duration: 0.35 }}
           className="mb-10 w-full"
         >
-          <div className="flex flex-col items-center justify-between gap-4 rounded-3xl border-2 border-destructive/40 bg-gradient-to-br from-destructive/15 via-destructive/8 to-transparent p-5 text-center sm:flex-row sm:text-start backdrop-blur-sm">
+          <div className="flex flex-col items-center justify-between gap-4 rounded-3xl border border-primary/30 bg-gradient-to-br from-primary/10 via-primary/5 to-transparent p-5 text-center sm:flex-row sm:text-start backdrop-blur-sm shadow-sm">
             <div className="flex items-center gap-4">
-              <span className="inline-flex size-12 shrink-0 items-center justify-center rounded-2xl bg-destructive/20 text-destructive border-2 border-destructive/30">
-                <AlertCircle className="size-6" />
+              <span className="inline-flex size-12 shrink-0 items-center justify-center rounded-2xl bg-primary/20 text-primary border border-primary/30">
+                <Sparkles className="size-6" />
               </span>
               <div>
-                <p className="font-bold text-foreground text-lg">الذكاء الاصطناعي جاهز للبدء</p>
+                <p className="font-bold text-foreground text-lg">اللعبة جاهزة للبدء (بنك الأسئلة المدمج)</p>
                 <p className="text-sm text-muted-foreground mt-1">
-                  توليد الأسئلة مدعوم تلقائياً عبر OpenRouter بنماذج مجانية
+                  يمكنك اللعب مباشرة الآن بالأسئلة المدمجة، أو إضافة مفتاح OpenRouter في الإعدادات لتوليد أسئلة غير محدودة بالذكاء الاصطناعي.
                 </p>
               </div>
             </div>
             <Button
+              variant="outline"
               size="lg"
               onClick={() => {
                 sound.unlock();
                 onOpenSettings();
               }}
-              className="shrink-0 font-bold shadow-lg"
+              className="shrink-0 font-bold border-primary/40 hover:bg-primary/10"
             >
               <KeyRound className="me-2 size-5" />
-              فتح الإعدادات
+              إعدادات الذكاء الاصطناعي
             </Button>
           </div>
         </motion.div>

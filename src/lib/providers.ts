@@ -25,8 +25,13 @@ import {
   generateQuestionsParallel,
   distributeQuestions,
   PARALLEL_FREE_MODELS,
+  getOpenRouterApiKey,
   type ParallelGenerationProgress,
 } from "./parallel-ai";
+import {
+  seedBankFromFallback,
+  getAnyFallbackQuestions,
+} from "./quiz-fallback";
 
 export interface Candidate {
   provider: "openrouter";
@@ -38,13 +43,6 @@ export interface Candidate {
 // openrouter/free is a meta-router that automatically routes to available free models
 export const DEFAULT_FREE_MODELS: string[] = [
   "openrouter/free",
-  "google/gemma-4-31b-it:free",
-  "google/gemma-4-26b-a4b-it:free",
-  "nvidia/nemotron-3-ultra-550b-a55b:free",
-  "nvidia/nemotron-3.5-lightning:free",
-  "liquid/lfm-2.5-2.6b:free",
-  "nvidia/nemotron-3.5-super-vl:free",
-  "cohere/north-mini-code:free",
 ];
 
 // In-memory model failure tracking (5-minute skip)
@@ -101,7 +99,7 @@ function getFreeModelPool(): string[] {
 
   // Pre-fetch latest free models in the background for subsequent calls
   if (typeof window !== "undefined") {
-    void fetchOpenRouterModels().catch(() => {});
+    void fetchOpenRouterModels().catch(() => { });
   }
 
   return Array.from(modelsSet);
@@ -343,76 +341,90 @@ export async function fetchInitialBatch(
     }
   }
 
-  // 2. Shortfall: use parallel AI generation with 4 models
-  const recent = getRecent();
-  const avoidKeys = bank.slice(-60).map((b) => b.topicKey || b.question);
+  // 2. Shortfall: try parallel AI generation if an API key is available
+  const apiKey =
+    typeof settings?.openrouterKey === "string"
+      ? settings.openrouterKey.trim()
+      : getOpenRouterApiKey();
 
-  const tryFetch = async (): Promise<Question[]> => {
-    // Use parallel generation: 3 questions distributed across 4 models
-    // Distribution: [1, 1, 1, 0] - uses 3 fastest models simultaneously
-    const raw = await generateQuestionsParallel(
-      (count) => buildPrompt(level, count, categories, recent, avoidKeys),
-      3, // Generate 3 questions total
-      undefined, // No progress callback for initial batch
-      getQuestionDedupeKey,
-    );
+  if (apiKey) {
+    const recent = getRecent();
+    const avoidKeys = bank.slice(-60).map((b) => b.topicKey || b.question);
 
-    // Store in bank immediately before resolving images
-    addQuestionsToBank(raw.map((q) => questionToBankItem(q, level)));
-    const prepared = await prepareRoundQuestions(raw, 2, 3500);
-    return prepared;
-  };
-
-  try {
-    const result = await tryFetch();
-    if (result.length >= 2) {
-      rememberQuestions(result);
-      return result;
-    }
-
-    // If 1 question prepared, supplement with least-recently-seen bank item
-    if (result.length === 1) {
-      const fallback = fillFromLeastRecentlySeen<BankQuizItem>(
-        bank,
-        level,
-        1,
-        new Set(result.map(getQuestionDedupeKey)),
-        (item) => categories.includes(item.category as CategoryKey),
+    const tryFetch = async (): Promise<Question[]> => {
+      const raw = await generateQuestionsParallel(
+        (count) => buildPrompt(level, count, categories, recent, avoidKeys),
+        3,
+        undefined,
+        getQuestionDedupeKey,
       );
-      if (fallback.length > 0) {
-        const combined = [...result, ...fallback.map(bankItemToQuestion)];
-        rememberQuestions(combined);
-        return combined;
-      }
-    }
 
-    if (result.length === 0) {
-      throw new QuizError("INVALID_RESPONSE");
-    }
-    rememberQuestions(result);
-    return result;
-  } catch (e) {
-    // Fallback to least-recently-seen bank items if AI fails
-    const fallbackBankItems = fillFromLeastRecentlySeen<BankQuizItem>(
-      bank,
-      level,
-      2,
-      new Set(),
-      (item) => categories.includes(item.category as CategoryKey),
-    );
-    if (fallbackBankItems.length >= 2) {
-      const prepared = await prepareRoundQuestions(
-        fallbackBankItems.map(bankItemToQuestion),
-        2,
-        3000,
-      );
-      if (prepared.length >= 2) {
-        rememberQuestions(prepared);
+      if (raw.length > 0) {
+        addQuestionsToBank(raw.map((q) => questionToBankItem(q, level)));
+        const prepared = await prepareRoundQuestions(raw, 2, 3500);
         return prepared;
       }
+      return [];
+    };
+
+    try {
+      const result = await tryFetch();
+      if (result.length >= 2) {
+        rememberQuestions(result);
+        return result;
+      }
+
+      if (result.length === 1) {
+        const fallback = fillFromLeastRecentlySeen<BankQuizItem>(
+          bank,
+          level,
+          1,
+          new Set(result.map(getQuestionDedupeKey)),
+          (item) => categories.includes(item.category as CategoryKey),
+        );
+        if (fallback.length > 0) {
+          const combined = [...result, ...fallback.map(bankItemToQuestion)];
+          rememberQuestions(combined);
+          return combined;
+        }
+      }
+    } catch (err) {
+      console.warn("AI generation failed in fetchInitialBatch, using fallback bank:", err);
     }
-    throw e;
   }
+
+  // 3. Fallback to least-recently-seen bank items
+  const fallbackBankItems = fillFromLeastRecentlySeen<BankQuizItem>(
+    bank,
+    level,
+    3,
+    new Set(),
+    (item) => categories.includes(item.category as CategoryKey),
+  );
+  if (fallbackBankItems.length >= 2) {
+    const prepared = await prepareRoundQuestions(
+      fallbackBankItems.map(bankItemToQuestion),
+      fallbackBankItems.length,
+      2500,
+    );
+    if (prepared.length >= 2) {
+      rememberQuestions(prepared);
+      return prepared;
+    }
+  }
+
+  // 4. Seed from curated fallback bank (ensures questions ALWAYS appear)
+  const seeded = seedBankFromFallback(level, categories, 4);
+  const prepared = await prepareRoundQuestions(seeded, seeded.length, 2500);
+  if (prepared.length >= 2) {
+    rememberQuestions(prepared);
+    return prepared;
+  }
+
+  // 5. Ultimate safety net: any text fallback questions (100% offline, guaranteed)
+  const emergency = getAnyFallbackQuestions(level, 3);
+  rememberQuestions(emergency);
+  return emergency;
 }
 
 /**
@@ -457,9 +469,13 @@ export async function fetchRemainingBatch(
 
   const stillNeeded = remainingNeeded - accumulated.length;
 
-  // 2. Use parallel AI generation for remaining questions
-  // Distribute across all 4 models simultaneously for maximum speed
-  if (stillNeeded > 0) {
+  const apiKey =
+    typeof settings?.openrouterKey === "string"
+      ? settings.openrouterKey.trim()
+      : getOpenRouterApiKey();
+
+  // 2. Use parallel AI generation for remaining questions if API key is configured
+  if (stillNeeded > 0 && apiKey) {
     const recent = getRecent();
     const avoidTitles = [
       ...existingQuestions.map((q) => q.question),
@@ -468,7 +484,7 @@ export async function fetchRemainingBatch(
     ];
 
     try {
-      // Generate all remaining questions in one parallel batch across 4 models
+      // Generate all remaining questions in one parallel batch across models
       const raw = await generateQuestionsParallel(
         (count) => buildPrompt(level, count, categories, recent, avoidTitles),
         stillNeeded + 2, // +2 spares for deduplication
@@ -512,7 +528,7 @@ export async function fetchRemainingBatch(
         onBatchReady?.(uniqueNew);
       }
     } catch (err) {
-      console.warn("Parallel background fetch error:", err);
+      console.warn("Parallel background fetch error, using fallback bank:", err);
       // Fallback from least-recently-seen bank if AI fails
       const fallback = fillFromLeastRecentlySeen<BankQuizItem>(
         bank,
@@ -535,6 +551,52 @@ export async function fetchRemainingBatch(
         onBatchReady?.(preparedFallback);
       }
     }
+  }
+
+  // 3. Fallback: If still short of remainingNeeded, fill from least-recently-seen bank or curated fallback
+  if (accumulated.length < remainingNeeded) {
+    const needed = remainingNeeded - accumulated.length;
+    const fallback = fillFromLeastRecentlySeen<BankQuizItem>(
+      bank,
+      level,
+      needed,
+      existingKeys,
+      (item) => categories.includes(item.category as CategoryKey),
+    );
+    if (fallback.length > 0) {
+      const preparedFallback = await prepareRoundQuestions(
+        fallback.map(bankItemToQuestion),
+        fallback.length,
+        2500,
+      );
+      for (const q of preparedFallback) {
+        const key = getQuestionDedupeKey(q);
+        if (!existingKeys.has(key)) {
+          existingKeys.add(key);
+          accumulated.push(q);
+          onBatchReady?.([q]);
+        }
+      }
+    }
+  }
+
+  // 4. If still short of remainingNeeded, seed from curated fallback bank
+  if (accumulated.length < remainingNeeded) {
+    const needed = remainingNeeded - accumulated.length;
+    const seeded = seedBankFromFallback(level, categories, needed + 4);
+    const prepared = await prepareRoundQuestions(seeded, seeded.length, 2500);
+    const candidates = prepared.length > 0 ? prepared : getAnyFallbackQuestions(level, needed);
+
+    for (const q of candidates) {
+      if (accumulated.length >= remainingNeeded) break;
+      const key = getQuestionDedupeKey(q);
+      if (!existingKeys.has(key)) {
+        existingKeys.add(key);
+        accumulated.push(q);
+        onBatchReady?.([q]);
+      }
+    }
+    rememberQuestions(accumulated);
   }
 
   return accumulated;

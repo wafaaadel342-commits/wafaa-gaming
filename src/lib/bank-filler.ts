@@ -11,6 +11,7 @@ import {
   generateQuestionsParallel,
   generateWordsParallel,
   generateSentencesParallel,
+  getOpenRouterApiKey,
 } from "./parallel-ai";
 import {
   ALL_CATEGORY_KEYS,
@@ -171,6 +172,16 @@ export async function runBankFilling(
   onProgress: (p: FillProgress) => void,
   isCancelled: () => boolean,
 ): Promise<{ added: number; error?: string }> {
+  const apiKey =
+    (settings?.openrouterKey && settings.openrouterKey.trim()) || getOpenRouterApiKey();
+  if (!apiKey) {
+    return {
+      added: 0,
+      error:
+        "يرجى إدخال مفتاح OpenRouter API في إعدادات الذكاء الاصطناعي للتمكن من تعبئة البنك بالذكاء الاصطناعي، أو استخدم زر 'استيراد بنك الأسئلة المدمج'.",
+    };
+  }
+
   let completed = 0;
   let cycleIndex = 0;
 

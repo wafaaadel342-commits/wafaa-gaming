@@ -214,7 +214,9 @@ export const THEME_KEY = "tahaddi-theme";
 
 // Default OpenRouter API key from environment if available
 export const DEFAULT_OPENROUTER_KEY =
-  (typeof import.meta !== "undefined" && import.meta.env?.["VITE_OPENROUTER_API_KEY"]) || "";
+  (typeof import.meta !== "undefined" &&
+    (import.meta.env?.["VITE_OPENROUTER_API_KEY"] || import.meta.env?.["OPENROUTER_API_KEY"])) ||
+  "";
 
 export const DEFAULT_SETTINGS: Settings = {
   openrouterKey: DEFAULT_OPENROUTER_KEY,
@@ -235,7 +237,7 @@ export function loadSettings(): Settings {
     const parsed = JSON.parse(raw) as Record<string, unknown>;
 
     const openrouterKey =
-      typeof parsed["openrouterKey"] === "string" && parsed["openrouterKey"].trim()
+      typeof parsed["openrouterKey"] === "string"
         ? parsed["openrouterKey"]
         : DEFAULT_OPENROUTER_KEY;
 
@@ -264,8 +266,11 @@ export function saveSettings(s: Settings) {
   localStorage.setItem(SETTINGS_KEY, JSON.stringify(s));
 }
 
-export function hasAnyKey(s: Settings): boolean {
-  return Boolean(s.openrouterKey.trim());
+export function hasAnyKey(s?: Settings | null): boolean {
+  if (s && typeof s.openrouterKey === "string" && s.openrouterKey.trim()) {
+    return true;
+  }
+  return Boolean(DEFAULT_OPENROUTER_KEY.trim());
 }
 
 export const hasActiveKey = hasAnyKey;
