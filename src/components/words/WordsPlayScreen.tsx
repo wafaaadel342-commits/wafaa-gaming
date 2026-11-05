@@ -57,6 +57,9 @@ export function WordsPlayScreen({ level, words, onFinish, onHome }: Props) {
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   // Stable ref for advance timer – avoids cancelling it on re-render
   const advanceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // Stable ref for advanceToNext so the check-word effect doesn't re-run when
+  // score/streak/results change (which would cancel the advance timer).
+  const advanceToNextRef = useRef<() => void>(() => {});
 
   // Initialize word state whenever currentIndex changes
   const initWord = useCallback((item: WordItem) => {
@@ -157,6 +160,19 @@ export function WordsPlayScreen({ level, words, onFinish, onHome }: Props) {
     }
   }, [currentIndex, words.length, maxStreak, streak, score, results, onFinish]);
 
+  // Keep ref in sync so the check-word effect can call the latest version
+  // without having it in its own dependency array.
+  useEffect(() => {
+    advanceToNextRef.current = advanceToNext;
+  });
+
+  // Cleanup advance/wrong timers on unmount
+  useEffect(() => {
+    return () => {
+      if (advanceTimerRef.current) clearTimeout(advanceTimerRef.current);
+    };
+  }, []);
+
   // Check word when all slots are filled
   useEffect(() => {
     if (status !== "playing" || !currentWord) return;
@@ -201,20 +217,23 @@ export function WordsPlayScreen({ level, words, onFinish, onHome }: Props) {
         },
       ]);
 
-      // Auto-advance after ~1.2s
-      const t = setTimeout(() => {
-        advanceToNext();
+      // Auto-advance after ~1.2s – use a stable ref so React effect cleanup
+      // on rapid re-renders doesn't cancel the timer prematurely.
+      if (advanceTimerRef.current) clearTimeout(advanceTimerRef.current);
+      advanceTimerRef.current = setTimeout(() => {
+        advanceTimerRef.current = null;
+        advanceToNextRef.current();
       }, 1200);
-
-      return () => clearTimeout(t);
     } else {
       // Wrong!
       setStatus("wrong");
       sound.playWrong();
       setWrongAttempts((w) => w + 1);
 
-      // Return unlocked letters to tray after ~0.8s
-      const t = setTimeout(() => {
+      // Return unlocked letters to tray after ~0.8s – use a local variable
+      // captured in closure; no need to return cleanup since the timer only
+      // calls setters (safe to run even after unmount in React 18).
+      const wrongTimer = setTimeout(() => {
         setSlots((prevSlots) => {
           const unlocked = prevSlots.filter((s) => !s.isLocked && s.letter !== null);
           const returnedTiles: TrayTile[] = unlocked.map((s) => ({
@@ -231,7 +250,8 @@ export function WordsPlayScreen({ level, words, onFinish, onHome }: Props) {
         setStatus("playing");
       }, 800);
 
-      return () => clearTimeout(t);
+      // Store so we can cancel if the component unmounts during the shake
+      advanceTimerRef.current = wrongTimer;
     }
   }, [
     slots,
@@ -241,7 +261,9 @@ export function WordsPlayScreen({ level, words, onFinish, onHome }: Props) {
     revealedCount,
     wrongAttempts,
     streak,
-    advanceToNext,
+    // advanceToNext intentionally omitted: it changes on every score/results
+    // update which would re-run this effect and cancel the advance timer.
+    // advanceToNextRef always holds the latest version (synced above).
   ]);
 
   // Tap tray tile -> flies to first empty slot (RTL order: slot 0 is rightmost)
@@ -501,6 +523,22 @@ export function WordsPlayScreen({ level, words, onFinish, onHome }: Props) {
             "{currentWord.hint}"
           </h2>
         </motion.div>
+
+        {/* Wrong-answer feedback banner */}
+        <AnimatePresence>
+          {status === "wrong" && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.2 }}
+              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-destructive/15 border border-destructive/30 text-destructive font-bold text-sm"
+            >
+              <span>❌</span>
+              <span>ترتيب خاطئ! حاول مرة أخرى</span>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* Answer Slots (RTL order: slot 0 is rightmost in standard RTL layout) */}
         <div

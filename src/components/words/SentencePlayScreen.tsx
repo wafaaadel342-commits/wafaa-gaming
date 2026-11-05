@@ -67,6 +67,11 @@ export function SentencePlayScreen({ level, sentences, onFinish, onHome }: Props
 
   const [timeLeft, setTimeLeft] = useState(() => calculateTimer(currentSentence));
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  // Stable ref for advance timer – avoids cancelling it on re-render
+  const advanceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // Stable ref for advanceToNext so the check-sentence effect doesn't re-run
+  // when score/streak/results change (which would cancel the advance timer).
+  const advanceToNextRef = useRef<() => void>(() => {});
 
   // Initialize sentence state when currentIndex changes
   const initSentence = useCallback(
@@ -173,6 +178,19 @@ export function SentencePlayScreen({ level, sentences, onFinish, onHome }: Props
     }
   }, [currentIndex, sentences.length, maxStreak, streak, score, results, onFinish]);
 
+  // Keep ref in sync so the check-sentence effect can call the latest version
+  // without having it in its own dependency array.
+  useEffect(() => {
+    advanceToNextRef.current = advanceToNext;
+  });
+
+  // Cleanup advance timer on unmount
+  useEffect(() => {
+    return () => {
+      if (advanceTimerRef.current) clearTimeout(advanceTimerRef.current);
+    };
+  }, []);
+
   // Check sentence when all slots are filled
   useEffect(() => {
     if (status !== "playing" || !currentSentence) return;
@@ -216,24 +234,24 @@ export function SentencePlayScreen({ level, sentences, onFinish, onHome }: Props
         },
       ]);
 
-      // Auto-advance after 1.2s
-      const t = setTimeout(() => {
-        advanceToNext();
+      // Auto-advance after 1.2s – use stable refs so React effect cleanup
+      // on rapid re-renders doesn't cancel the timer prematurely.
+      if (advanceTimerRef.current) clearTimeout(advanceTimerRef.current);
+      advanceTimerRef.current = setTimeout(() => {
+        advanceTimerRef.current = null;
+        advanceToNextRef.current();
       }, 1200);
-
-      return () => clearTimeout(t);
     } else {
       // Wrong arrangement
       setStatus("wrong");
       sound.playWrong();
       setWrongAttempts((w) => w + 1);
 
-      // Keep slots editable, reset status to playing after a brief shake
-      const t = setTimeout(() => {
+      // Reset status to playing after a brief shake
+      const wrongTimer = setTimeout(() => {
         setStatus("playing");
       }, 800);
-
-      return () => clearTimeout(t);
+      advanceTimerRef.current = wrongTimer;
     }
   }, [
     slots,
@@ -243,7 +261,9 @@ export function SentencePlayScreen({ level, sentences, onFinish, onHome }: Props
     revealedCount,
     wrongAttempts,
     streak,
-    advanceToNext,
+    // advanceToNext intentionally omitted: it changes on every score/results
+    // update which would re-run this effect and cancel the advance timer.
+    // advanceToNextRef always holds the latest version (synced above).
   ]);
 
   // Click on tray chip -> places into first empty slot
@@ -544,6 +564,22 @@ export function SentencePlayScreen({ level, sentences, onFinish, onHome }: Props
             })}
           </motion.div>
         </div>
+
+        {/* Wrong-answer feedback banner */}
+        <AnimatePresence>
+          {status === "wrong" && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.2 }}
+              className="flex items-center justify-center gap-2 px-4 py-2 rounded-xl bg-destructive/15 border border-destructive/30 text-destructive font-bold text-sm"
+            >
+              <span>❌</span>
+              <span>ترتيب خاطئ! حاول مرة أخرى</span>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* Revealed/Timeout alert */}
         {status === "revealed" && (
