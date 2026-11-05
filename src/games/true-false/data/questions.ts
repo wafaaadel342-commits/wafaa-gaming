@@ -1,4 +1,5 @@
 import type { TrueFalseQuestion } from "../types";
+import { EXPANSION_QUESTIONS } from "./questions-expansion";
 
 type SeedQuestion = Omit<TrueFalseQuestion, "verified" | "status">;
 
@@ -1030,7 +1031,10 @@ const SEED_QUESTIONS: SeedQuestion[] = [
   },
 ];
 
-export const VERIFIED_QUESTIONS: TrueFalseQuestion[] = SEED_QUESTIONS.map((question) => ({
+export const VERIFIED_QUESTIONS: TrueFalseQuestion[] = [
+  ...SEED_QUESTIONS,
+  ...EXPANSION_QUESTIONS,
+].map((question) => ({
   ...question,
   verified: true,
   status: "approved",

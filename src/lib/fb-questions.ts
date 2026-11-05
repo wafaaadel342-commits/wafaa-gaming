@@ -6,9 +6,10 @@
  *
  * Guarantees:
  *  - Only `status === "approved"` questions are returned to the client.
- *  - `correctIndex` is NEVER part of the client-visible `questions` documents.
- *    Answers live in `questionAnswers`, which Security Rules block entirely;
- *    they are resolved server-side through Cloud Functions / Admin SDK.
+ *  - New `questions` documents carry `correctIndex` so the client can validate
+ *    answers locally even without Cloud Functions. Legacy documents keep the
+ *    answer only in `questionAnswers` (blocked by Security Rules) and use the
+ *    server-side `submitAnswer` fallback.
  *  - Small batches + cursor pagination (`startAfter`), never the full bank.
  *  - No gameplay path waits for Firestore: callers keep the local bank and
  *    OpenRouter path as fallback.
@@ -42,6 +43,12 @@ export interface FirestoreQuestionDoc {
   categoryKey: string;
   question: string;
   options: string[];
+  /**
+   * Optional answer index stored alongside the public document so the client
+   * can validate locally when Cloud Functions are unavailable. Legacy docs
+   * keep the answer only in `questionAnswers` and use the callable path.
+   */
+  correctIndex?: number;
   explanation: string;
   level: Level;
   topicKey?: string;
@@ -90,9 +97,40 @@ function docToQuestion(doc: QueryDocumentSnapshot<DocumentData>): Question {
   const rawOptions = Array.isArray(d.options)
     ? d.options.filter((o) => typeof o === "string").slice(0, 4)
     : [];
-  // Shuffle the displayed order once and keep the mapping to the stored order.
-  // `submitAnswer` receives the original index, so server-side validation and
-  // the correct answer returned by the function stay exact.
+
+  // Preferred path: the document carries `correctIndex`, so options can be
+  // shuffled once and validated entirely on the client. This keeps scoring
+  // exact even when Cloud Functions are not deployed (the server-side callable
+  // path is only a fallback for legacy docs without a public answer index).
+  const storedCorrect = d.correctIndex;
+  const hasLocalAnswer =
+    rawOptions.length === 4 &&
+    typeof storedCorrect === "number" &&
+    Number.isInteger(storedCorrect) &&
+    storedCorrect >= 0 &&
+    storedCorrect <= 3;
+
+  if (hasLocalAnswer) {
+    const { options, correctIndex } = shuffleOptionsWithMapping(rawOptions, storedCorrect);
+    return {
+      id: doc.id,
+      category: safeCategory,
+      question: typeof d.question === "string" ? d.question : "",
+      options,
+      explanation: typeof d.explanation === "string" ? d.explanation : "",
+      correctIndex,
+      // The Firestore doc carries `level`; Question in quiz.ts has no level field,
+      // so it is attached dynamically and read by the caller when needed.
+      level: (d.level as Level) || "medium",
+      topicKey: d.topicKey,
+      countryCode: d.countryCode,
+      imageQuery: d.imageQuery,
+    } as Question & { level: Level };
+  }
+
+  // Legacy path: shuffle the displayed order once and keep the mapping to the
+  // stored order. `submitAnswer` receives the original index, so server-side
+  // validation and the correct answer returned by the function stay exact.
   const { options, order } = shuffleOptionsWithMapping(rawOptions, -1);
 
   return {

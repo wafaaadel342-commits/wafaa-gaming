@@ -597,6 +597,426 @@
         "أشرف حكيمي"
       ],
       "explanation": "محمد صلاح حطم أرقاماً قياسيّة في الدوري الإنجليزي."
+    },
+    {
+      "level": "medium",
+      "category": "capitals",
+      "categoryKey": "capitals",
+      "topicKey": "capital_japan",
+      "correctIndex": 0,
+      "question": "ما هي عاصمة اليابان؟",
+      "options": [
+        "طوكيو",
+        "أوساكا",
+        "كيوتو",
+        "ناغويا"
+      ],
+      "explanation": "طوكيو هي عاصمة اليابان وأكبر مدنها، وتقع على ساحل المحيط الهادئ."
+    },
+    {
+      "level": "medium",
+      "category": "capitals",
+      "categoryKey": "capitals",
+      "topicKey": "capital_germany",
+      "correctIndex": 0,
+      "question": "ما هي عاصمة ألمانيا؟",
+      "options": [
+        "برلين",
+        "ميونخ",
+        "هامبورغ",
+        "فرانكفورت"
+      ],
+      "explanation": "برلين هي عاصمة ألمانيا وأكبر مدنها، وأصبحت عاصمة البلاد بعد إعادة التوحيد عام 1990."
+    },
+    {
+      "level": "medium",
+      "category": "capitals",
+      "categoryKey": "capitals",
+      "topicKey": "capital_turkey",
+      "correctIndex": 0,
+      "question": "ما هي عاصمة تركيا؟",
+      "options": [
+        "أنقرة",
+        "إسطنبول",
+        "إزمير",
+        "بورصة"
+      ],
+      "explanation": "أنقرة هي العاصمة السياسية لتركيا منذ عام 1923، بينما إسطنبول هي أكبر مدنها."
+    },
+    {
+      "level": "medium",
+      "category": "capitals",
+      "categoryKey": "capitals",
+      "topicKey": "capital_morocco",
+      "correctIndex": 0,
+      "question": "ما هي عاصمة المغرب؟",
+      "options": [
+        "الرباط",
+        "الدار البيضاء",
+        "مراكش",
+        "فاس"
+      ],
+      "explanation": "الرباط هي عاصمة المغرب، أما الدار البيضاء فهي أكبر المدن من حيث عدد السكان."
+    },
+    {
+      "level": "medium",
+      "category": "capitals",
+      "categoryKey": "capitals",
+      "topicKey": "capital_argentina",
+      "correctIndex": 0,
+      "question": "ما هي عاصمة الأرجنتين؟",
+      "options": [
+        "بوينس آيرس",
+        "سانتياغو",
+        "ليما",
+        "مونتيفيديو"
+      ],
+      "explanation": "بوينس آيرس هي عاصمة الأرجنتين وأكبر مدنها، وتقع على ضفاف Río de la Plata."
+    },
+    {
+      "level": "medium",
+      "category": "capitals",
+      "categoryKey": "capitals",
+      "topicKey": "capital_india",
+      "correctIndex": 0,
+      "question": "ما هي عاصمة الهند؟",
+      "options": [
+        "نيودلهي",
+        "مومباي",
+        "كولكاتا",
+        "تشيناي"
+      ],
+      "explanation": "نيودلهي هي عاصمة الهند، وتقع داخل منطقة دلهي الحضرية."
+    },
+    {
+      "level": "easy",
+      "category": "capitals",
+      "categoryKey": "capitals",
+      "topicKey": "capital_spain",
+      "correctIndex": 0,
+      "question": "ما هي عاصمة إسبانيا؟",
+      "options": [
+        "مدريد",
+        "برشلونة",
+        "إشبيلية",
+        "بلنسية"
+      ],
+      "explanation": "مدريد هي عاصمة إسبانيا وأكبر مدنها، وتقع في وسط البلاد."
+    },
+    {
+      "level": "medium",
+      "category": "capitals",
+      "categoryKey": "capitals",
+      "topicKey": "capital_kenya",
+      "correctIndex": 0,
+      "question": "ما هي عاصمة كينيا؟",
+      "options": [
+        "نيروبي",
+        "مومباسا",
+        "دار السلام",
+        "أديس أبابا"
+      ],
+      "explanation": "نيروبي هي عاصمة كينيا وأكبر مدنها، وتشتهر بكونها من أكبر مدن أفريقيا."
+    },
+    {
+      "level": "medium",
+      "category": "capitals",
+      "categoryKey": "capitals",
+      "topicKey": "capital_norway",
+      "correctIndex": 0,
+      "question": "ما هي عاصمة النرويج؟",
+      "options": [
+        "أوسلو",
+        "برغن",
+        "ستافانغر",
+        "ترومسو"
+      ],
+      "explanation": "أوسلو هي عاصمة النرويج وأكبر مدنها، وتقع على رأس مضيق أوسلوفجورد."
+    },
+    {
+      "level": "hard",
+      "category": "capitals",
+      "categoryKey": "capitals",
+      "topicKey": "capital_vietnam",
+      "correctIndex": 0,
+      "question": "ما هي عاصمة فيتنام؟",
+      "options": [
+        "هانوي",
+        "هو تشي منه",
+        "دا نانغ",
+        "هايفونغ"
+      ],
+      "explanation": "هانوي هي عاصمة فيتنام، أما مدينة هو تشي منه فهي أكبر مدن البلاد."
+    },
+    {
+      "level": "easy",
+      "category": "general_knowledge",
+      "categoryKey": "general_knowledge",
+      "topicKey": "largest_ocean",
+      "correctIndex": 0,
+      "question": "ما هو أكبر محيط في العالم؟",
+      "options": [
+        "المحيط الهادئ",
+        "المحيط الأطلسي",
+        "المحيط الهندي",
+        "المحيط المتجمد الشمالي"
+      ],
+      "explanation": "المحيط الهادئ هو أكبر وأعمق محيطات العالم، ويغطي نحو ثلث سطح الأرض."
+    },
+    {
+      "level": "easy",
+      "category": "general_knowledge",
+      "categoryKey": "general_knowledge",
+      "topicKey": "rainbow_colors",
+      "correctIndex": 0,
+      "question": "كم عدد ألوان قوس قزح؟",
+      "options": [
+        "7 ألوان",
+        "5 ألوان",
+        "6 ألوان",
+        "8 ألوان"
+      ],
+      "explanation": "يُقسّم قوس قزح تقليدياً إلى سبعة ألوان: الأحمر والبرتقالي والأصفر والأخضر والأزرق والنيلي والبنفسجي."
+    },
+    {
+      "level": "medium",
+      "category": "general_knowledge",
+      "categoryKey": "general_knowledge",
+      "topicKey": "iron_symbol",
+      "correctIndex": 0,
+      "question": "ما هو العنصر الكيميائي الذي رمزه Fe؟",
+      "options": [
+        "الحديد",
+        "الفلور",
+        "الفرانسيوم",
+        "الفوسفور"
+      ],
+      "explanation": "الرمز Fe مشتق من الكلمة اللاتينية Ferrum، وهو رمز عنصر الحديد في الجدول الدوري."
+    },
+    {
+      "level": "easy",
+      "category": "general_knowledge",
+      "categoryKey": "general_knowledge",
+      "topicKey": "current_unit",
+      "correctIndex": 0,
+      "question": "ما هي وحدة قياس شدة التيار الكهربائي؟",
+      "options": [
+        "الأمبير",
+        "الفولت",
+        "الأوم",
+        "الواط"
+      ],
+      "explanation": "الأمبير هو وحدة قياس شدة التيار الكهربائي، بينما الفولت لقياس الجهد والأوم للمقاومة."
+    },
+    {
+      "level": "medium",
+      "category": "general_knowledge",
+      "categoryKey": "general_knowledge",
+      "topicKey": "light_bulb_inventor",
+      "correctIndex": 0,
+      "question": "من هو مخترع المصباح الكهربائي التجاري؟",
+      "options": [
+        "توماس إديسون",
+        "نيكولا تسلا",
+        "ألساندرو فولتا",
+        "جيمس وات"
+      ],
+      "explanation": "طوّر توماس إديسون أول مصباح كهربائي تجاري عملي طويل الأمد عام 1879."
+    },
+    {
+      "level": "easy",
+      "category": "general_knowledge",
+      "categoryKey": "general_knowledge",
+      "topicKey": "largest_country",
+      "correctIndex": 0,
+      "question": "ما هي أكبر دولة في العالم من حيث المساحة؟",
+      "options": [
+        "روسيا",
+        "كندا",
+        "الصين",
+        "الولايات المتحدة"
+      ],
+      "explanation": "روسيا هي أكبر دولة في العالم مساحةً، إذ تبلغ مساحتها نحو 17 مليون كيلومتر مربع."
+    },
+    {
+      "level": "easy",
+      "category": "general_knowledge",
+      "categoryKey": "general_knowledge",
+      "topicKey": "highest_mountain",
+      "correctIndex": 0,
+      "question": "ما هي أعلى قمة جبلية في العالم؟",
+      "options": [
+        "قمة إيفرست",
+        "قمة كي2",
+        "كانغشينجونغا",
+        "قمة ماكينيلي"
+      ],
+      "explanation": "قمة إيفرست في سلسلة جبال الهيمالايا هي أعلى قمة على سطح الأرض بارتفاع نحو 8849 متراً."
+    },
+    {
+      "level": "medium",
+      "category": "general_knowledge",
+      "categoryKey": "general_knowledge",
+      "topicKey": "most_spoken_native_language",
+      "correctIndex": 0,
+      "question": "ما هي اللغة الأكثر تحدثاً كلغة أم في العالم؟",
+      "options": [
+        "الماندرين الصينية",
+        "الإنجليزية",
+        "الإسبانية",
+        "الهندية"
+      ],
+      "explanation": "الماندرين الصينية هي اللغة الأكثر تحدثاً كلغة أم في العالم، بأكثر من 900 مليون متحدث."
+    },
+    {
+      "level": "easy",
+      "category": "general_knowledge",
+      "categoryKey": "general_knowledge",
+      "topicKey": "leap_year_days",
+      "correctIndex": 0,
+      "question": "كم عدد أيام السنة الكبيسة؟",
+      "options": [
+        "366 يوماً",
+        "365 يوماً",
+        "364 يوماً",
+        "367 يوماً"
+      ],
+      "explanation": "تضم السنة الكبيسة 366 يوماً، إذ يُضاف يوم 29 فبراير كل أربع سنوات."
+    },
+    {
+      "level": "easy",
+      "category": "general_knowledge",
+      "categoryKey": "general_knowledge",
+      "topicKey": "ship_of_desert",
+      "correctIndex": 0,
+      "question": "ما هو الحيوان الذي يُلقّب بـ«سفينة الصحراء»؟",
+      "options": [
+        "الجمل",
+        "الحصان",
+        "الفيل",
+        "الغزال"
+      ],
+      "explanation": "يُلقّب الجمل بسفينة الصحراء لقدرته على تحمل العطش والسير لمسافات طويلة في الصحراء."
+    },
+    {
+      "level": "medium",
+      "category": "general_knowledge",
+      "categoryKey": "general_knowledge",
+      "topicKey": "largest_human_organ",
+      "correctIndex": 0,
+      "question": "ما هو أكبر عضو في جسم الإنسان؟",
+      "options": [
+        "الجلد",
+        "الكبد",
+        "الرئة",
+        "القلب"
+      ],
+      "explanation": "الجلد هو أكبر عضو في جسم الإنسان من حيث المساحة والوزن، ويشكل حاجزاً واقياً للجسم."
+    },
+    {
+      "level": "medium",
+      "category": "general_knowledge",
+      "categoryKey": "general_knowledge",
+      "topicKey": "most_abundant_gas",
+      "correctIndex": 0,
+      "question": "ما هو الغاز الأكثر وفرة في الغلاف الجوي للأرض؟",
+      "options": [
+        "النيتروجين",
+        "الأكسجين",
+        "ثاني أكسيد الكربون",
+        "الأرجون"
+      ],
+      "explanation": "يشكل النيتروجين نحو 78% من الغلاف الجوي، يليه الأكسجين بنحو 21%."
+    },
+    {
+      "level": "hard",
+      "category": "general_knowledge",
+      "categoryKey": "general_knowledge",
+      "topicKey": "skull_bones",
+      "correctIndex": 0,
+      "question": "كم عدد عظام جمجمة الإنسان البالغ؟",
+      "options": [
+        "22 عظمة",
+        "28 عظمة",
+        "18 عظمة",
+        "32 عظمة"
+      ],
+      "explanation": "تتكون جمجمة الإنسان البالغ من 22 عظمة: 8 عظام قحفية و14 عظمة وجهية."
+    },
+    {
+      "level": "easy",
+      "category": "general_knowledge",
+      "categoryKey": "general_knowledge",
+      "topicKey": "first_moon_walker",
+      "correctIndex": 0,
+      "question": "من هو أول إنسان مشى على سطح القمر؟",
+      "options": [
+        "نيل أرمسترونغ",
+        "باز ألدرين",
+        "يوري غاغارين",
+        "مايكل كولينز"
+      ],
+      "explanation": "كان نيل أرمسترونغ أول إنسان يطأ سطح القمر في مهمة أبولو 11 عام 1969."
+    },
+    {
+      "level": "medium",
+      "category": "quotes",
+      "categoryKey": "quotes",
+      "topicKey": "quote_descartes",
+      "correctIndex": 0,
+      "question": "من قائل: «أنا أفكر إذن أنا موجود»؟",
+      "options": [
+        "رينيه ديكارت",
+        "إيمانويل كانط",
+        "أفلاطون",
+        "أرسطو"
+      ],
+      "explanation": "هذه العبارة الشهيرة للفيلسوف الفرنسي رينيه ديكارت، وتُعرف باللاتينية Cogito ergo sum."
+    },
+    {
+      "level": "hard",
+      "category": "quotes",
+      "categoryKey": "quotes",
+      "topicKey": "quote_archimedes",
+      "correctIndex": 0,
+      "question": "من قائل: «أعطني نقطة ارتكاز أحرك بها الأرض»؟",
+      "options": [
+        "أرخميدس",
+        "فيثاغورس",
+        "إقليدس",
+        "بطليموس"
+      ],
+      "explanation": "العبارة تُنسب إلى العالم اليوناني أرخميدس تعبيراً عن مبدأ الرافعة."
+    },
+    {
+      "level": "hard",
+      "category": "quotes",
+      "categoryKey": "quotes",
+      "topicKey": "quote_sartre",
+      "correctIndex": 0,
+      "question": "من قائل: «الجحيم هو الآخرون»؟",
+      "options": [
+        "جان بول سارتر",
+        "ألبير كامو",
+        "فولتير",
+        "فريدريك نيتشه"
+      ],
+      "explanation": "العبارة من مسرحية «المغلقة» للفيلسوف الوجودي الفرنسي جان بول سارتر."
+    },
+    {
+      "level": "medium",
+      "category": "quotes",
+      "categoryKey": "quotes",
+      "topicKey": "quote_bacon",
+      "correctIndex": 0,
+      "question": "من قال: «المعرفة قوة»؟",
+      "options": [
+        "فرانسيس باكون",
+        "رينيه ديكارت",
+        "إسحاق نيوتن",
+        "ألبرت أينشتاين"
+      ],
+      "explanation": "تُنسب عبارة «المعرفة قوة» إلى الفيلسوف الإنجليزي فرانسيس باكون."
     }
   ]
 }

@@ -332,10 +332,12 @@ export function QuizScreen({ level, settings, setupOptions, onFinish, onExit }: 
         sound.playClick();
       }
 
-      // Firestore questions: correctness is verified server-side. The answer
-      // never exists in the browser before this call. Send the ORIGINAL option
-      // index (not the shuffled display position) so validation stays exact.
-      if (firestoreMode && q.id) {
+      // Firestore questions without a public answer index: correctness is
+      // verified server-side. The answer never exists in the browser before
+      // this call. Send the ORIGINAL option index (not the shuffled display
+      // position) so validation stays exact. Documents that carry a local
+      // `correctIndex` skip this and use the normal client-side path below.
+      if (firestoreMode && q.id && q.correctIndex < 0) {
         const originalChoice =
           choice >= 0 && q.optionOrder ? (q.optionOrder[choice] ?? choice) : choice;
         void submitFirestoreAnswer(q.id, originalChoice).then((result) => {
@@ -531,7 +533,11 @@ export function QuizScreen({ level, settings, setupOptions, onFinish, onExit }: 
         ? q.optionOrder.indexOf(revealed)
         : revealed;
   const awaitingServer =
-    firestoreMode && Boolean(q.id) && revealedAnswers[index] === undefined && selected !== null;
+    firestoreMode &&
+    Boolean(q.id) &&
+    q.correctIndex < 0 &&
+    revealedAnswers[index] === undefined &&
+    selected !== null;
   const isCorrectAnswer = selected !== null && selected === resolvedCorrectIndex;
   const effectiveTotal =
     bgStatus === "ready" || bgStatus === "error" ? questions.length : targetTotal;
