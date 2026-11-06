@@ -1,79 +1,47 @@
-/**
- * Word bank loader - handles both local JSON file and Firebase backend.
- * Completely isolated from other games.
- */
+import wordsData from "../data/words-data.json";
+import type { TargetWordItem } from "../types";
+import { getNormalizedLength, normalizeArabic } from "./normalization";
 
-import { normalizeArabicWord } from "./normalization";
-import { db } from "@/lib/firebase";
-import { collection, getDocs } from "firebase/firestore";
-import type { WordGuessingWord } from "../types";
+export const TARGET_WORDS: TargetWordItem[] =
+  wordsData.target_words as TargetWordItem[];
 
-const FIRESTORE_WORD_COLLECTION = "word_guessing_words";
+// Fast O(1) set lookup for accepted guesses
+const ACCEPTED_GUESSES_SET = new Set<string>(
+  wordsData.accepted_guesses.map((w: string) => normalizeArabic(w)),
+);
 
-/**
- * Load the word bank from Firebase Firestore.
- * Returns a map of wordId → WordGuessingWord.
- */
-export async function loadWordBankFromFirebase(): Promise<Map<string, WordGuessingWord>> {
-  const wordsCol = await getDocs(collection(db, FIRESTORE_WORD_COLLECTION));
-  const wordMap = new Map<string, WordGuessingWord>();
-
-  for (const doc of wordsCol.docs) {
-    const data = doc.data() as WordGuessingWord & { id?: string };
-    const normalized = normalizeArabicWord(data.normalized || data.word || "");
-    if (normalized.length !== 5) continue;
-
-    wordMap.set(doc.id, {
-      id: doc.id,
-      word: data.word || "",
-      normalized,
-      meaning: data.meaning || "",
-      shortHint: data.shortHint || data.meaning || "",
-      category: data.category as import("../types").WordGuessingCategoryKey,
-      difficulty: data.difficulty as import("../types").WordGuessingDifficulty,
-      language: "ar",
-      dialect: (data.dialect as import("../types").WordGuessingWord["dialect"]) ?? "fus'ha",
-      status: (data.status as import("../types").WordGuessingWord["status"]) ?? "approved",
-      sourceName: data.sourceName ?? "",
-      sourceUrl: data.sourceUrl ?? "",
-      verificationNote: data.verificationNote ?? "",
-      normalizedUsage: data.normalizedUsage ?? [],
-      createdAt: data.createdAt ?? Date.now(),
-      updatedAt: data.updatedAt ?? Date.now(),
-    });
-  }
-
-  return wordMap;
+// Ensure all target words are also in the accepted set
+for (const t of TARGET_WORDS) {
+  ACCEPTED_GUESSES_SET.add(normalizeArabic(t.normalized || t.word));
 }
 
 /**
- * Get daily word key for a given date.
+ * Validates whether a typed Arabic word is a legitimate 5-letter guess.
  */
-export async function getDailyWordKey(
-  dateKey: string,
-  wordMap: Map<string, WordGuessingWord>,
-): Promise<string | null> {
-  const approvedWords: string[] = [];
-  for (const [id, word] of wordMap.entries()) {
-    if (word.status === "approved") approvedWords.push(id);
-  }
-
-  if (approvedWords.length === 0) return null;
-
-  // Use deterministic selection
-  const hash = dateKey.split("").reduce((acc, ch) => acc + ch.charCodeAt(0), 0);
-  const idx = Math.abs(hash) % approvedWords.length;
-  return approvedWords[idx] ?? null;
+export function isValidGuess(word: string): boolean {
+  if (!word) return false;
+  const norm = normalizeArabic(word);
+  if (getNormalizedLength(norm) !== 5) return false;
+  return ACCEPTED_GUESSES_SET.has(norm);
 }
 
 /**
- * Load word for a given word ID from the word map.
+ * Select a random target word for Practice mode.
  */
-export async function loadWordById(
-  wordId: string,
-  wordMap: Map<string, WordGuessingWord>,
-): Promise<WordGuessingWord | null> {
-  const word = wordMap.get(wordId);
-  if (!word) return null;
-  return { ...word };
+export function getRandomPracticeWord(excludeIds?: string[]): TargetWordItem {
+  let pool = TARGET_WORDS;
+  if (excludeIds && excludeIds.length > 0) {
+    const filtered = TARGET_WORDS.filter((w) => !excludeIds.includes(w.id));
+    if (filtered.length > 0) pool = filtered;
+  }
+  const index = Math.floor(Math.random() * pool.length);
+  const picked = pool[index];
+  return picked ?? TARGET_WORDS[0]!;
+}
+
+/**
+ * Find target word by its id.
+ */
+export function getTargetWordById(id: string): TargetWordItem | undefined {
+  return TARGET_WORDS.find((w) => w.id === id);
 }

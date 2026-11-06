@@ -1,121 +1,86 @@
-/**
- * Two-pass Wordle-style letter evaluation for Arabic words.
- *
- * Pass 1: mark exact-position matches as GREEN and consume those letters
- * from the secret word's multiset.
- * Pass 2: for remaining guess letters, mark YELLOW only if an unmatched
- * occurrence exists in the secret word's remaining multiset; otherwise GRAY.
- *
- * GREEN > YELLOW > GRAY priority is maintained by design.
- *
- * Completely isolated to this module.
- */
-
-import type { LetterEvaluation } from "../types";
-import { normalizeArabicWord } from "./normalization";
-
-const WORD_LENGTH = 5;
+import type { KeyboardKeyStatus, LetterEvaluation } from "../types";
+import { getLettersArray, normalizeArabic } from "./normalization";
 
 /**
- * Evaluate a guess against a secret word using correct Arabic handling.
- * Both inputs are normalized before comparison.
- *
- * @returns evaluations array aligned with guess positions (left→right),
- * plus `isCorrect` flag.
+ * Two-pass Wordle evaluation algorithm.
+ * Guarantees correct duplicate letter counting.
  */
 export function evaluateGuess(
+  guessWord: string,
   secretWord: string,
-  guess: string,
-): { evaluations: LetterEvaluation[]; isCorrect: boolean } {
-  const secret = normalizeArabicWord(secretWord);
-  const g = normalizeArabicWord(guess);
+): LetterEvaluation[] {
+  const guessLetters = getLettersArray(guessWord);
+  const secretLetters = getLettersArray(secretWord);
 
-  const secretClusters = graphemeClusterList(secret);
-  const guessClusters = graphemeClusterList(g);
+  const len = guessLetters.length;
+  const result: LetterEvaluation[] = new Array(len);
 
-  if (guessClusters.length !== WORD_LENGTH || secretClusters.length !== WORD_LENGTH) {
-    // Fallback: treat as invalid; return all gray.
-    return {
-      evaluations: guessClusters.map((letter, i) => ({
-        letter,
-        letterIndex: i,
-        type: "gray",
-        matchedInSecret: false,
-      })),
-      isCorrect: false,
-    };
-  }
+  // Remaining pool of letters from secret word (unmatched by pass 1)
+  const remainingSecretCounts: Record<string, number> = {};
 
-  const evaluations: LetterEvaluation[] = [];
+  // Pass 1: Identify all GREEN (exact match) tiles
+  for (let i = 0; i < len; i++) {
+    const g = guessLetters[i] ?? "";
+    const s = secretLetters[i] ?? "";
 
-  // Initialize secret letter multiset counts (remaining unmatched letters).
-  const remainingCounts = new Map<string, number>();
-  for (const letter of secretClusters) {
-    remainingCounts.set(letter, (remainingCounts.get(letter) ?? 0) + 1);
-  }
-
-  // Pass 1: exact-position matches (GREEN).
-  // First pass fills null placeholders; we then fill non-green in pass 2.
-  const placeholders = new Array<LetterEvaluation | null>(WORD_LENGTH);
-
-  for (let i = 0; i < WORD_LENGTH; i++) {
-    const guessLetter = guessClusters[i]!;
-    if (guessLetter === secretClusters[i]!) {
-      placeholders[i] = {
-        letter: guessLetter,
-        letterIndex: i,
-        type: "green",
-        matchedInSecret: true,
-      };
-      const current = remainingCounts.get(guessLetter) ?? 0;
-      remainingCounts.set(guessLetter, Math.max(0, current - 1));
-    }
-  }
-
-  // Pass 2: remaining guess letters evaluated against remaining secret counts.
-  for (let i = 0; i < WORD_LENGTH; i++) {
-    const evalSlot = placeholders[i];
-    if (evalSlot) {
-      evaluations.push(evalSlot);
-      continue;
-    }
-
-    const guessLetter = guessClusters[i]!;
-    const remaining = remainingCounts.get(guessLetter) ?? 0;
-
-    if (remaining > 0) {
-      placeholders[i] = {
-        letter: guessLetter,
-        letterIndex: i,
-        type: "yellow",
-        matchedInSecret: true,
-      };
-      remainingCounts.set(guessLetter, remaining - 1);
+    if (g === s) {
+      result[i] = { letter: g, status: "green" };
     } else {
-      placeholders[i] = {
-        letter: guessLetter,
-        letterIndex: i,
-        type: "gray",
-        matchedInSecret: false,
-      };
+      // Add to remaining pool
+      remainingSecretCounts[s] = (remainingSecretCounts[s] || 0) + 1;
     }
-    evaluations.push(placeholders[i]!);
   }
 
-  const isCorrect = evaluations.every((e) => e.type === "green");
-  return { evaluations, isCorrect };
+  // Pass 2: Identify YELLOW (in word, different pos) and GRAY
+  for (let i = 0; i < len; i++) {
+    // If already marked green in pass 1, skip
+    if (result[i]?.status === "green") continue;
+
+    const g = guessLetters[i] ?? "";
+    const available = remainingSecretCounts[g] || 0;
+
+    if (available > 0) {
+      result[i] = { letter: g, status: "yellow" };
+      remainingSecretCounts[g] = available - 1;
+    } else {
+      result[i] = { letter: g, status: "gray" };
+    }
+  }
+
+  return result;
 }
 
 /**
- * Split a normalized Arabic string into its grapheme clusters (letter-by-letter).
- * No diacritics expected after normalization; one base char per cluster.
+ * Status priority: GREEN (3) > YELLOW (2) > GRAY (1) > DEFAULT (0).
  */
-function graphemeClusterList(input: string): string[] {
-  const clusters: string[] = [];
-  for (const ch of input) {
-    clusters.push(ch);
-  }
-  return clusters;
-}
+const STATUS_PRIORITY: Record<KeyboardKeyStatus, number> = {
+  green: 3,
+  yellow: 2,
+  gray: 1,
+  default: 0,
+};
 
-export { WORD_LENGTH };
+/**
+ * Updates keyboard key status without ever downgrading a higher status.
+ */
+export function updateKeyboardStatuses(
+  currentMap: Record<string, KeyboardKeyStatus>,
+  evaluations: LetterEvaluation[],
+): Record<string, KeyboardKeyStatus> {
+  const updated = { ...currentMap };
+
+  for (const item of evaluations) {
+    const char = normalizeArabic(item.letter);
+    if (!char) continue;
+
+    const currentStatus = updated[char] || "default";
+    const currentScore = STATUS_PRIORITY[currentStatus];
+    const newScore = STATUS_PRIORITY[item.status];
+
+    if (newScore > currentScore) {
+      updated[char] = item.status;
+    }
+  }
+
+  return updated;
+}

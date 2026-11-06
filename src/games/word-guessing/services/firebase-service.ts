@@ -1,124 +1,77 @@
-/**
- * Firebase service for Word Guessing game.
- *
- * Completely isolated from other games. Uses shared Firebase init from
- * @/lib/firebase. Collections:
- * - word_guessing_words
- * - word_guessing_daily_puzzles
- * - word_guessing_player_stats
- * - word_guessing_sessions
- */
-
-import { db } from "@/lib/firebase";
+import { auth, db } from "@/lib/firebase";
 import {
+  addDoc,
   collection,
   doc,
   getDoc,
-  setDoc,
-  getDocs,
-  query,
-  where,
-  orderBy,
-  limit,
-  Timestamp,
   serverTimestamp,
-  runTransaction,
-  DocumentData,
+  setDoc,
 } from "firebase/firestore";
+import type { GameResultPayload } from "../types";
 
-import type { WordGuessingWord, WordGuessingStats, WordGuessingSetup, WordGuessingResult } from "../types";
+export const COLLECTIONS = {
+  WORDS: "word_guessing_words",
+  DAILY_PUZZLES: "word_guessing_daily_puzzles",
+  STATS: "word_guessing_player_stats",
+  SESSIONS: "word_guessing_sessions",
+} as const;
 
-const WORDS_COLLECTION = "word_guessing_words";
-const DAILY_COLLECTION = "word_guessing_daily_puzzles";
-const STATS_COLLECTION = "word_guessing_player_stats";
-const SESSIONS_COLLECTION = "word_guessing_sessions";
+/**
+ * Log completed round session to Firestore.
+ * Dedicated strictly to the word-guessing game.
+ */
+export async function logWordGuessingSession(
+  result: GameResultPayload,
+): Promise<boolean> {
+  if (typeof window === "undefined") return false;
 
-/** Approved words only - never expose pending/rejected words to public queries */
-export async function fetchApprovedWords(): Promise<WordGuessingWord[]> {
-  const wordsCol = collection(db, WORDS_COLLECTION);
-  const q = query(wordsCol, where("status", "==", "approved"), orderBy("updatedAt", "desc"), limit(2000));
-  const snap = await getDocs(q);
-  return snap.docs.map((d) => ({ id: d.id, ...d.data() } as WordGuessingWord));
-}
+  try {
+    const currentUserId = auth?.currentUser?.uid || "guest_player";
 
-/** Get daily word for a given date - server-side selection */
-export async function getDailyWord(dateKey: string): Promise<WordGuessingWord | null> {
-  const dailyRef = doc(db, DAILY_COLLECTION, dateKey);
-  const dailySnap = await getDoc(dailyRef);
-
-  if (!dailySnap.exists()) return null;
-
-  const dailyData = dailySnap.data() as { wordId?: string };
-  if (!dailyData.wordId) return null;
-
-  const wordRef = doc(db, WORDS_COLLECTION, dailyData.wordId);
-  const wordSnap = await getDoc(wordRef);
-  if (!wordSnap.exists()) return null;
-
-  return { id: wordSnap.id, ...wordSnap.data() } as WordGuessingWord;
-}
-
-/** Create daily puzzle entry - secure, no word exposed publicly */
-export async function createDailyPuzzle(
-  dateKey: string,
-  wordId: string
-): Promise<void> {
-  await setDoc(
-    doc(db, DAILY_COLLECTION, dateKey),
-    {
-      date: dateKey,
-      wordId,
+    // 1. Add session log
+    const sessionsCol = collection(db, COLLECTIONS.SESSIONS);
+    await addDoc(sessionsCol, {
+      userId: currentUserId,
+      mode: result.mode,
+      dateKey: result.dateKey ?? null,
+      won: result.won,
+      attemptsCount: result.attemptsCount,
+      secretWordId: result.secretWord.id,
+      secretWord: result.secretWord.word,
+      guesses: result.guesses,
+      timeElapsedSeconds: result.timeElapsedSeconds,
       createdAt: serverTimestamp(),
-      expiresAt: Timestamp.fromDate(new Date(Date.now() + 86400000)), // +1 day
-    },
-    { merge: true }
-  );
-}
+    });
 
-/** Save player stats */
-export async function savePlayerStats(userId: string, stats: WordGuessingStats): Promise<void> {
-  await setDoc(
-    doc(db, STATS_COLLECTION, userId),
-    {
-      userId,
-      stats,
-      lastUpdated: serverTimestamp(),
-    },
-    { merge: true }
-  );
-}
+    // 2. Aggregate player stats in Firestore
+    if (currentUserId && currentUserId !== "guest_player") {
+      const statsRef = doc(db, COLLECTIONS.STATS, currentUserId);
+      const prevDoc = await getDoc(statsRef);
+      const prev = prevDoc.exists() ? (prevDoc.data() as Record<string, any>) : {};
 
-/** Get player stats */
-export async function getPlayerStats(userId: string): Promise<WordGuessingStats | null> {
-  const ref = doc(db, STATS_COLLECTION, userId);
-  const snap = await getDoc(ref);
-  if (!snap.exists()) return null;
-  const data = snap.data() as DocumentData;
-  return data["stats"] as WordGuessingStats;
-}
+      const prevPlayed = ((prev["totalGames"] as number) || 0) + 1;
+      const prevWins = ((prev["totalWins"] as number) || 0) + (result.won ? 1 : 0);
+      const prevStreak = result.won ? (((prev["currentStreak"] as number) || 0) + 1) : 0;
+      const prevMaxStreak = Math.max((prev["bestStreak"] as number) || 0, prevStreak);
 
-/** Record a game session */
-export async function saveSession(
-  userId: string | undefined,
-  setup: WordGuessingSetup,
-  result: WordGuessingResult
-): Promise<void> {
-  const sessionId = `session-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
-  await setDoc(doc(db, SESSIONS_COLLECTION, sessionId), {
-    sessionId,
-    userId,
-    setup,
-    result,
-    startedAt: serverTimestamp(),
-    completedAt: serverTimestamp(),
-    expired: false,
-  });
-}
+      await setDoc(
+        statsRef,
+        {
+          userId: currentUserId,
+          lastPlayedAt: serverTimestamp(),
+          totalGames: prevPlayed,
+          totalWins: prevWins,
+          currentStreak: prevStreak,
+          bestStreak: prevMaxStreak,
+        },
+        { merge: true },
+      );
+    }
 
-/** Count approved words */
-export async function countApprovedWords(): Promise<number> {
-  const wordsCol = collection(db, WORDS_COLLECTION);
-  const q = query(wordsCol, where("status", "==", "approved"), limit(1));
-  const snap = await getDocs(q);
-  return snap.size;
+    return true;
+  } catch (error) {
+    // Offline / guest fallback
+    console.warn("Word Guessing: Firebase log deferred (offline/guest):", error);
+    return false;
+  }
 }

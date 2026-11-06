@@ -1,156 +1,70 @@
-import type { LucideIcon } from "lucide-react";
+export type TileStatus = "empty" | "tapped" | "green" | "yellow" | "gray";
 
-/** Word guessing game types – completely isolated from other games */
+export type KeyboardKeyStatus = "default" | "green" | "yellow" | "gray";
 
-export type WordGuessingCategoryKey =
-  | "everyday-life"
-  | "nature-and-animals"
-  | "food"
-  | "science"
-  | "technology"
-  | "geography"
-  | "history"
-  | "culture"
-  | "sports"
-  | "general-vocabulary"
-  | "mixed";
+export type GameMode = "daily" | "practice";
 
-export type WordGuessingDifficulty = "easy" | "medium" | "hard";
-export type WordGuessingDifficultyFilter = WordGuessingDifficulty | "mixed";
+export type GamePlayStatus =
+  | "idle"
+  | "playing"
+  | "submitting"
+  | "won"
+  | "lost";
 
-/** Core word object – exact 5 normalized Arabic letters */
-export interface WordGuessingWord {
+export interface TargetWordItem {
   id: string;
   word: string;
   normalized: string;
   meaning: string;
-  shortHint?: string;
-  category: WordGuessingCategoryKey;
-  difficulty: WordGuessingDifficulty;
-  language: "ar";
-  dialect: "fus'ha" | "egypt" | "levantine" | "gulf" | "maghreb";
-  status: "approved" | "pending" | "rejected" | "needs_review";
-  sourceName?: string;
-  sourceUrl?: string;
-  verificationNote?: string;
-  normalizedUsage?: string[];
-  createdAt: number;
-  updatedAt: number;
+  hint: string;
+  category: string;
+  difficulty: "easy" | "medium" | "hard";
 }
 
-/** Daily challenge for deterministic per‑date selection */
-export interface WordGuessingDaily {
-  date: string;
-  wordId: string;
-  word: WordGuessingWord;
-  createdAt: number;
-  expiresAt?: number;
+export interface LetterEvaluation {
+  letter: string;
+  status: "green" | "yellow" | "gray";
 }
 
-/** Player attempt record */
-export interface WordGuessingAttempt {
-  guess: string;
-  normalized: string;
-  positions: LetterEvaluation[];
-  isCorrect: boolean;
+export interface GuessRowData {
+  letters: string[];
+  evaluations: LetterEvaluation[] | null;
+  isSubmitted: boolean;
+  isInvalidShake?: boolean | undefined;
+}
+
+export interface DailyChallengeState {
+  dateKey: string; // YYYY-MM-DD in Africa/Cairo
+  completed: boolean;
+  won: boolean;
+  guesses: string[];
+  secretWordId: string;
+  solvedInAttempts: number;
   timestamp: number;
 }
 
-/** Per‑letter evaluation used for coloring */
-export interface LetterEvaluation {
-  letter: string;
-  letterIndex: number;
-  type: "green" | "yellow" | "gray";
-  matchedInSecret?: boolean;
-}
-
-/** Result for a single game session */
-export interface WordGuessingResult {
-  score: number;
-  correctCount: number;
-  incorrectCount: number;
-  total: number;
-  bestStreak: number;
-  accuracy: number;
-  attempts: WordGuessingAttempt[];
-  secretWord: WordGuessingWord;
-  timeSpentMs: number;
-}
-
-/** Game setup configuration */
-export interface WordGuessingSetup {
-  mode: "daily" | "practice";
-  category: WordGuessingCategoryKey;
-  difficulty: WordGuessingDifficultyFilter;
-  maxAttempts: number;
-  timezone: string;
-  hintEnabled: boolean;
-  allowGuessSubstitution: boolean;
-  streakEnabled: boolean;
-}
-
-/** Player statistics aggregated across sessions */
-export interface WordGuessingStats {
-  totalGames: number;
-  totalWins: number;
+export interface PlayerStats {
+  played: number;
+  wins: number;
   currentStreak: number;
-  bestStreak: number;
-  averageAttempts: number;
-  guessDistribution: number[]; // 1‑6 attempts
-  categoryStats: Partial<Record<WordGuessingCategoryKey, {
-    games: number;
-    wins: number;
-    avgAttempts: number;
-  }>>;
-  difficultyStats: Partial<Record<WordGuessingDifficulty, {
-    games: number;
-    wins: number;
-    avgAttempts: number;
-  }>>;
-  lastPlayed?: number;
-  dailyChallengeCompleted?: boolean;
-  dailyChallengeDate?: string;
+  maxStreak: number;
+  guessDistribution: Record<number, number>; // 1 -> count, 2 -> count ...
+  lastPlayedDateKey?: string | undefined;
 }
 
-/** Firestore document shapes – isolated from other games */
-export interface WordGuessingWordDoc {
-  word: string;
-  normalized: string;
-  meaning: string;
-  shortHint?: string;
-  category: WordGuessingCategoryKey;
-  difficulty: WordGuessingDifficulty;
-  language: "ar";
-  dialect: string;
-  status: "approved" | "pending" | "rejected" | "needs_review";
-  sourceName?: string;
-  sourceUrl?: string;
-  verificationNote?: string;
-  normalizedUsage?: string[];
-  usageCount: number;
-  createdAt: number;
-  updatedAt: number;
+export interface HintUsage {
+  revealedCategory: boolean;
+  revealedClue: boolean;
+  revealedLetterIndex: number | null; // index of letter revealed
 }
 
-export interface WordGuessingDailyDoc {
-  date: string;
-  wordId: string;
-  createdAt: number;
-  expiresAt?: number;
-}
-
-export interface WordGuessingStatsDoc {
-  userId: string;
-  stats: WordGuessingStats;
-  lastUpdated: number;
-}
-
-export interface WordGuessingSessionDoc {
-  sessionId: string;
-  userId?: string;
-  setup: WordGuessingSetup;
-  result: WordGuessingResult;
-  startedAt: number;
-  completedAt?: number;
-  expired: boolean;
+export interface GameResultPayload {
+  mode: GameMode;
+  dateKey?: string | undefined;
+  won: boolean;
+  attemptsCount: number;
+  secretWord: TargetWordItem;
+  guesses: string[];
+  evaluationsGrid: LetterEvaluation[][];
+  timeElapsedSeconds: number;
 }

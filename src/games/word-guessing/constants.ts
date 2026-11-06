@@ -1,59 +1,27 @@
-export type WordGuessingCategoryKey =
-  | "everyday-life"
-  | "nature-and-animals"
-  | "food"
-  | "science"
-  | "technology"
-  | "geography"
-  | "history"
-  | "culture"
-  | "sports"
-  | "general-vocabulary"
-  | "mixed";
-
-export type WordGuessingDifficulty = "easy" | "medium" | "hard";
+import type { PlayerStats } from "./types";
 
 export const WORD_LENGTH = 5;
 export const MAX_ATTEMPTS = 6;
+export const CAIRO_TIMEZONE = "Africa/Cairo";
 
-export const CATEGORIES: Array<{ id: WordGuessingCategoryKey; label: string; description: string }> = [
-  { id: "everyday-life", label: "الحياة اليومية", description: "كلمات يومية" },
-  { id: "nature-and-animals", label: "الطبيعة والحيوانات", description: "طبيعة" },
-  { id: "food", label: "الطعام", description: "طعام" },
-  { id: "science", label: "العلوم", description: "علوم" },
-  { id: "technology", label: "التكنولوجيا", description: "تكنولوجيا" },
-  { id: "geography", label: "الجغرافيا", description: "جغرافيا" },
-  { id: "history", label: "التاريخ", description: "تاريخ" },
-  { id: "culture", label: "الثقافة", description: "ثقافة" },
-  { id: "sports", label: "الرياضة", description: "رياضة" },
-  { id: "general-vocabulary", label: "المفردات العامة", description: "مفردات" },
-  { id: "mixed", label: "مختلط", description: "جميع الفئات" },
+export const ARABIC_KEYBOARD_ROWS = [
+  ["ض", "ص", "ث", "ق", "ف", "غ", "ع", "ه", "خ", "ح", "ج", "د"],
+  ["ش", "س", "ي", "ب", "ل", "ا", "ت", "ن", "م", "ك", "ط"],
+  ["ذ", "ء", "ؤ", "ئ", "ر", "ى", "ة", "و", "ز", "ظ"],
 ];
 
-export const DIFFICULTIES: Array<{ id: WordGuessingDifficulty; label: string; description: string }> = [
-  { id: "easy", label: "سهل", description: "كلمات شائعة" },
-  { id: "medium", label: "متوسط", description: "كلمات متوسطة" },
-  { id: "hard", label: "صعب", description: "كلمات أصعب" },
-];
+export const STORAGE_KEYS = {
+  DAILY_STATE: "word_guessing_daily_state",
+  PRACTICE_STATS: "word_guessing_practice_stats",
+  DAILY_STATS: "word_guessing_daily_stats",
+  SETTINGS: "word_guessing_settings",
+  CATALOG_BEST: "word-guessing-best",
+} as const;
 
-export const HINTS = {
-  revealMeaning: "تعريف الكلمة",
-  revealCategory: "فئة الكلمة",
-  provideClue: "شرح مختصر",
-};
-
-export const DAILY_TIMEZONE = "Africa/Cairo";
-
-export type WordGuessingStats = {
-  totalGames: number;
-  totalWins: number;
-  currentStreak: number;
-  bestStreak: number;
-  averageAttempts: number;
-  guessDistribution: number[];
-  categoryStats: Record<string, { games: number; wins: number; avgAttempts: number }>;
-  difficultyStats: Record<string, { games: number; wins: number; avgAttempts: number }>;
-  lastPlayed?: number;
-  dailyChallengeCompleted?: boolean;
-  dailyChallengeDate?: string;
+export const INITIAL_PLAYER_STATS: PlayerStats = {
+  played: 0,
+  wins: 0,
+  currentStreak: 0,
+  maxStreak: 0,
+  guessDistribution: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 },
 };

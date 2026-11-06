@@ -1,69 +1,60 @@
 /**
- * Arabic text normalization utilities for word guessing.
- *
- * Strictly isolated to this module. Does NOT mutate shared utilities or
- * change global state. Uses Unicode NFKC normalization followed by explicit
- * character substitutions required by Arabic Wordle gameplay.
+ * Arabic Normalization Module.
+ * Dedicated specifically for the Arabic Word Guessing game.
+ * Ensures consistent handling across validation, comparison, and counting.
  */
 
-const ALIF_VARIANTS: Record<string, string> = {
-  "أ": "ا",
-  "إ": "ا",
-  "آ": "ا",
-  "ٱ": "ا",
-};
+const DIACRITICS_REGEX = /[\u064B-\u065F\u0670]/g;
+const INVISIBLE_CHARS_REGEX = /[\u200B-\u200F\u202A-\u202E\uFEFF]/g;
+const TATWEEL_REGEX = /\u0640/g;
+const ALEF_VARIANTS_REGEX = /[أإآٱ]/g;
 
-function isTatweel(code: number): boolean {
-  return code >= 0x104df && code <= 0x104ff;
+/**
+ * Normalizes an Arabic word strictly for matching:
+ * - NFKC decomposition/composition
+ * - Strips zero-width & directional controls
+ * - Strips Tashkeel
+ * - Strips Tatweel (ـ)
+ * - Normalizes Alef variants (أ، إ، آ، ٱ) into bare Alef (ا)
+ * - Keeps ة distinct from ه
+ * - Keeps ى distinct from ي
+ * - Keeps ؤ and ئ distinct
+ */
+export function normalizeArabic(text: string): string {
+  if (!text) return "";
+  let s = text.normalize("NFKC");
+  s = s.replace(INVISIBLE_CHARS_REGEX, "");
+  s = s.replace(DIACRITICS_REGEX, "");
+  s = s.replace(TATWEEL_REGEX, "");
+  s = s.replace(ALEF_VARIANTS_REGEX, "ا");
+  return s.trim();
 }
 
 /**
- * Remove Tatweel, remove diacritics, normalize Alef variants, keep Taasmara
- * and Yaa distinct. Returns a new string; never mutates input.
+ * Grapheme-aware segmentation for Arabic text using Intl.Segmenter.
  */
-export function normalizeArabicWord(input: string): string {
-  if (!input || typeof input !== "string") return "";
-
-  let s = input.normalize("NFC");
-
-  s = Array.from(s)
-    .filter((ch) => !isTatweel(ch.codePointAt(0) as number))
-    .join("");
-
-  s = Array.from(s).map((ch) => ALIF_VARIANTS[ch] ?? ch).join("");
-
-  return s;
-}
-
-/**
- * Count grapheme clusters in an Arabic word.
- */
-export function countGraphemeClusters(input: string): number {
-  let n = 0;
-  for (const ch of input) {
-    n += 1;
+export function getArabicGraphemes(text: string): string[] {
+  if (!text) return [];
+  if (typeof Intl !== "undefined" && "Segmenter" in Intl) {
+    const segmenter = new Intl.Segmenter("ar", { granularity: "grapheme" });
+    return Array.from(segmenter.segment(text), (s) => s.segment);
   }
-  return n;
+  // Fallback
+  return Array.from(text);
 }
 
 /**
- * Normalize an accepted guess for dictionary membership checks.
+ * Returns grapheme count of normalized word.
  */
-export function normalizeForMembership(input: string): string {
-  return normalizeArabicWord(input);
+export function getNormalizedLength(word: string): number {
+  const norm = normalizeArabic(word);
+  return getArabicGraphemes(norm).length;
 }
 
 /**
- * Validate that a candidate target word is exactly 5 normalized letters
+ * Splits normalized word into array of exactly 5 letters.
  */
-export function isValidTargetLength(normalized: string): boolean {
-  return normalized.length === 5;
-}
-
-/**
- * Validate that an accepted guess matches the rules: exactly 5 normalized chars, valid dictionary entry
- */
-export function isAcceptedGuess(normalized: string, dictionarySet: Set<string>): boolean {
-  if (!dictionarySet.has(normalized)) return false;
-  return true;
+export function getLettersArray(word: string): string[] {
+  const norm = normalizeArabic(word);
+  return getArabicGraphemes(norm);
 }
