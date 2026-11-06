@@ -17,15 +17,15 @@ export const EgyptianCardBack: React.FC<EgyptianPatternProps> = ({
       }}
     >
       {/* Corner Egyptian Golden Ornaments */}
-      <div className="absolute top-1.5 left-1.5 w-4 h-4 border-t-2 border-l-2 border-amber-400/80 rounded-tl-sm pointer-events-none" />
-      <div className="absolute top-1.5 right-1.5 w-4 h-4 border-t-2 border-r-2 border-amber-400/80 rounded-tr-sm pointer-events-none" />
-      <div className="absolute bottom-1.5 left-1.5 w-4 h-4 border-b-2 border-l-2 border-amber-400/80 rounded-bl-sm pointer-events-none" />
-      <div className="absolute bottom-1.5 right-1.5 w-4 h-4 border-b-2 border-r-2 border-amber-400/80 rounded-br-sm pointer-events-none" />
+      <div className="absolute top-1 left-1 sm:top-1.5 sm:left-1.5 w-2.5 h-2.5 sm:w-4 sm:h-4 border-t sm:border-t-2 border-l sm:border-l-2 border-amber-400/80 rounded-tl-xs sm:rounded-tl-sm pointer-events-none" />
+      <div className="absolute top-1 right-1 sm:top-1.5 sm:right-1.5 w-2.5 h-2.5 sm:w-4 sm:h-4 border-t sm:border-t-2 border-r sm:border-r-2 border-amber-400/80 rounded-tr-xs sm:rounded-tr-sm pointer-events-none" />
+      <div className="absolute bottom-1 left-1 sm:bottom-1.5 sm:left-1.5 w-2.5 h-2.5 sm:w-4 sm:h-4 border-b sm:border-b-2 border-l sm:border-l-2 border-amber-400/80 rounded-bl-xs sm:rounded-bl-sm pointer-events-none" />
+      <div className="absolute bottom-1 right-1 sm:bottom-1.5 sm:right-1.5 w-2.5 h-2.5 sm:w-4 sm:h-4 border-b sm:border-b-2 border-r sm:border-r-2 border-amber-400/80 rounded-br-xs sm:rounded-br-sm pointer-events-none" />
 
       {/* Central Khayamiya Star Medallion */}
       <svg
         viewBox="0 0 100 100"
-        className="w-14 h-14 sm:w-16 sm:h-16 opacity-95 transition-transform duration-300 group-hover:scale-105"
+        className="w-8 h-8 xs:w-11 xs:h-11 sm:w-16 sm:h-16 opacity-95 transition-transform duration-300 group-hover:scale-105"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >

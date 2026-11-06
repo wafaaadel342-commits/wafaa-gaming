@@ -4,7 +4,7 @@
 
 class SoundManager {
   private ctx: AudioContext | null = null;
-  private volume: number = 0.8;
+  private volume: number = 1.0;
   private muted: boolean = false;
   private reverbNode: ConvolverNode | null = null;
   private reverbWet: GainNode | null = null;
@@ -702,7 +702,33 @@ class SoundManager {
     this.playHintReveal();
   }
 
-  // 18) Generic sound dispatcher for backward compatibility
+  // 18) Countdown / timer warning sound (urgent high-pitch beep)
+  public playTimerWarning() {
+    if (this.muted || this.volume <= 0) return;
+    const ctx = this.getContext();
+    if (!ctx) return;
+
+    const now = ctx.currentTime;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(1100, now);
+    osc.frequency.exponentialRampToValueAtTime(880, now + 0.04);
+
+    const peak = 0.22 * this.volume;
+    gain.gain.setValueAtTime(0.001, now);
+    gain.gain.linearRampToValueAtTime(peak, now + 0.003);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.05);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.start(now);
+    osc.stop(now + 0.055);
+  }
+
+  // 19) Generic sound dispatcher for backward compatibility
   public play(name?: string) {
     if (!name) {
       this.playClick();
@@ -719,6 +745,17 @@ class SoundManager {
       case "click":
         this.playClick();
         break;
+      case "cardFlip":
+      case "cardPress":
+        this.playCardPress();
+        break;
+      case "letterPlaced":
+        this.playLetterPlaced();
+        break;
+      case "letterReturned":
+      case "tileRemove":
+        this.playLetterReturned();
+        break;
       case "tabSwitch":
         this.playTabSwitch();
         break;
@@ -726,9 +763,11 @@ class SoundManager {
         this.playHintReveal();
         break;
       case "fanfare":
+      case "victory":
         this.playFanfare();
         break;
       case "tryAgain":
+      case "gameOver":
         this.playTryAgain();
         break;
       case "start":
@@ -736,6 +775,9 @@ class SoundManager {
         break;
       case "tick":
         this.playTick();
+        break;
+      case "timerWarning":
+        this.playTimerWarning();
         break;
       case "timeout":
         this.playTimeout();

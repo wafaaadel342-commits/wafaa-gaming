@@ -48,7 +48,7 @@ export const LetterTile: React.FC<LetterTileProps> = ({
 
   return (
     <div
-      className={`aspect-square w-full max-w-[62px] min-w-[42px] sm:min-w-[52px] text-xl sm:text-2xl md:text-3xl ${styles["tileBase"]} ${colorClasses} ${animationClass}`}
+      className={`aspect-square w-full max-w-[56px] min-w-[32px] xs:min-w-[40px] sm:max-w-[62px] sm:min-w-[52px] text-lg xs:text-xl sm:text-2xl md:text-3xl ${styles["tileBase"]} ${colorClasses} ${animationClass}`}
       style={{
         animationDelay: isEvaluated ? `${animationDelayMs}ms` : undefined,
       }}

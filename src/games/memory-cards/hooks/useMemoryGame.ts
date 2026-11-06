@@ -99,8 +99,14 @@ export function useMemoryGame({
       previewTimerRef.current = window.setInterval(() => {
         remaining -= 1;
         setPreviewRemaining(remaining);
+        if (soundEnabled && remaining > 0 && remaining <= 3) {
+          sound.playTick();
+        }
         if (remaining <= 0) {
           if (previewTimerRef.current) clearInterval(previewTimerRef.current);
+          if (soundEnabled) {
+            sound.playStartJingle();
+          }
           // Turn cards face down
           setCards((prev) => prev.map((c) => ({ ...c, isFlipped: false })));
           setStatus("playing");
@@ -108,20 +114,26 @@ export function useMemoryGame({
         }
       }, 1000);
     } else {
+      if (soundEnabled) {
+        sound.playStartJingle();
+      }
       setCards(initialCards);
       setStatus("playing");
       isLockedRef.current = false;
     }
-  }, [mode, difficulty, totalPairs, selectedCategory, previewEnabled, config.previewSeconds]);
+  }, [mode, difficulty, totalPairs, selectedCategory, previewEnabled, config.previewSeconds, soundEnabled]);
 
   // Skip preview manually
   const skipPreview = useCallback(() => {
     if (status !== "preview") return;
     if (previewTimerRef.current) clearInterval(previewTimerRef.current);
+    if (soundEnabled) {
+      sound.playStartJingle();
+    }
     setCards((prev) => prev.map((c) => ({ ...c, isFlipped: false })));
     setStatus("playing");
     isLockedRef.current = false;
-  }, [status]);
+  }, [status, soundEnabled]);
 
   // Start timer helper
   const ensureTimerRunning = useCallback(() => {

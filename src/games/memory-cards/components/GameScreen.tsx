@@ -79,7 +79,7 @@ export const GameScreen: React.FC<GameScreenProps> = ({
   }
 
   return (
-    <div className="w-full flex flex-col flex-1 pb-10">
+    <div className="w-full flex flex-col flex-1 pb-4 sm:pb-8">
       {/* Top Game HUD Header */}
       <GameHeader
         mode={settings.mode}
@@ -96,7 +96,7 @@ export const GameScreen: React.FC<GameScreenProps> = ({
         onExit={onExitToMenu}
       />
 
-      <div className="max-w-5xl mx-auto w-full px-3 sm:px-4 pt-4 flex flex-col flex-1">
+      <div className="max-w-5xl mx-auto w-full px-2 sm:px-4 pt-2 sm:pt-4 flex flex-col flex-1 justify-center">
         {/* Preview Countdown Banner */}
         {status === "preview" && (
           <PreviewBanner
@@ -108,7 +108,7 @@ export const GameScreen: React.FC<GameScreenProps> = ({
 
         {/* Card Grid */}
         <div
-          className={`grid gap-2.5 sm:gap-3.5 md:gap-4 my-auto py-2 ${config.gridColsClass}`}
+          className={`grid gap-1.5 xs:gap-2 sm:gap-3.5 md:gap-4 my-auto py-1 sm:py-2 ${config.gridColsClass}`}
         >
           {cards.map((card) => (
             <Card

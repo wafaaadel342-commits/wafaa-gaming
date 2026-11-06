@@ -4,6 +4,7 @@
  */
 
 import React, { useState } from "react";
+import { sound } from "@/lib/sound";
 import {
   ArrowRight,
   BarChart3,
@@ -41,13 +42,17 @@ export const GameScreen: React.FC<GameScreenProps> = ({
 
   return (
     <>
-      <div className="flex flex-col items-center gap-1 w-full max-w-lg mx-auto select-none" dir="rtl">
+      <div className="flex flex-col items-center justify-between min-h-0 w-full max-w-lg mx-auto select-none gap-0.5 sm:gap-1" dir="rtl">
         {/* Top HUD */}
-        <div className="w-full flex items-center justify-between px-1 py-2">
+        <div className="w-full flex items-center justify-between px-1 py-1 sm:py-2">
           {/* Left: back button */}
           <button
             type="button"
-            onClick={onBackToMenu}
+            onClick={() => {
+              sound.unlock();
+              sound.playClick();
+              onBackToMenu();
+            }}
             className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-muted/60 hover:bg-muted text-muted-foreground hover:text-foreground text-xs font-bold transition-colors cursor-pointer"
             title="رجوع للقائمة"
           >
@@ -79,7 +84,11 @@ export const GameScreen: React.FC<GameScreenProps> = ({
           <div className="flex items-center gap-1">
             <button
               type="button"
-              onClick={() => setShowHowToPlay(true)}
+              onClick={() => {
+                sound.unlock();
+                sound.playClick();
+                setShowHowToPlay(true);
+              }}
               className="p-1.5 rounded-lg hover:bg-muted text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
               title="كيف تلعب"
             >
@@ -87,7 +96,11 @@ export const GameScreen: React.FC<GameScreenProps> = ({
             </button>
             <button
               type="button"
-              onClick={() => setShowStats(true)}
+              onClick={() => {
+                sound.unlock();
+                sound.playClick();
+                setShowStats(true);
+              }}
               className="p-1.5 rounded-lg hover:bg-muted text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
               title="إحصائيات"
             >

@@ -8,7 +8,7 @@ export const DIFFICULTY_CONFIGS: Record<DifficultyLevel, DifficultyConfig> = {
     pairsCount: 4,
     previewSeconds: 3,
     scoreMultiplier: 1.0,
-    gridColsClass: "grid-cols-2 sm:grid-cols-4",
+    gridColsClass: "grid-cols-2 xs:grid-cols-4 sm:grid-cols-4",
   },
   medium: {
     level: "medium",

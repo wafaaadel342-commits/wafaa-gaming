@@ -42,7 +42,7 @@ export const GuessRow: React.FC<GuessRowProps> = ({
 
   return (
     <div
-      className={`flex items-center justify-center gap-1.5 sm:gap-2.5 w-full dir-rtl ${shakeClass}`}
+      className={`flex items-center justify-center gap-1 sm:gap-2.5 w-full dir-rtl ${shakeClass}`}
       role="row"
       aria-current={isCurrentRow ? "true" : "false"}
     >

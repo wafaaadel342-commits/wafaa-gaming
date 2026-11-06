@@ -329,7 +329,7 @@ export const DEFAULT_OPENROUTER_KEY =
 export const DEFAULT_SETTINGS: Settings = {
   openrouterKey: DEFAULT_OPENROUTER_KEY,
   openrouterModels: [],
-  volume: 80,
+  volume: 100,
   muted: false,
   questionBackend: "localStorage",
 };

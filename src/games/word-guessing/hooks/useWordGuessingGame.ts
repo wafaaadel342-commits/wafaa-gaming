@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { sound } from "@/lib/sound";
 import { MAX_ATTEMPTS, WORD_LENGTH } from "../constants";
 import { getCairoDateKey, getDailySecretWord } from "../lib/daily";
 import { evaluateGuess, updateKeyboardStatuses as updateKeyStatuses } from "../lib/evaluation";
@@ -214,6 +215,8 @@ export function useWordGuessingGame(initialMode: GameMode = "daily") {
       const normalizedChar = normalizeArabic(char);
       if (!normalizedChar) return;
 
+      sound.playLetterPlaced();
+
       const nextGuess = [...currentGuess, normalizedChar];
       setCurrentGuess(nextGuess);
 
@@ -237,6 +240,8 @@ export function useWordGuessingGame(initialMode: GameMode = "daily") {
     if (gameStatus !== "playing") return;
     if (currentGuess.length === 0) return;
 
+    sound.playLetterReturned();
+
     const nextGuess = currentGuess.slice(0, -1);
     setCurrentGuess(nextGuess);
 
@@ -259,6 +264,7 @@ export function useWordGuessingGame(initialMode: GameMode = "daily") {
 
     // Check letter count
     if (currentGuess.length < WORD_LENGTH) {
+      sound.playWrong();
       showToast("أكمل ٥ حروف أولاً للكلمة");
       setRows((prev) => {
         const copy = [...prev];
@@ -285,6 +291,7 @@ export function useWordGuessingGame(initialMode: GameMode = "daily") {
 
     // Validate against dictionary
     if (!isValidGuess(guessStr)) {
+      sound.playWrong();
       showToast("الكلمة غير موجودة في معجم اللعبة");
       setRows((prev) => {
         const copy = [...prev];
@@ -342,6 +349,7 @@ export function useWordGuessingGame(initialMode: GameMode = "daily") {
     );
 
     if (isWon) {
+      sound.playFanfare();
       setWinningRowIndex(currentRowIndex);
       setGameStatus("won");
       const updatedStats = recordGameStats(
@@ -382,6 +390,7 @@ export function useWordGuessingGame(initialMode: GameMode = "daily") {
         setShowResultModal(true);
       }, 1600);
     } else if (isLastAttempt) {
+      sound.playTryAgain();
       setGameStatus("lost");
       const updatedStats = recordGameStats(
         mode === "daily",
@@ -420,6 +429,8 @@ export function useWordGuessingGame(initialMode: GameMode = "daily") {
         setShowResultModal(true);
       }, 1600);
     } else {
+      // Correct letter feedback or partial progress sound
+      sound.playCardPress();
       // Continue next attempt
       const nextIdx = currentRowIndex + 1;
       setCurrentRowIndex(nextIdx);
@@ -451,15 +462,18 @@ export function useWordGuessingGame(initialMode: GameMode = "daily") {
 
   // In-Game Hints handlers
   const handleRevealCategory = useCallback(() => {
+    sound.playHintReveal();
     setHintUsage((prev) => ({ ...prev, revealedCategory: true }));
   }, []);
 
   const handleRevealClue = useCallback(() => {
+    sound.playHintReveal();
     setHintUsage((prev) => ({ ...prev, revealedClue: true }));
   }, []);
 
   const handleRevealLetter = useCallback(() => {
     if (hintUsage.revealedLetterIndex !== null) return;
+    sound.playHintReveal();
 
     const secretLetters = getLettersArray(secretWord.normalized);
     // Find first letter index not yet correctly guessed in green

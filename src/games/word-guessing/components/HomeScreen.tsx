@@ -4,6 +4,7 @@
  */
 
 import React, { useState } from "react";
+import { sound } from "@/lib/sound";
 import {
   BarChart3,
   CalendarDays,
@@ -55,7 +56,11 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
         {/* Daily Challenge Card */}
         <button
           type="button"
-          onClick={() => onStartGame("daily")}
+          onClick={() => {
+            sound.unlock();
+            sound.playStartJingle();
+            onStartGame("daily");
+          }}
           className="w-full bg-card border border-border rounded-3xl p-5 text-right shadow-sm hover:shadow-md hover:border-primary/30 transition-all group cursor-pointer"
         >
           <div className="flex items-start gap-3">
@@ -95,7 +100,11 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
         {/* Practice Mode Card */}
         <button
           type="button"
-          onClick={() => onStartGame("practice")}
+          onClick={() => {
+            sound.unlock();
+            sound.playStartJingle();
+            onStartGame("practice");
+          }}
           className="w-full bg-card border border-border rounded-3xl p-5 text-right shadow-sm hover:shadow-md hover:border-amber-400/30 transition-all group cursor-pointer"
         >
           <div className="flex items-start gap-3">
@@ -122,7 +131,11 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
         <div className="flex items-center justify-center gap-3 w-full">
           <button
             type="button"
-            onClick={() => setShowHowToPlay(true)}
+            onClick={() => {
+              sound.unlock();
+              sound.playClick();
+              setShowHowToPlay(true);
+            }}
             className="flex items-center gap-1.5 px-4 py-2.5 rounded-2xl bg-muted/60 hover:bg-muted text-muted-foreground hover:text-foreground text-xs font-bold border border-border/60 transition-colors cursor-pointer"
           >
             <HelpCircle className="w-4 h-4" />
@@ -131,7 +144,11 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
 
           <button
             type="button"
-            onClick={() => setShowStats(true)}
+            onClick={() => {
+              sound.unlock();
+              sound.playClick();
+              setShowStats(true);
+            }}
             className="flex items-center gap-1.5 px-4 py-2.5 rounded-2xl bg-muted/60 hover:bg-muted text-muted-foreground hover:text-foreground text-xs font-bold border border-border/60 transition-colors cursor-pointer"
           >
             <BarChart3 className="w-4 h-4" />

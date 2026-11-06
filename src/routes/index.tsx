@@ -25,10 +25,10 @@ import { AppHeader } from "@/components/common/AppHeader";
 import { AppFooter } from "@/components/common/AppFooter";
 import { BackgroundBlobs } from "@/components/common/BackgroundBlobs";
 import { SettingsDialog } from "@/components/quiz/SettingsDialog";
+import { WafaaSurpriseModal } from "@/components/home/WafaaSurpriseModal";
 import { GAMES_REGISTRY, getGameBestScore, type GameDefinition } from "@/lib/games";
 import { loadSettings, saveSettings, type Settings } from "@/lib/quiz";
 import {
-  startGlobalBankFilling,
   cancelGlobalBankFilling,
   subscribeGlobalBankFiller,
   getGlobalBankFillerState,
@@ -76,40 +76,6 @@ function HubHomePage() {
       setFillerState(st);
     });
     return unsub;
-  }, []);
-
-  // Automatic bank filling 3 seconds after opening the website
-  useEffect(() => {
-    const sessionTriggerKey = "tahaddi_autofill_200_triggered";
-    if (sessionStorage.getItem(sessionTriggerKey)) {
-      return;
-    }
-
-    const timer = setTimeout(async () => {
-      sessionStorage.setItem(sessionTriggerKey, "true");
-      const currentSettings = loadSettings();
-
-      toast.info(
-        "جاري التعبئة التلقائية المتوازية لبنك المحتوى (٢٠٠ عنصر: أسئلة، كلمات، وجمل)...",
-        {
-          duration: 5000,
-        },
-      );
-
-      try {
-        const res = await startGlobalBankFilling(currentSettings, "all", 200);
-        if (res.added > 0) {
-          toast.success(
-            `اكتملت تعبئة البنك بنجاح! تم توليد وحفظ ${res.added} عنصراً جديداً في بنك المحتوى للعب الفوري. 🎉`,
-            { duration: 6000 },
-          );
-        }
-      } catch (err) {
-        console.warn("Auto bank filling error:", err);
-      }
-    }, 3000);
-
-    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
@@ -331,51 +297,64 @@ function HubHomePage() {
               </p>
             </div>
 
-            {/* Filter Tabs */}
-            <div className="flex items-center gap-1.5 p-1 rounded-xl border border-border/80 bg-card/60 backdrop-blur-sm self-start sm:self-auto">
-              <button
-                type="button"
-                onClick={() => {
-                  sound.unlock();
-                  sound.playClick();
-                  setActiveFilter("all");
-                }}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${activeFilter === "all"
-                  ? "bg-primary text-primary-foreground shadow-2xs"
-                  : "text-muted-foreground hover:text-foreground"
-                  }`}
-              >
-                الكل (٦)
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  sound.unlock();
-                  sound.playClick();
-                  setActiveFilter("ready");
-                }}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${activeFilter === "ready"
-                  ? "bg-primary text-primary-foreground shadow-2xs"
-                  : "text-muted-foreground hover:text-foreground"
-                  }`}
-              >
-                متاحة للعب (٤)
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  sound.unlock();
-                  sound.playClick();
-                  setActiveFilter("soon");
-                }}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${activeFilter === "soon"
-                  ? "bg-primary text-primary-foreground shadow-2xs"
-                  : "text-muted-foreground hover:text-foreground"
-                  }`}
-              >
-                قريباً (٢)
-              </button>
-            </div>
+              {/* Filter Tabs */}
+              {(() => {
+                const totalCount = GAMES_REGISTRY.length;
+                const readyCount = GAMES_REGISTRY.filter((g) => g.status === "ready").length;
+                const soonCount = GAMES_REGISTRY.filter((g) => g.status === "soon").length;
+
+                return (
+                  <div className="flex items-center gap-1.5 p-1 rounded-xl border border-border/80 bg-card/60 backdrop-blur-sm self-start sm:self-auto">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        sound.unlock();
+                        sound.playClick();
+                        setActiveFilter("all");
+                      }}
+                      className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                        activeFilter === "all"
+                          ? "bg-primary text-primary-foreground shadow-2xs"
+                          : "text-muted-foreground hover:text-foreground"
+                      }`}
+                    >
+                      الكل ({arabicNum(totalCount)})
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        sound.unlock();
+                        sound.playClick();
+                        setActiveFilter("ready");
+                      }}
+                      className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                        activeFilter === "ready"
+                          ? "bg-primary text-primary-foreground shadow-2xs"
+                          : "text-muted-foreground hover:text-foreground"
+                      }`}
+                    >
+                      متاحة للعب ({arabicNum(readyCount)})
+                    </button>
+                    {soonCount > 0 && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          sound.unlock();
+                          sound.playClick();
+                          setActiveFilter("soon");
+                        }}
+                        className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                          activeFilter === "soon"
+                            ? "bg-primary text-primary-foreground shadow-2xs"
+                            : "text-muted-foreground hover:text-foreground"
+                        }`}
+                      >
+                        قريباً ({arabicNum(soonCount)})
+                      </button>
+                    )}
+                  </div>
+                );
+              })()}
           </div>
 
           {/* Games Grid: 3 columns desktop, 2 columns tablet, 1 column mobile */}
@@ -605,6 +584,9 @@ function HubHomePage() {
             onSave={saveSettingsAndClose}
           />
         )}
+
+        {/* Romantic Welcome Surprise for Wafaa */}
+        <WafaaSurpriseModal />
 
         <Toaster position="top-center" offset={80} richColors />
       </div>

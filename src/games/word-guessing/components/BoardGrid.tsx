@@ -16,7 +16,7 @@ export const BoardGrid: React.FC<BoardGridProps> = ({
 }) => {
   return (
     <div
-      className="flex flex-col items-center justify-center gap-1.5 sm:gap-2.5 w-full max-w-sm mx-auto px-2 py-3 select-none"
+      className="flex flex-col items-center justify-center gap-1 sm:gap-2.5 w-full max-w-[340px] sm:max-w-sm mx-auto px-1 sm:px-2 py-1.5 sm:py-3 select-none"
       role="grid"
       aria-label="لوحة الكلمات"
     >
