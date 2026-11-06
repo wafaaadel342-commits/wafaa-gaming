@@ -1,6 +1,25 @@
 import type { LucideIcon } from "lucide-react";
 import { Brain, SpellCheck, Quote, HelpCircle, Layers, CheckCircle2 } from "lucide-react";
 
+/** Reads the best score for a game from localStorage. Handles both simple number and level-based objects. */
+export function getGameBestScore(storageKey?: string): number {
+  if (!storageKey || typeof window === "undefined") return 0;
+  try {
+    const raw = localStorage.getItem(storageKey);
+    if (!raw) return 0;
+    const parsed = JSON.parse(raw);
+    if (typeof parsed === "number") return parsed;
+    if (typeof parsed === "object" && parsed !== null) {
+      // For level-based best scores (e.g., { easy: 100, medium: 200, hard: 300 })
+      const values = Object.values(parsed).filter((v) => typeof v === "number") as number[];
+      if (values.length > 0) return Math.max(...values);
+    }
+    return 0;
+  } catch {
+    return 0;
+  }
+}
+
 export interface GameDefinition {
   id: string;
   title: string;
@@ -50,7 +69,7 @@ export const GAMES_REGISTRY: GameDefinition[] = [
     gradient: "from-amber-600/20 via-orange-600/10 to-transparent",
     accentBg: "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30",
     accentText: "text-amber-600 dark:text-amber-400",
-    accentBorder: "hover:border-amber-500/50 hover:shadow-amber-500/10",
+    accentBorder: "hover:border-amber-500/50 hover:shadow-amber-500/50",
     route: "/words",
     status: "ready",
     storageBestKey: "rakeb-best",
@@ -95,17 +114,24 @@ export const GAMES_REGISTRY: GameDefinition[] = [
     id: "memory-cards",
     title: "ذاكرة الكروت",
     description:
-      "اقلب الكروت وطابق الرموز والأشكال المتطابقة بأقل عدد من المحاولات لتقوية الذاكرة البصرية.",
+      "اقلب الكروت وطابق الرموز والأشكال المتطابقة، أو طابق أسئلة التراث المصري بإجاباتها الموثقة.",
     category: "قوة ملاحظة وتركيز",
     image: "/games/memory-cards.jpg",
     icon: Layers,
-    gradient: "from-purple-600/20 via-indigo-600/10 to-transparent",
-    accentBg: "bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/30",
-    accentText: "text-purple-600 dark:text-purple-400",
-    accentBorder: "hover:border-purple-500/50",
-    route: "#",
-    status: "soon",
-    features: ["مطابقة أزواج", "مستويات متدرجة", "تدريب بصري"],
+    badge: "جديد",
+    gradient: "from-teal-600/20 via-emerald-600/10 to-transparent",
+    accentBg: "bg-teal-500/10 text-teal-600 dark:text-teal-400 border-teal-500/30",
+    accentText: "text-teal-600 dark:text-teal-400",
+    accentBorder: "hover:border-teal-500/50",
+    route: "/memory-cards",
+    status: "ready",
+    storageBestKey: "memory-cards-best",
+    features: [
+      "مطابقة بصرية ومعرفية",
+      "تراث وثقافة مصرية",
+      "مستويات متدرجة",
+      "مؤقت وإحصائيات",
+    ],
   },
   {
     id: "guess-word",
@@ -119,24 +145,9 @@ export const GAMES_REGISTRY: GameDefinition[] = [
     accentBg: "bg-teal-500/10 text-teal-600 dark:text-teal-400 border-teal-500/30",
     accentText: "text-teal-600 dark:text-teal-400",
     accentBorder: "hover:border-teal-500/50",
-    route: "#",
-    status: "soon",
-    features: ["تحليل لوني", "كلمات يومية", "إحصائيات دقيقة"],
+    route: "/guess-word",
+    status: "ready",
+    storageBestKey: "word-guessing-best",
+    features: ["تحليل لوني", "كلمات يومية", "إحصائيات دقيقة", "تحدي يومي"],
   },
 ];
-
-/** Retrieve highest best score recorded for a game */
-export function getGameBestScore(bestKey?: string): number | null {
-  if (!bestKey || typeof window === "undefined") return null;
-  try {
-    const raw = localStorage.getItem(bestKey);
-    if (!raw) return null;
-    const parsed = JSON.parse(raw) as Record<string, number>;
-    const values = Object.values(parsed).filter((v) => typeof v === "number");
-    if (values.length === 0) return null;
-    const max = Math.max(...values);
-    return max > 0 ? max : null;
-  } catch {
-    return null;
-  }
-}

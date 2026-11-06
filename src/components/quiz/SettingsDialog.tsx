@@ -216,44 +216,6 @@ export function SettingsDialog({ open, onOpenChange, settings, onSave }: Props) 
 
         {activeTab === "general" ? (
           <div className="mt-4 space-y-6">
-            {/* Automatic AI Provider Status Card */}
-            <div className="rounded-2xl border border-primary/30 bg-primary/5 p-4 space-y-3">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2.5">
-                  <span className="inline-flex size-9 items-center justify-center rounded-xl bg-primary/15 text-primary">
-                    <Zap className="size-5" />
-                  </span>
-                  <div>
-                    <h3 className="font-bold text-base text-foreground">
-                      مزود الذكاء الاصطناعي: OpenRouter
-                    </h3>
-                    <p className="text-xs text-muted-foreground">
-                      مفعل تلقائياً بنماذج مجانية فقط مع التبديل التلقائي في حال تعثر أي نموذج
-                    </p>
-                  </div>
-                </div>
-                <span className="inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-full bg-easy/15 text-easy">
-                  <CheckCircle2 className="size-3.5" />
-                  جاهز للعب
-                </span>
-              </div>
-
-              <div className="rounded-xl bg-background/50 border border-border/60 p-3 text-xs text-muted-foreground space-y-1.5 leading-relaxed">
-                <p className="flex items-center gap-2 font-medium">
-                  <span className="size-2 rounded-full bg-easy animate-pulse" />
-                  تم تعيين OpenRouter كمزود وحيد واكتشاف النماذج المجانية واختيار الأفضل تلقائياً.
-                </p>
-                {draft.lastUsedModel && (
-                  <p className="text-xs pt-1 border-t border-border/40 font-medium">
-                    النموذج الأخير المستخدم:{" "}
-                    <span className="font-bold text-foreground font-mono" dir="ltr">
-                      {draft.lastUsedModel}
-                    </span>
-                  </p>
-                )}
-              </div>
-            </div>
-
             {/* OpenRouter API Key Input Card */}
             <div className="space-y-3 rounded-2xl bg-secondary/30 p-4 border border-border/60">
               <div className="flex items-center justify-between">
@@ -331,82 +293,129 @@ export function SettingsDialog({ open, onOpenChange, settings, onSave }: Props) 
               </div>
             </div>
 
-            {/* Firestore Question Bank Toggle Card */}
-            <div className="space-y-3 rounded-2xl bg-accent/10 p-4 border border-accent/40">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <Database className="size-5 text-accent-foreground" />
-                  <div>
-                    <Label className="font-bold text-sm text-foreground">
-                      مصدر الأسئلة: بنك اللعبة المحلي
-                    </Label>
-                    <p className="text-[11px] text-muted-foreground">
-                      البنك المدمج + توليد OpenRouter (الأداء الأسرع، أوفلاين أولاً)
-                    </p>
-                  </div>
+            {/* Question Source Toggle Card */}
+            <div className="space-y-4 rounded-2xl bg-gradient-to-br from-primary/5 via-transparent to-accent/5 p-4 border border-primary/10">
+              <div className="flex items-center gap-2">
+                <div className="inline-flex size-9 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                  <Database className="size-5" />
                 </div>
-                <Button
+                <div>
+                  <Label className="font-bold text-sm text-foreground">مصدر الأسئلة</Label>
+                  <p className="text-[11px] text-muted-foreground">
+                    اختر مصدر بنك الأسئلة للعبة
+                  </p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-2">
+                {/* AI Button - Local + OpenRouter */}
+                <button
                   type="button"
-                  variant={draft.questionBackend === "localStorage" ? "default" : "outline"}
-                  size="sm"
                   onClick={() => setDraft((d) => ({ ...d, questionBackend: "localStorage" }))}
                   className={cn(
-                    "text-xs px-3",
+                    "relative flex flex-col items-center gap-2 rounded-2xl p-4 text-center transition-all duration-300 border-2",
                     draft.questionBackend === "localStorage"
-                      ? "bg-accent text-accent-foreground"
-                      : "border-accent/40 text-accent-foreground hover:bg-accent/20",
+                      ? "bg-gradient-to-br from-primary via-primary/80 to-accent border-primary shadow-lg shadow-primary/20"
+                      : "bg-secondary/40 border-border/60 hover:border-primary/30 hover:bg-primary/5 hover:shadow-md",
                   )}
                 >
-                  Local
-                </Button>
-              </div>
-
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <Sparkles className="size-5 text-primary" />
+                  {/* Active indicator */}
+                  {draft.questionBackend === "localStorage" && (
+                    <div className="absolute -top-2 -end-2 size-5 rounded-full bg-primary/20 border-2 border-primary animate-pulse" />
+                  )}
+                  
+                  <div className="inline-flex size-12 items-center justify-center rounded-xl transition-all duration-300">
+                    {draft.questionBackend === "localStorage" ? (
+                      <>
+                        <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-primary/20 to-accent/20 blur-sm" />
+                        <Sparkles className="size-6 text-white relative" />
+                      </>
+                    ) : (
+                      <Sparkles className="size-6 text-muted-foreground" />
+                    )}
+                  </div>
+                  
                   <div>
-                    <Label className="font-bold text-sm text-foreground">
-                      مصدر الأسئلة: Firestore (قاعدة بيانات)
-                    </Label>
-                    <p className="text-[11px] text-muted-foreground">
-                      أسئلة معتمدة من Firebase Cloud Firestore + توليد في الخلفية (يتطلب إعداد
-                      Firestore أولاً)
+                    <h4 className={cn(
+                      "font-bold text-sm",
+                      draft.questionBackend === "localStorage" ? "text-white" : "text-foreground"
+                    )}>
+                      AI
+                    </h4>
+                    <p className={cn(
+                      "text-[10px] font-medium leading-tight",
+                      draft.questionBackend === "localStorage" ? "text-primary-foreground/80" : "text-muted-foreground"
+                    )}>
+                      البنك المحلي + OpenRouter
                     </p>
                   </div>
-                </div>
-                <Button
+                  
+                  <p className={cn(
+                    "text-[10px] font-medium px-2 py-0.5 rounded-full",
+                    draft.questionBackend === "localStorage"
+                      ? "bg-white/20 text-white"
+                      : "bg-muted/60 text-muted-foreground"
+                  )}>
+                    أوفلاين أولاً
+                  </p>
+                </button>
+
+                {/* Firebase Button - Firestore */}
+                <button
                   type="button"
-                  variant={draft.questionBackend === "firestore" ? "default" : "outline"}
-                  size="sm"
                   onClick={() => setDraft((d) => ({ ...d, questionBackend: "firestore" }))}
                   className={cn(
-                    "text-xs px-3",
+                    "relative flex flex-col items-center gap-2 rounded-2xl p-4 text-center transition-all duration-300 border-2",
                     draft.questionBackend === "firestore"
-                      ? "bg-primary text-primary-foreground"
-                      : "border-primary/40 text-primary hover:bg-primary/20",
+                      ? "bg-gradient-to-br from-primary via-primary/80 to-accent border-primary shadow-lg shadow-primary/20"
+                      : "bg-secondary/40 border-border/60 hover:border-primary/30 hover:bg-primary/5 hover:shadow-md",
                   )}
                 >
-                  Firestore
-                </Button>
+                  {/* Active indicator */}
+                  {draft.questionBackend === "firestore" && (
+                    <div className="absolute -top-2 -end-2 size-5 rounded-full bg-primary/20 border-2 border-primary animate-pulse" />
+                  )}
+                  
+                  <div className="inline-flex size-12 items-center justify-center rounded-xl transition-all duration-300">
+                    {draft.questionBackend === "firestore" ? (
+                      <>
+                        <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-primary/20 to-accent/20 blur-sm" />
+                        <Layers className="size-6 text-white relative" />
+                      </>
+                    ) : (
+                      <Layers className="size-6 text-muted-foreground" />
+                    )}
+                  </div>
+                  
+                  <div>
+                    <h4 className={cn(
+                      "font-bold text-sm",
+                      draft.questionBackend === "firestore" ? "text-white" : "text-foreground"
+                    )}>
+                      Firebase
+                    </h4>
+                    <p className={cn(
+                      "text-[10px] font-medium leading-tight",
+                      draft.questionBackend === "firestore" ? "text-primary-foreground/80" : "text-muted-foreground"
+                    )}>
+                      Firestore Cloud
+                    </p>
+                  </div>
+                  
+                  <p className={cn(
+                    "text-[10px] font-medium px-2 py-0.5 rounded-full",
+                    draft.questionBackend === "firestore"
+                      ? "bg-white/20 text-white"
+                      : "bg-muted/60 text-muted-foreground"
+                  )}>
+                    بنك مركزي
+                  </p>
+                </button>
               </div>
 
-              <div className="rounded-xl bg-background/50 border border-border/60 p-3 text-xs space-y-2">
-                <p className="font-medium text-foreground">الفرق بين الخيارين:</p>
-                <ul className="list-disc list-inside space-y-1 text-muted-foreground leading-relaxed">
-                  <li>
-                    <strong>البنك المحلي:</strong> يعمل تماماً كما تعمل اللعبة الآن — الأسئلة
-                    المخزنة في متصفحك + OpenRouter للتوليد في الخلفية.
-                  </li>
-                  <li>
-                    <strong>Firestore:</strong> تُقرأ الأسئلة من Firebase Cloud Firestore مباشرة
-                    (بنك مركزي معتمد). يظل OpenRouter يُولّد أسئلة جديدة في الخلفية أثناء اللعب. لا
-                    يتطلب مفاتيح إضافية من اللاعب.
-                  </li>
-                </ul>
-                <p className="text-[10px] text-muted-foreground leading-relaxed">
-                  ملاحظة: التغيير يتطلب إعادة تحميل الصفحة ليصبح ساري المفعول. الوضع الافتراضي
-                  (البنك المحلي) لا يتأثر بأي إعدادات Firebase ويظل يعمل أوفلاين.
-                </p>
+              <div className="rounded-xl bg-background/50 border border-border/60 p-3 text-[10px] text-muted-foreground leading-relaxed">
+                <p className="font-medium text-foreground mb-1">ملاحظة:</p>
+                <p>الوضع الافتراضي (AI) يعمل أوفلاين بالكامل ولا يتطلب إعدادات. Firebase يتطلب مشروع Firebase مُعدّ مسبقاً. التغيير يسري بعد إعادة تحميل الصفحة.</p>
               </div>
             </div>
 

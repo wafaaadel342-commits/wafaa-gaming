@@ -94,7 +94,8 @@ export function ProverbsQuizScreen({ level, setupOptions, onFinish, onExit }: Pr
   }, []);
 
   // Build the round from the approved proverb bank, filtered by level and the
-  // selected proverb categories. This never depends on OpenRouter or Firestore.
+  // selected proverb categories. Egyptian proverbs are prioritized when all
+  // categories are selected. This never depends on OpenRouter or Firestore.
   const startInitialLoad = useCallback(async () => {
     if (initialLoadingRef.current) return;
     initialLoadingRef.current = true;
@@ -118,16 +119,28 @@ export function ProverbsQuizScreen({ level, setupOptions, onFinish, onExit }: Pr
         throw new QuizError("SERVER");
       }
 
-      // Fisher-Yates shuffle for a fresh order each round.
-      const shuffled = [...pool];
-      for (let i = shuffled.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        const tmp = shuffled[i]!;
-        shuffled[i] = shuffled[j]!;
-        shuffled[j] = tmp;
-      }
+      // Prioritize Egyptian proverbs: sort so Egyptian ones come first,
+      // then shuffle within each group to maintain randomness.
+      const egyptianPool = pool.filter(
+        (q) => (q.origin === "egyptian" || q.origin === "unknown") && categories.includes("egyptian")
+      );
+      const otherPool = pool.filter((q) => !(q.origin === "egyptian" || q.origin === "unknown"));
 
-      const chosen = shuffled.slice(0, Math.min(targetTotal, shuffled.length));
+      // Fisher-Yates shuffle within each group
+      const shuffleGroup = (arr: ProverbQuestion[]) => {
+        const copy = [...arr];
+        for (let i = copy.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          const tmp = copy[i]!;
+          copy[i] = copy[j]!;
+          copy[j] = tmp;
+        }
+        return copy;
+      };
+
+      const prioritizedPool = [...shuffleGroup(egyptianPool), ...shuffleGroup(otherPool)];
+
+      const chosen = prioritizedPool.slice(0, Math.min(targetTotal, prioritizedPool.length));
       const initial = chosen.map((q) =>
         proverbQuestionToQuestion({
           ...q,

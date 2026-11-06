@@ -10,6 +10,8 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as GuessWordRouteImport } from './routes/guess-word'
+import { Route as MemoryCardsRouteImport } from './routes/memory-cards'
 import { Route as ProverbsRouteImport } from './routes/proverbs'
 import { Route as QuizRouteImport } from './routes/quiz'
 import { Route as TrueOrFalseRouteImport } from './routes/true-or-false'
@@ -18,6 +20,16 @@ import { Route as WordsRouteImport } from './routes/words'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GuessWordRoute = GuessWordRouteImport.update({
+  id: '/guess-word',
+  path: '/guess-word',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MemoryCardsRoute = MemoryCardsRouteImport.update({
+  id: '/memory-cards',
+  path: '/memory-cards',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProverbsRoute = ProverbsRouteImport.update({
@@ -43,6 +55,8 @@ const WordsRoute = WordsRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/guess-word': typeof GuessWordRoute
+  '/memory-cards': typeof MemoryCardsRoute
   '/proverbs': typeof ProverbsRoute
   '/quiz': typeof QuizRoute
   '/true-or-false': typeof TrueOrFalseRoute
@@ -50,6 +64,8 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/guess-word': typeof GuessWordRoute
+  '/memory-cards': typeof MemoryCardsRoute
   '/proverbs': typeof ProverbsRoute
   '/quiz': typeof QuizRoute
   '/true-or-false': typeof TrueOrFalseRoute
@@ -58,6 +74,8 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/guess-word': typeof GuessWordRoute
+  '/memory-cards': typeof MemoryCardsRoute
   '/proverbs': typeof ProverbsRoute
   '/quiz': typeof QuizRoute
   '/true-or-false': typeof TrueOrFalseRoute
@@ -65,14 +83,38 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/proverbs' | '/quiz' | '/true-or-false' | '/words'
+  fullPaths:
+    | '/'
+    | '/guess-word'
+    | '/memory-cards'
+    | '/proverbs'
+    | '/quiz'
+    | '/true-or-false'
+    | '/words'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/proverbs' | '/quiz' | '/true-or-false' | '/words'
-  id: '__root__' | '/' | '/proverbs' | '/quiz' | '/true-or-false' | '/words'
+  to:
+    | '/'
+    | '/guess-word'
+    | '/memory-cards'
+    | '/proverbs'
+    | '/quiz'
+    | '/true-or-false'
+    | '/words'
+  id:
+    | '__root__'
+    | '/'
+    | '/guess-word'
+    | '/memory-cards'
+    | '/proverbs'
+    | '/quiz'
+    | '/true-or-false'
+    | '/words'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  GuessWordRoute: typeof GuessWordRoute
+  MemoryCardsRoute: typeof MemoryCardsRoute
   ProverbsRoute: typeof ProverbsRoute
   QuizRoute: typeof QuizRoute
   TrueOrFalseRoute: typeof TrueOrFalseRoute
@@ -86,6 +128,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/guess-word': {
+      id: '/guess-word'
+      path: '/guess-word'
+      fullPath: '/guess-word'
+      preLoaderRoute: typeof GuessWordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/memory-cards': {
+      id: '/memory-cards'
+      path: '/memory-cards'
+      fullPath: '/memory-cards'
+      preLoaderRoute: typeof MemoryCardsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/proverbs': {
@@ -121,6 +177,8 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  GuessWordRoute: GuessWordRoute,
+  MemoryCardsRoute: MemoryCardsRoute,
   ProverbsRoute: ProverbsRoute,
   QuizRoute: QuizRoute,
   TrueOrFalseRoute: TrueOrFalseRoute,

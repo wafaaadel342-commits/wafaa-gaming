@@ -52,6 +52,14 @@ export const Route = createFileRoute("/")({
 
 type FilterType = "all" | "ready" | "soon";
 
+function arabicNum(n: number): string {
+  return n
+    .toString()
+    .split("")
+    .map((c) => "٠١٢٣٤٥٦٧٨٩"[Number(c)])
+    .join("");
+}
+
 function HubHomePage() {
   const navigate = useNavigate();
   const [settings, setSettings] = useState<Settings | null>(null);

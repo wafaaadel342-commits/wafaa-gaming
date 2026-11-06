@@ -1,0 +1,2904 @@
+{
+  "version": "2.0",
+  "total_qa_pairs": 215,
+  "total_visual_symbols": 88,
+  "question_answer_pairs": [
+    {
+      "id": "qa001",
+      "category": "آثار ومعالم",
+      "question": "في أي محافظة يقع معبد أبو سمبل؟",
+      "answer": "أسوان",
+      "explanation": "يقع معبد أبو سمبل في جنوب مصر بمحافظة أسوان بالقرب من الحدود الجنوبية.",
+      "difficulty": "easy",
+      "source_name": "وزارة السياحة والآثار المصرية",
+      "source_url": "https://egymonuments.gov.eg/ar/archaeological-sites/abu-simbel",
+      "verification_status": "source_linked_needs_review"
+    },
+    {
+      "id": "qa002",
+      "category": "آثار ومعالم",
+      "question": "أي ملك ارتبط ببناء معبد أبو سمبل الكبير؟",
+      "answer": "رمسيس الثاني",
+      "explanation": "نُحت معبد أبو سمبل الكبير في عهد الملك رمسيس الثاني.",
+      "difficulty": "easy",
+      "source_name": "وزارة السياحة والآثار المصرية",
+      "source_url": "https://egymonuments.gov.eg/ar/archaeological-sites/abu-simbel",
+      "verification_status": "source_linked_needs_review"
+    },
+    {
+      "id": "qa003",
+      "category": "آثار ومعالم",
+      "question": "لأي معبودة خُصص معبد إيزيس الشهير في فيلة؟",
+      "answer": "إيزيس",
+      "explanation": "أبرز معالم فيلة هو معبد خُصص للمعبودة إيزيس.",
+      "difficulty": "medium",
+      "source_name": "وزارة السياحة والآثار المصرية",
+      "source_url": "https://egymonuments.gov.eg/en/archaeological-sites/philae/",
+      "verification_status": "source_linked_needs_review"
+    },
+    {
+      "id": "qa004",
+      "category": "آثار ومعالم",
+      "question": "في أي مدينة مصرية يقع معبد الأقصر؟",
+      "answer": "الأقصر",
+      "explanation": "معبد الأقصر أحد أشهر آثار مدينة الأقصر على الضفة الشرقية للنيل.",
+      "difficulty": "easy",
+      "source_name": "وزارة السياحة والآثار المصرية",
+      "source_url": "https://egymonuments.gov.eg/ar/monuments/luxor-temple/",
+      "verification_status": "source_linked_needs_review"
+    },
+    {
+      "id": "qa005",
+      "category": "آثار ومعالم",
+      "question": "في أي مدينة يقع مجمع معابد الكرنك؟",
+      "answer": "الأقصر",
+      "explanation": "يقع مجمع الكرنك الأثري في مدينة الأقصر.",
+      "difficulty": "easy",
+      "source_name": "وزارة السياحة والآثار المصرية",
+      "source_url": null,
+      "source_search_hint": "وزارة السياحة والآثار معابد الكرنك الأقصر",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa006",
+      "category": "آثار ومعالم",
+      "question": "أين يقع وادي الملوك؟",
+      "answer": "غرب الأقصر",
+      "explanation": "تقع جبانة وادي الملوك على الضفة الغربية للنيل في منطقة الأقصر.",
+      "difficulty": "medium",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "وزارة السياحة والآثار وادي الملوك الأقصر",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa007",
+      "category": "آثار ومعالم",
+      "question": "لأي ملك يُنسب الهرم الأكبر بالجيزة؟",
+      "answer": "خوفو",
+      "explanation": "الهرم الأكبر هو هرم الملك خوفو، أحد ملوك الأسرة الرابعة.",
+      "difficulty": "easy",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "وزارة السياحة والآثار الهرم الأكبر خوفو",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa008",
+      "category": "آثار ومعالم",
+      "question": "في أي محافظة تقع أهرامات الجيزة؟",
+      "answer": "الجيزة",
+      "explanation": "تقع الأهرامات الثلاثة الشهيرة على هضبة الجيزة.",
+      "difficulty": "easy",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "وزارة السياحة والآثار أهرامات الجيزة",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa009",
+      "category": "آثار ومعالم",
+      "question": "على أي هضبة يوجد تمثال أبو الهول؟",
+      "answer": "هضبة الجيزة",
+      "explanation": "يقع تمثال أبو الهول في منطقة أهرامات الجيزة.",
+      "difficulty": "easy",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "وزارة السياحة والآثار تمثال أبو الهول الجيزة",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa010",
+      "category": "آثار ومعالم",
+      "question": "في أي منطقة أثرية يوجد هرم زوسر المدرج؟",
+      "answer": "سقارة",
+      "explanation": "هرم زوسر المدرج من أبرز آثار منطقة سقارة جنوب الجيزة.",
+      "difficulty": "medium",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "وزارة السياحة والآثار هرم زوسر سقارة",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa011",
+      "category": "آثار ومعالم",
+      "question": "ما اسم الملك المرتبط بالهرم المدرج في سقارة؟",
+      "answer": "زوسر",
+      "explanation": "شُيّد الهرم المدرج للملك زوسر من الأسرة الثالثة.",
+      "difficulty": "medium",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "وزارة السياحة والآثار هرم زوسر",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa012",
+      "category": "آثار ومعالم",
+      "question": "في أي مدينة تقع قلعة قايتباي؟",
+      "answer": "الإسكندرية",
+      "explanation": "توجد قلعة قايتباي على ساحل البحر المتوسط في مدينة الإسكندرية.",
+      "difficulty": "easy",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "وزارة السياحة والآثار قلعة قايتباي الإسكندرية",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa013",
+      "category": "آثار ومعالم",
+      "question": "في أي مدينة تقع قلعة صلاح الدين الأيوبي الشهيرة؟",
+      "answer": "القاهرة",
+      "explanation": "تقع قلعة صلاح الدين في القاهرة وتُعرف أيضًا بقلعة الجبل.",
+      "difficulty": "easy",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "وزارة السياحة والآثار قلعة صلاح الدين القاهرة",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa014",
+      "category": "آثار ومعالم",
+      "question": "في أي منطقة بالأقصر يوجد معبد الملكة حتشبسوت؟",
+      "answer": "الدير البحري",
+      "explanation": "يقع المعبد الجنائزي لحتشبسوت بالدير البحري على الضفة الغربية للأقصر.",
+      "difficulty": "hard",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "وزارة السياحة والآثار معبد حتشبسوت الدير البحري",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa015",
+      "category": "آثار ومعالم",
+      "question": "في أي مدينة تقع مكتبة الإسكندرية؟",
+      "answer": "الإسكندرية",
+      "explanation": "تقع مكتبة الإسكندرية الحديثة في مدينة الإسكندرية على ساحل المتوسط.",
+      "difficulty": "easy",
+      "source_name": "مكتبة الإسكندرية",
+      "source_url": "https://www.bibalex.org/",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa016",
+      "category": "آثار ومعالم",
+      "question": "في أي مدينة يوجد جامع الأزهر؟",
+      "answer": "القاهرة",
+      "explanation": "يقع الجامع الأزهر في القاهرة التاريخية.",
+      "difficulty": "easy",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "بوابة الأزهر تاريخ الجامع الأزهر القاهرة",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa017",
+      "category": "آثار ومعالم",
+      "question": "في أي مدينة توجد المسلة الناقصة؟",
+      "answer": "أسوان",
+      "explanation": "تقع المسلة الناقصة في محاجر الجرانيت القديمة بمدينة أسوان.",
+      "difficulty": "medium",
+      "source_name": "وزارة السياحة والآثار المصرية",
+      "source_url": "https://egymonuments.gov.eg/en/world-heritage/nubian-monuments-from-abu-simbel-to-philae/",
+      "verification_status": "source_linked_needs_review"
+    },
+    {
+      "id": "qa018",
+      "category": "آثار ومعالم",
+      "question": "بجوار أي مدينة عُثر على حجر رشيد؟",
+      "answer": "رشيد",
+      "explanation": "عُثر على الحجر قرب مدينة رشيد في دلتا النيل.",
+      "difficulty": "medium",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "المتحف البريطاني حجر رشيد رشيد مصر",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa019",
+      "category": "آثار ومعالم",
+      "question": "ما اسم الحجر الذي ساعد العلماء على قراءة الهيروغليفية؟",
+      "answer": "حجر رشيد",
+      "explanation": "حمل حجر رشيد نصوصًا بثلاثة أنظمة كتابة، وكان مفتاحًا لفك رموز الهيروغليفية.",
+      "difficulty": "medium",
+      "source_name": "المتحف البريطاني",
+      "source_url": null,
+      "verification_status": "needs_review",
+      "source_search_hint": "المتحف البريطاني حجر رشيد وفك رموز الهيروغليفية"
+    },
+    {
+      "id": "qa020",
+      "category": "آثار ومعالم",
+      "question": "ما اسم الكتابة المصورة الشهيرة في مصر القديمة؟",
+      "answer": "الهيروغليفية",
+      "explanation": "الهيروغليفية نظام كتابة استخدمه المصريون القدماء في النقوش والنصوص.",
+      "difficulty": "easy",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "المتحف البريطاني الكتابة الهيروغليفية مصر القديمة",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa021",
+      "category": "تراث ورموز مصرية",
+      "question": "من أي نبات صُنعت مادة البردي للكتابة قديمًا؟",
+      "answer": "نبات البردي",
+      "explanation": "صنع المصريون القدماء مادة الكتابة المعروفة بالبردي من سيقان نبات البردي.",
+      "difficulty": "medium",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "المتحف البريطاني صناعة ورق البردي نبات البردي",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa022",
+      "category": "تراث ورموز مصرية",
+      "question": "بماذا ارتبط رمز العنخ في مصر القديمة؟",
+      "answer": "الحياة",
+      "explanation": "يُعرف رمز العنخ عادةً باسم مفتاح الحياة ويرتبط بمفهوم الحياة.",
+      "difficulty": "easy",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "متحف متروبوليتان رمز العنخ الحياة مصر القديمة",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa023",
+      "category": "تراث ورموز مصرية",
+      "question": "أي حشرة ارتبطت رمزيًا بالتجدد في مصر القديمة؟",
+      "answer": "الجعران",
+      "explanation": "ارتبط الجعران في الرمزية المصرية القديمة بالشمس والتجدد والبعث.",
+      "difficulty": "medium",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "متحف متروبوليتان الجعران الرمزية المصرية القديمة",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa024",
+      "category": "تراث ورموز مصرية",
+      "question": "ما اسم الرمز المصري القديم المرتبط بحورس ويُستخدم رمزًا للحماية؟",
+      "answer": "عين حورس",
+      "explanation": "ارتبطت عين حورس بمعاني الحماية والسلامة في المعتقدات المصرية القديمة.",
+      "difficulty": "medium",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "متحف متروبوليتان عين حورس الحماية",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa025",
+      "category": "آثار ومعالم",
+      "question": "لأي إله خُصص المعبد الرئيسي في إدفو؟",
+      "answer": "حورس",
+      "explanation": "معبد إدفو مخصص للإله حورس.",
+      "difficulty": "medium",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "وزارة السياحة والآثار معبد إدفو حورس",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa026",
+      "category": "آثار ومعالم",
+      "question": "في أي محافظة يقع معبد دندرة؟",
+      "answer": "قنا",
+      "explanation": "يقع مجمع معابد دندرة بالقرب من مدينة قنا.",
+      "difficulty": "medium",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "وزارة السياحة والآثار معبد دندرة قنا",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa027",
+      "category": "آثار ومعالم",
+      "question": "ما اسم المتحف الموجود بجوار ميدان التحرير في القاهرة ويضم آثارًا مصرية؟",
+      "answer": "المتحف المصري",
+      "explanation": "المتحف المصري بميدان التحرير أحد المتاحف المعروفة في القاهرة.",
+      "difficulty": "easy",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "المتحف المصري بالتحرير الموقع الرسمي",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa028",
+      "category": "آثار ومعالم",
+      "question": "في أي مدينة يقع متحف الفن الإسلامي؟",
+      "answer": "القاهرة",
+      "explanation": "يقع متحف الفن الإسلامي في القاهرة.",
+      "difficulty": "medium",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "وزارة السياحة والآثار متحف الفن الإسلامي القاهرة",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa029",
+      "category": "آثار ومعالم",
+      "question": "في أي مدينة يقع المتحف القبطي؟",
+      "answer": "القاهرة",
+      "explanation": "يقع المتحف القبطي في منطقة مصر القديمة بالقاهرة.",
+      "difficulty": "medium",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "المتحف القبطي الموقع الرسمي القاهرة",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa030",
+      "category": "آثار ومعالم",
+      "question": "في أي مدينة يقع معبد الرامسيوم؟",
+      "answer": "الأقصر",
+      "explanation": "الرامسيوم معبد جنائزي للملك رمسيس الثاني ويقع في الأقصر.",
+      "difficulty": "medium",
+      "source_name": "وزارة السياحة والآثار المصرية",
+      "source_url": "https://egymonuments.gov.eg/ar/monuments/the-ramesseum-the-temple-of-ramses-ii",
+      "verification_status": "source_linked_needs_review"
+    },
+    {
+      "id": "qa031",
+      "category": "جغرافيا مصر",
+      "question": "ما عاصمة جمهورية مصر العربية؟",
+      "answer": "القاهرة",
+      "explanation": "القاهرة هي عاصمة مصر.",
+      "difficulty": "easy",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "الهيئة العامة للاستعلامات عاصمة مصر القاهرة",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa032",
+      "category": "جغرافيا مصر",
+      "question": "في أي بحر يصب نهر النيل؟",
+      "answer": "البحر المتوسط",
+      "explanation": "يمتد النيل شمالًا عبر مصر ويصب في البحر المتوسط.",
+      "difficulty": "easy",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "الموسوعة البريطانية نهر النيل البحر المتوسط",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa033",
+      "category": "جغرافيا مصر",
+      "question": "ما المسطح المائي الذي يصل البحر المتوسط بالبحر الأحمر عبر قناة السويس؟",
+      "answer": "قناة السويس",
+      "explanation": "قناة السويس ممر مائي يصل بين البحر المتوسط والبحر الأحمر.",
+      "difficulty": "easy",
+      "source_name": "هيئة قناة السويس",
+      "source_url": "https://www.suezcanal.gov.eg/",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa034",
+      "category": "جغرافيا مصر",
+      "question": "في أي محافظة تقع واحة سيوة؟",
+      "answer": "مطروح",
+      "explanation": "تقع واحة سيوة في الصحراء الغربية وتتبع محافظة مطروح.",
+      "difficulty": "medium",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "محافظة مطروح واحة سيوة الموقع الرسمي",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa035",
+      "category": "جغرافيا مصر",
+      "question": "في أي محافظة تقع محمية وادي الريان؟",
+      "answer": "الفيوم",
+      "explanation": "محمية وادي الريان من أبرز المناطق الطبيعية في محافظة الفيوم.",
+      "difficulty": "easy",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "وزارة البيئة محمية وادي الريان الفيوم",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa036",
+      "category": "جغرافيا مصر",
+      "question": "في أي محافظة تقع محمية رأس محمد؟",
+      "answer": "جنوب سيناء",
+      "explanation": "تقع محمية رأس محمد عند الطرف الجنوبي لشبه جزيرة سيناء.",
+      "difficulty": "medium",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "وزارة البيئة محمية رأس محمد جنوب سيناء",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa037",
+      "category": "جغرافيا مصر",
+      "question": "ما اسم البحيرة التي تكونت خلف السد العالي؟",
+      "answer": "بحيرة ناصر",
+      "explanation": "أدى إنشاء السد العالي إلى تكوّن بحيرة ناصر خلفه.",
+      "difficulty": "medium",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "وزارة الموارد المائية السد العالي بحيرة ناصر",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa038",
+      "category": "جغرافيا مصر",
+      "question": "على أي نهر بُني السد العالي في أسوان؟",
+      "answer": "نهر النيل",
+      "explanation": "أُقيم السد العالي على مجرى نهر النيل في أسوان.",
+      "difficulty": "easy",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "وزارة الموارد المائية السد العالي نهر النيل",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa039",
+      "category": "جغرافيا مصر",
+      "question": "على ساحل أي بحر تقع مدينة الإسكندرية؟",
+      "answer": "البحر المتوسط",
+      "explanation": "تقع الإسكندرية على الساحل الشمالي لمصر المطل على البحر المتوسط.",
+      "difficulty": "easy",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "الهيئة العامة للاستعلامات الإسكندرية البحر المتوسط",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa040",
+      "category": "جغرافيا مصر",
+      "question": "على ساحل أي بحر تقع مدينة الغردقة؟",
+      "answer": "البحر الأحمر",
+      "explanation": "الغردقة مدينة ساحلية مصرية على البحر الأحمر.",
+      "difficulty": "easy",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "محافظة البحر الأحمر مدينة الغردقة",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa041",
+      "category": "جغرافيا مصر",
+      "question": "في أي محافظة تقع مدينة شرم الشيخ؟",
+      "answer": "جنوب سيناء",
+      "explanation": "تقع شرم الشيخ في محافظة جنوب سيناء.",
+      "difficulty": "easy",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "محافظة جنوب سيناء مدينة شرم الشيخ",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa042",
+      "category": "جغرافيا مصر",
+      "question": "في أي قارة تقع شبه جزيرة سيناء جغرافيًا؟",
+      "answer": "آسيا",
+      "explanation": "تقع شبه جزيرة سيناء في الجزء الآسيوي من مصر.",
+      "difficulty": "medium",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "الموسوعة البريطانية شبه جزيرة سيناء آسيا",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa043",
+      "category": "جغرافيا مصر",
+      "question": "في أي محافظة توجد بحيرة قارون؟",
+      "answer": "الفيوم",
+      "explanation": "تقع بحيرة قارون في منخفض الفيوم.",
+      "difficulty": "medium",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "وزارة البيئة بحيرة قارون الفيوم",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa044",
+      "category": "جغرافيا مصر",
+      "question": "في أي منطقة تقع الصحراء البيضاء؟",
+      "answer": "الفرافرة",
+      "explanation": "تقع الصحراء البيضاء في نطاق الفرافرة بالصحراء الغربية.",
+      "difficulty": "hard",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "وزارة البيئة محمية الصحراء البيضاء الفرافرة",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa045",
+      "category": "جغرافيا مصر",
+      "question": "ما أعلى قمة جبلية في مصر؟",
+      "answer": "جبل كاترين",
+      "explanation": "جبل كاترين في جنوب سيناء هو أعلى قمة جبلية في مصر.",
+      "difficulty": "hard",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "هيئة المساحة المصرية أعلى قمة جبل كاترين",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa046",
+      "category": "جغرافيا مصر",
+      "question": "في أي جزء من مصر تقع دلتا النيل؟",
+      "answer": "شمال مصر",
+      "explanation": "تنتشر دلتا النيل في شمال مصر قبل وصول النهر إلى البحر المتوسط.",
+      "difficulty": "easy",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "الموسوعة البريطانية دلتا النيل مصر",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa047",
+      "category": "جغرافيا مصر",
+      "question": "في أي اتجاه يجري نهر النيل عبر مصر عمومًا؟",
+      "answer": "من الجنوب إلى الشمال",
+      "explanation": "يجري النيل شمالًا حتى يصب في البحر المتوسط.",
+      "difficulty": "medium",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "الموسوعة البريطانية نهر النيل مصر اتجاه الجريان",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa048",
+      "category": "جغرافيا مصر",
+      "question": "في أي مدينة تقع بورسعيد عند المدخل الشمالي لقناة السويس؟",
+      "answer": "بورسعيد",
+      "explanation": "تقع بورسعيد عند المدخل الشمالي لقناة السويس على البحر المتوسط.",
+      "difficulty": "medium",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "هيئة قناة السويس بورسعيد المدخل الشمالي",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa049",
+      "category": "أكلات مصرية",
+      "question": "ما المكونات الأساسية الشهيرة للكشري المصري؟",
+      "answer": "الأرز والعدس والمكرونة",
+      "explanation": "يجمع الكشري المصري عادةً بين الأرز والعدس والمكرونة، مع إضافات مثل الصلصة والبصل.",
+      "difficulty": "easy",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "مصدر ثقافي أو موسوعة طعام موثوقة عن الكشري المصري",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa050",
+      "category": "أكلات مصرية",
+      "question": "من أي نوع من البقول يُحضّر الفول المدمس؟",
+      "answer": "الفول",
+      "explanation": "الفول المدمس يُحضّر أساسًا من حبوب الفول المطهية ببطء.",
+      "difficulty": "easy",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "مرجع غذائي موثوق الفول المدمس المصري",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa051",
+      "category": "أكلات مصرية",
+      "question": "ما المكوّن الأساسي الشائع في الطعمية المصرية؟",
+      "answer": "الفول المجروش",
+      "explanation": "تُحضّر الطعمية المصرية التقليدية غالبًا من الفول المجروش والأعشاب.",
+      "difficulty": "medium",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "مرجع غذائي موثوق الطعمية المصرية والفلافل",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa052",
+      "category": "أكلات مصرية",
+      "question": "ما النبات الذي تُحضّر من أوراقه أكلة الملوخية؟",
+      "answer": "الملوخية",
+      "explanation": "تُحضّر الأكلة من أوراق نبات الملوخية وتُطهى بطرق مصرية معروفة.",
+      "difficulty": "easy",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "مرجع نباتي أو غذائي نبات الملوخية",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa053",
+      "category": "أكلات مصرية",
+      "question": "ما الحشوة الأساسية في طبق الحواوشي؟",
+      "answer": "اللحم المفروم",
+      "explanation": "الحواوشي خبز محشو عادةً باللحم المفروم المتبل.",
+      "difficulty": "easy",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "مصدر غذائي موثوق الحواوشي المصري",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa054",
+      "category": "أكلات مصرية",
+      "question": "ما نوع الطعام الذي يُعرف به الفطير المشلتت؟",
+      "answer": "فطير مورّق",
+      "explanation": "الفطير المشلتت عجين مصري مورّق متعدد الطبقات.",
+      "difficulty": "easy",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "مصدر ثقافي أو غذائي موثوق الفطير المشلتت",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa055",
+      "category": "أكلات مصرية",
+      "question": "ما المكوّن الجاف الأساسي في البسبوسة؟",
+      "answer": "دقيق السميد",
+      "explanation": "تُحضّر البسبوسة أساسًا من السميد وتُسقى غالبًا بالشربات.",
+      "difficulty": "medium",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "مرجع طبخ موثوق البسبوسة السميد",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa056",
+      "category": "أكلات مصرية",
+      "question": "أي مكوّن سائل أساسي يظهر في حلوى أم علي؟",
+      "answer": "اللبن",
+      "explanation": "تُحضّر أم علي من رقائق أو قطع عجين مخبوزة مع اللبن ومكونات إضافية.",
+      "difficulty": "easy",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "مرجع غذائي موثوق حلوى أم علي",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa057",
+      "category": "أكلات مصرية",
+      "question": "من أي زهرة يُحضّر مشروب الكركديه؟",
+      "answer": "زهرة الكركديه",
+      "explanation": "يُحضّر مشروب الكركديه من الكؤوس المجففة لنبات الكركديه.",
+      "difficulty": "easy",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "مرجع نباتي موثوق نبات الكركديه والمشروب",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa058",
+      "category": "أكلات مصرية",
+      "question": "من أي ثمرة يُحضّر مشروب التمر الهندي؟",
+      "answer": "التمر الهندي",
+      "explanation": "يُحضّر المشروب من لب ثمار شجرة التمر الهندي.",
+      "difficulty": "easy",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "مرجع غذائي موثوق التمر الهندي",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa059",
+      "category": "أكلات مصرية",
+      "question": "ما المكوّنان الأساسيان في الأرز باللبن؟",
+      "answer": "الأرز واللبن",
+      "explanation": "حلوى الأرز باللبن تعتمد على طهي الأرز في اللبن وتحليته.",
+      "difficulty": "easy",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "مرجع غذائي موثوق الأرز باللبن",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa060",
+      "category": "أكلات مصرية",
+      "question": "بماذا تُحشى الخضروات عادةً في طبق المحشي المصري؟",
+      "answer": "الأرز والخضرة",
+      "explanation": "تُحشى أنواع من الخضروات بخليط الأرز والأعشاب والتوابل.",
+      "difficulty": "easy",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "مرجع غذائي موثوق المحشي المصري",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa061",
+      "category": "فن وثقافة مصرية",
+      "question": "ما اسم الأديب المصري الذي حصل على نوبل في الأدب عام 1988؟",
+      "answer": "نجيب محفوظ",
+      "explanation": "حصل نجيب محفوظ على جائزة نوبل في الأدب سنة 1988.",
+      "difficulty": "medium",
+      "source_name": "مؤسسة نوبل",
+      "source_url": "https://www.nobelprize.org/prizes/literature/1988/mahfouz/facts/",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa062",
+      "category": "فن وثقافة مصرية",
+      "question": "بماذا اشتهرت أم كلثوم؟",
+      "answer": "الغناء",
+      "explanation": "أم كلثوم من أشهر المطربات في تاريخ الموسيقى العربية.",
+      "difficulty": "easy",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "مصدر ثقافي موثوق سيرة أم كلثوم",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa063",
+      "category": "فن وثقافة مصرية",
+      "question": "ما المجال الفني الذي اشتهر به محمد عبد الوهاب؟",
+      "answer": "التلحين والغناء",
+      "explanation": "كان محمد عبد الوهاب ملحنًا ومطربًا مصريًا بارزًا.",
+      "difficulty": "medium",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "مصدر ثقافي موثوق سيرة محمد عبد الوهاب",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa064",
+      "category": "فن وثقافة مصرية",
+      "question": "بأي مدينة ترتبط دار الأوبرا المصرية في موقعها الرئيسي؟",
+      "answer": "القاهرة",
+      "explanation": "تقع دار الأوبرا المصرية في منطقة الجزيرة بالقاهرة.",
+      "difficulty": "easy",
+      "source_name": "دار الأوبرا المصرية",
+      "source_url": "https://www.cairoopera.org/",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa065",
+      "category": "فن وثقافة مصرية",
+      "question": "ما العملة الرسمية في مصر؟",
+      "answer": "الجنيه المصري",
+      "explanation": "الجنيه المصري هو العملة الرسمية المتداولة في مصر.",
+      "difficulty": "easy",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "البنك المركزي المصري العملة الرسمية الجنيه المصري",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa066",
+      "category": "فن وثقافة مصرية",
+      "question": "ما اللغة الرسمية في جمهورية مصر العربية؟",
+      "answer": "اللغة العربية",
+      "explanation": "اللغة العربية هي اللغة الرسمية في مصر.",
+      "difficulty": "easy",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "الدستور المصري اللغة الرسمية العربية",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa067",
+      "category": "فن وثقافة مصرية",
+      "question": "ما الطائر الموجود في شعار جمهورية مصر العربية؟",
+      "answer": "نسر صلاح الدين",
+      "explanation": "يتوسط شعار الدولة نسر صلاح الدين باللون الذهبي.",
+      "difficulty": "medium",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "الهيئة العامة للاستعلامات شعار جمهورية مصر العربية نسر صلاح الدين",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa068",
+      "category": "فن وثقافة مصرية",
+      "question": "بماذا يُعرف عيد شم النسيم في مصر من حيث الموسم؟",
+      "answer": "الربيع",
+      "explanation": "يرتبط شم النسيم بالاحتفال بقدوم الربيع في مصر.",
+      "difficulty": "easy",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "الهيئة العامة للاستعلامات شم النسيم عيد الربيع",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa069",
+      "category": "فن وثقافة مصرية",
+      "question": "بأي منطقة من مصر ترتبط الثقافة النوبية تاريخيًا؟",
+      "answer": "جنوب مصر",
+      "explanation": "ترتبط المجتمعات والثقافة النوبية بجنوب مصر وشمال السودان، ومن مدنها المصرية أسوان.",
+      "difficulty": "medium",
+      "source_name": "وزارة السياحة والآثار المصرية",
+      "source_url": "https://egymonuments.gov.eg/en/world-heritage/nubian-monuments-from-abu-simbel-to-philae/",
+      "verification_status": "source_linked_needs_review"
+    },
+    {
+      "id": "qa070",
+      "category": "جغرافيا مصر",
+      "question": "في أي محافظة تقع مدينة رشيد؟",
+      "answer": "البحيرة",
+      "explanation": "تقع مدينة رشيد على فرع رشيد من النيل وتتبع محافظة البحيرة.",
+      "difficulty": "medium",
+      "source_name": null,
+      "source_url": null,
+      "source_search_hint": "محافظة البحيرة مدينة رشيد الموقع الرسمي",
+      "verification_status": "needs_review"
+    },
+    {
+      "id": "qa071",
+      "category": "آثار ومعالم",
+      "question": "من هو الملك المصري صاحب تمثال نهضة مصر الشهير؟",
+      "answer": "النحات محمود مختار",
+      "explanation": "صمّم النحات المصري الرائد محمود مختار تمثال نهضة مصر رمزاً لصحوة الأمة في عشرينيات القرن العشرين.",
+      "difficulty": "medium",
+      "source_name": "وزارة الثقافة المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa072",
+      "category": "آثار ومعالم",
+      "question": "ما اسم الملكة المصرية التي شيدت معبد الدير البحري بالأقصر؟",
+      "answer": "حتشبسوت",
+      "explanation": "معبد الدير البحري بالبر الغربي في الأقصر شيدته الملكة حتشبسوت في عصر الدولة الحديثة.",
+      "difficulty": "easy",
+      "source_name": "وزارة السياحة والآثار المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa073",
+      "category": "آثار ومعالم",
+      "question": "أين عُثر على مقبرة الملك الشاب توت عنخ آمون سليمة بكامل كنوزها؟",
+      "answer": "وادي الملوك",
+      "explanation": "اكتشف هوارد كارتر مقبرة توت عنخ آمون في وادي الملوك بالأقصر عام ١٩٢٢.",
+      "difficulty": "easy",
+      "source_name": "وزارة السياحة والآثار المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa074",
+      "category": "آثار ومعالم",
+      "question": "ما اسم الملك الذي شيد الهرم الأكبر بالجيزة؟",
+      "answer": "خوفو",
+      "explanation": "الهرم الأكبر في هضبة الجيزة شيده الملك خوفو أحد ملوك الأسرة الرابعة في عصر الدولة القديمة.",
+      "difficulty": "easy",
+      "source_name": "وزارة السياحة والآثار المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa075",
+      "category": "آثار ومعالم",
+      "question": "ما اسم الهرم الأوسط في هضبة الجيزة والمنسوب إليه تمثال أبو الهول؟",
+      "answer": "خفرع",
+      "explanation": "هرم خفرع هو ثاني أكبر أهرامات الجيزة ويقترن بتمثال أبو الهول ومعبد الوادي.",
+      "difficulty": "easy",
+      "source_name": "وزارة السياحة والآثار المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa076",
+      "category": "آثار ومعالم",
+      "question": "ما اسم أصغر الأهرامات الثلاثة الرئيسية في هضبة الجيزة؟",
+      "answer": "منكاورع",
+      "explanation": "هرم منكاورع هو الهرم الأصغر بين أهرامات الجيزة الثلاثة الكبرى في مصر.",
+      "difficulty": "easy",
+      "source_name": "وزارة السياحة والآثار المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa077",
+      "category": "آثار ومعالم",
+      "question": "في أي معبد مصري يقع بهو الأعمدة الأضخم عالمياً المكون من ١٣٤ عموداً؟",
+      "answer": "الكرنك",
+      "explanation": "صالة الأعمدة الكبرى بمعبد الكرنك في الأقصر تضم ١٣٤ عموداً ضخماً على شكل نبات البردي.",
+      "difficulty": "medium",
+      "source_name": "وزارة السياحة والآثار المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa078",
+      "category": "آثار ومعالم",
+      "question": "في أي معبد مصري تتسامد الشمس مرتين سنوياً على وجه رمسيس الثاني؟",
+      "answer": "أبو سمبل الكبير",
+      "explanation": "تتعامد الشمس في ٢٢ أكتوبر و٢٢ فبراير داخل قدس أقداس معبد أبو سمبل الكبير بأسوان.",
+      "difficulty": "medium",
+      "source_name": "وزارة السياحة والآثار المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa079",
+      "category": "آثار ومعالم",
+      "question": "ما اسم المعبد المصري الشهير المكرس للمعبودة حتحور في محافظة قنا؟",
+      "answer": "دندرة",
+      "explanation": "معبد دندرة بمحافظة قنا يعد من أبهى المعابد البطلمية المحفوظة بسقوفه الملونة ونقوش الأبراج السماوية.",
+      "difficulty": "medium",
+      "source_name": "وزارة السياحة والآثار المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa080",
+      "category": "آثار ومعالم",
+      "question": "أي معبد بطلمي في محافظة أسوان يكرس لعبادة المعبودين سوبك وحورس معاً؟",
+      "answer": "كوم أمبو",
+      "explanation": "معبد كوم أمبو في أسوان ينفرد بتصميمه المزدوج المتناظر لعبادة الإله التمساح سوبك وحورس الأكبر.",
+      "difficulty": "hard",
+      "source_name": "وزارة السياحة والآثار المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa081",
+      "category": "آثار ومعالم",
+      "question": "ما اسم معبد حورس الذي يعد من أكمل المعابد المصرية القديمة حفظاً بمحافظة أسوان؟",
+      "answer": "إدفو",
+      "explanation": "معبد إدفو المخصص لحورس هو ثاني أكبر معابد مصر بعد الكرنك وأكثرها اكتمالاً وبقاءً لجدرانه وسقوفه.",
+      "difficulty": "medium",
+      "source_name": "وزارة السياحة والآثار المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa082",
+      "category": "آثار ومعالم",
+      "question": "ما اسم الطريق الأثري العريق الذي يربط بين معبدي الأقصر والكرنك؟",
+      "answer": "طريق الكباش",
+      "explanation": "طريق الكباش يمتد لمسافة نحو ٢.٧ كم محفوفاً بتماثيل أبو الهول برؤوس كباش ورؤوس آدمية.",
+      "difficulty": "easy",
+      "source_name": "وزارة السياحة والآثار المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa083",
+      "category": "آثار ومعالم",
+      "question": "في أي موقع تم اكتشاف مراكب الشمس الجنائزية الشهيرة المصنوعة من خشب الأرز؟",
+      "answer": "جنوب الهرم الأكبر بالجيزة",
+      "explanation": "اكتشف المهندس كمال الملاخ حفرة مركب الشمس للملك خوفو جنوب هرمه الأكبر عام ١٩٥٤.",
+      "difficulty": "medium",
+      "source_name": "وزارة السياحة والآثار المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa084",
+      "category": "آثار ومعالم",
+      "question": "ما هو الحجر الأثري الذي فك العالم الفرنسي شامبليون من خلاله رموز الهيروغليفية؟",
+      "answer": "حجر رشيد",
+      "explanation": "عُثر على حجر رشيد عام ١٧٩٩، واحتوى على مرسوم بطلمي كُتب بالهيروغليفية والديموطيقية واليونانية.",
+      "difficulty": "easy",
+      "source_name": "وزارة الثقافة والآثار",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa085",
+      "category": "آثار ومعالم",
+      "question": "ما اسم العاصمة القديمة لمصر في عهد الدولة القديمة ومؤسسها الملك مينا؟",
+      "answer": "منف (ميمفيس)",
+      "explanation": "منف (ميت رهينة الحالية بالجيزة) كانت أول عاصمة مركزية لمصر الموحدة في عهد الملك مينا نعرمر.",
+      "difficulty": "medium",
+      "source_name": "وزارة السياحة والآثار المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa086",
+      "category": "آثار ومعالم",
+      "question": "ما اسم المسلة الناقصة الجرانيتية الضخمة التي لا تزال في محجرها الأصلي بمصر؟",
+      "answer": "المسلة الناقصة بأسوان",
+      "explanation": "المسلة الناقصة بمحاجر الجرانيت في أسوان توضح التقنيات الهندسية الفرعونية لقطع ونحت المسلات.",
+      "difficulty": "easy",
+      "source_name": "وزارة السياحة والآثار المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa087",
+      "category": "آثار ومعالم",
+      "question": "ما اسم الملك المصري الذي بنى هرم ميدوم وهرم دهشور المنحني والهرم الأحمر؟",
+      "answer": "سنفرو",
+      "explanation": "الملك سنفرو مؤسس الأسرة الرابعة وأول من نجح في بناء هرم كامل الحواف في دهشور.",
+      "difficulty": "hard",
+      "source_name": "وزارة السياحة والآثار المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa088",
+      "category": "آثار ومعالم",
+      "question": "ما اسم المدينة التي اتخذها الملك إخناتون عاصمة لدعوته الدينية التوحيدية؟",
+      "answer": "أخيتاتون (تل العمارنة بالمنيا)",
+      "explanation": "تل العمارنة في محافظة المنيا كانت عاصمة مصر خلال فترة حكم إخناتون ودعوة عبادة قرص الشمس آتون.",
+      "difficulty": "medium",
+      "source_name": "وزارة السياحة والآثار المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa089",
+      "category": "آثار ومعالم",
+      "question": "ما اسم الملكة المصرية الشهيرة بتمثالها النصفي الفريد المعروض في برلين؟",
+      "answer": "نفرتيتي",
+      "explanation": "تمثال نفرتيتي النصفي المصنوع من الحجر الجيري والجص عثر عليه الألماني بورشارد في تل العمارنة.",
+      "difficulty": "easy",
+      "source_name": "وزارة السياحة والآثار المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa090",
+      "category": "آثار ومعالم",
+      "question": "ما اسم المعبد المنحوت في الصخر المخصص للملكة نفرتاري بجوار معبد رمسيس الثاني؟",
+      "answer": "معبد أبو سمبل الصغير",
+      "explanation": "أهداه الملك رمسيس الثاني لزوجته المحبوبة الملكة نفرتاري وكُرس للمعبودة حتحور.",
+      "difficulty": "medium",
+      "source_name": "وزارة السياحة والآثار المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa091",
+      "category": "آثار ومعالم",
+      "question": "ما اسم أقدم جامع شُيد في مصر وأفريقيا بعد الفتح الإسلامي؟",
+      "answer": "جامع عمرو بن العاص",
+      "explanation": "بُني جامع عمرو بن العاص في مدينة الفسطاط عام ٢١ هـ / ٦٤٢ م كأول مسجد في قارة أفريقيا.",
+      "difficulty": "easy",
+      "source_name": "وزارة السياحة والآثار المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa092",
+      "category": "آثار ومعالم",
+      "question": "ما اسم الجامع العريق ذي المئذنة الملوية الشهيرة بالقاهرة التاريخية؟",
+      "answer": "جامع أحمد بن طولون",
+      "explanation": "شيده أحمد بن طولون في القطائع بمصر عام ٢٦٥ هـ، وتتميز مئذنته بسلم خارجي حلزوني مستوحى من سامراء.",
+      "difficulty": "easy",
+      "source_name": "وزارة السياحة والآثار المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa093",
+      "category": "آثار ومعالم",
+      "question": "ما اسم التحفة المعمارية المملوكية الملقبة بـ 'هرم العمارة الإسلامية' بالقاهرة؟",
+      "answer": "مسجد ومدرسة السلطان حسن",
+      "explanation": "مسجد السلطان حسن شيد في القرن الثامن الهجري بميدان القلعة، ويعد من أعظم إنجازات العمارة الإسلامية.",
+      "difficulty": "medium",
+      "source_name": "وزارة السياحة والآثار المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa094",
+      "category": "آثار ومعالم",
+      "question": "ما اسم الكنيسة القبطية التاريخية المبنية فوق برجين من أبراج حصن بابليون الروماني؟",
+      "answer": "الكنيسة المعلقة",
+      "explanation": "الكنيسة المعلقة بمصر القديمة سُميت بذلك لأنها بُنيت مرتفعة فوق بوابتي حصن بابليون الروماني.",
+      "difficulty": "easy",
+      "source_name": "وزارة السياحة والآثار المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa095",
+      "category": "آثار ومعالم",
+      "question": "في أي دير مصري تقع شجرة العليقة المقدسة وأقدم مكتبة مخطوطات كنسية في العالم؟",
+      "answer": "دير سانت كاترين بسيناء",
+      "explanation": "يقع دير سانت كاترين عند سفح جبل موسى بجنوب سيناء وأُسس في القرن السادس الميلادي بأمر الإمبراطور جستنيان.",
+      "difficulty": "medium",
+      "source_name": "وزارة السياحة والآثار المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa096",
+      "category": "آثار ومعالم",
+      "question": "ما اسم الشارع الأثري الشهير بالقاهرة الفاطمية الذي يعد أكبر متحف مفتوح للآثار الإسلامية؟",
+      "answer": "شارع المعز لدين الله الفاطمي",
+      "explanation": "يمتد شارع المعز من باب الفتوح شمالاً حتى باب زويلة جنوباً ويحوي عشرات المساجد والمدارس والوكالات التاريخية.",
+      "difficulty": "easy",
+      "source_name": "وزارة السياحة والآثار المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa097",
+      "category": "آثار ومعالم",
+      "question": "ما اسم الباب الفاطمي الشهير بالقاهرة الذي عُلقت عليه رؤوس رسل هولاكو بعد عين جالوت؟",
+      "answer": "باب زويلة (بوابة المتولي)",
+      "explanation": "باب زويلة أحد أبواب سور القاهرة الجنوبي بناه بدر الجمالي عام ١٠٩٢ م ويحمل مئذنتي جامع المؤيد شيخ.",
+      "difficulty": "medium",
+      "source_name": "وزارة السياحة والآثار المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa098",
+      "category": "آثار ومعالم",
+      "question": "ما اسم الجامع الشهير المشيد داخل قلعة صلاح الدين بحجارة المرمر (الألباستر)؟",
+      "answer": "جامع محمد علي باشا",
+      "explanation": "شيده محمد علي باشا بين عامي ١٨٣٠ و١٨٤٨ م على الطراز العثماني قباباً ومآذن رشيقة مرمرية.",
+      "difficulty": "easy",
+      "source_name": "وزارة السياحة والآثار المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa099",
+      "category": "آثار ومعالم",
+      "question": "في أي منطقة بالقاهرة تقع الكنيسة الأثرية التي احتمت فيها العائلة المقدسة في مصر؟",
+      "answer": "مغارة كنيسة أبي سرجة بمصر القديمة",
+      "explanation": "كنيسة الشهيدين سرجيوس وواخس (أبي سرجة) بمصر القديمة تضم المغارة التي نزلت بها العائلة المقدسة في رحلتها.",
+      "difficulty": "medium",
+      "source_name": "وزارة السياحة والآثار المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa100",
+      "category": "آثار ومعالم",
+      "question": "ما اسم عمود الجرانيت الروماني الشهير الشاهق على هضبة كوم الشقافة بالإسكندرية؟",
+      "answer": "عمود السواري",
+      "explanation": "عمود السواري بالإسكندرية أقيم تخليداً للإمبراطور دقلديانوس وهو من أضخم الأعمدة التذكارية المصمتة بالبحر المتوسط.",
+      "difficulty": "easy",
+      "source_name": "وزارة السياحة والآثار المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa101",
+      "category": "جغرافيا مصر",
+      "question": "ما هي أعلى قمة جبلية في مصر كلها؟",
+      "answer": "جبل كاترين (٢٦٢٩ متراً)",
+      "explanation": "جبل كاترين في محافظة جنوب سيناء هو أعلى جبل في الأراضي المصرية وتغطيه الثلوج شتاءً.",
+      "difficulty": "medium",
+      "source_name": "الهيئة العامة للاستعلامات المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa102",
+      "category": "جغرافيا مصر",
+      "question": "ما اسم المحمية الطبيعية المصرية المسجلة تراثاً طبيعياً عالمياً لاحتوائها على هياكل حيتان متحجرة؟",
+      "answer": "وادي الحيتان بالفيوم",
+      "explanation": "يقع وادي الحيتان بمحمية وادي الريان بمحافظة الفيوم ويحوي حفريات نادرة لحيتان ترجع لأكثر من ٤٠ مليون سنة.",
+      "difficulty": "medium",
+      "source_name": "وزارة البيئة المصرية - اليونسكو",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa103",
+      "category": "جغرافيا مصر",
+      "question": "ما اسم الصحراء المصرية الشهيرة بتكويناتها الصخرية الطباشيرية البيضاء كتماثيل ثلجية؟",
+      "answer": "الصحراء البيضاء (واحة الفرافرة)",
+      "explanation": "محمية الصحراء البيضاء تقع في محافظة الوادي الجديد وتتميز بصخور طباشيرية نحتتها الرياح عبر ملايين السنين.",
+      "difficulty": "medium",
+      "source_name": "وزارة البيئة المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa104",
+      "category": "جغرافيا مصر",
+      "question": "ما اسم المحمية البحرية الواقعة عند نقطة التقاء خليج العقبة وخليج السويس بجنوب سيناء؟",
+      "answer": "محمية رأس محمد",
+      "explanation": "تعد رأس محمد أول محمية طبيعية أُعلنت في مصر عام ١٩٨٣ وتشتهر بشعابها المرجانية الغنية والأحياء المائية.",
+      "difficulty": "easy",
+      "source_name": "وزارة البيئة المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa105",
+      "category": "جغرافيا مصر",
+      "question": "ما اسم أكبر بحيرة عذبة صناعية في العالم تكونت خلف السد العالي بمصر؟",
+      "answer": "بحيرة ناصر",
+      "explanation": "بحيرة ناصر تمتد من جنوب أسوان إلى شمال السودان بسعة تخزينية ضخمة لتأمين مياه مصر من الفيضان والجفاف.",
+      "difficulty": "easy",
+      "source_name": "الهيئة العامة للاستعلامات",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa106",
+      "category": "جغرافيا مصر",
+      "question": "ما اسم البحيرة المالحة الطبيعية الشهيرة التي تقع في منخفض الفيوم بمصر؟",
+      "answer": "بحيرة قارون",
+      "explanation": "بحيرة قارون بالفيوم من أقدم البحيرات الطبيعية في العالم وتعد مقصداً هاماً للطيور المهاجرة.",
+      "difficulty": "medium",
+      "source_name": "محافظة الفيوم - الهيئة العامة للاستعلامات",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa107",
+      "category": "جغرافيا مصر",
+      "question": "ما اسم أكبر المحافظات المصرية مساحة وتقع في الصحراء الغربية؟",
+      "answer": "محافظة الوادي الجديد",
+      "explanation": "تغطي محافظة الوادي الجديد نحو ٤٤٪ من إجمالي مساحة مصر وتضم واحات الخارجة والداخلة والفرافرة وباريس.",
+      "difficulty": "medium",
+      "source_name": "الجهاز المركزي للتعبئة العامة والإحصاء",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa108",
+      "category": "جغرافيا مصر",
+      "question": "ما اسم المدينة المصرية الباسلة المطلة على المدخل الشمالي لقناة السويس؟",
+      "answer": "بورسعيد",
+      "explanation": "تأسست مدينة بورسعيد مع حفر قناة السويس عام ١٨٥٩ وتشتهر بمبنى هيئة القناة التاريخي وطرازها المعماري الكوزموبوليتاني.",
+      "difficulty": "easy",
+      "source_name": "الهيئة العامة للاستعلامات",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa109",
+      "category": "جغرافيا مصر",
+      "question": "ما اسم المدينة المصرية الواقعة على المدخل الجنوبي لقناة السويس وخليج السويس؟",
+      "answer": "السويس",
+      "explanation": "مدينة السويس الباسلة تقع عند المدخل الجنوبي للمجرى الملاحي لقناة السويس في شمال البحر الأحمر.",
+      "difficulty": "easy",
+      "source_name": "الهيئة العامة للاستعلامات",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa110",
+      "category": "جغرافيا مصر",
+      "question": "ما اسم المدينة المصرية الملقبة بـ 'مدينة السحر والجمال' وتشتهر بحدائق المانجو وبحيرة التمساح؟",
+      "answer": "الإسماعيلية",
+      "explanation": "الإسماعيلية أنشأها الخديوي إسماعيل في منتصف مجرى قناة السويس وتشتهر بأشجارها وخضرتها وفاكهة المانجو الفاخرة.",
+      "difficulty": "medium",
+      "source_name": "محافظة الإسماعيلية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa111",
+      "category": "جغرافيا مصر",
+      "question": "ما اسم المحافظة المصرية الشهيرة بصناعة الأثاث والحلويات الشرقية ومينائها البحري؟",
+      "answer": "دمياط",
+      "explanation": "تشتهر دمياط بالصناعات الخشبية والأثاث الفاخر وحلويات المشبك والجبن الدمياطي العريق.",
+      "difficulty": "easy",
+      "source_name": "محافظة دمياط",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa112",
+      "category": "جغرافيا مصر",
+      "question": "في أي محافظة مصرية تقع مدينة المحلة الكبرى قلعة صناعة الغزل والنسيج في الشرق الأوسط؟",
+      "answer": "الغربية",
+      "explanation": "مدينة المحلة الكبرى بمحافظة الغربية في وسط دلتا النيل هي أكبر مراكز صناعة النسيج والقطن المصري.",
+      "difficulty": "easy",
+      "source_name": "الهيئة العامة للاستعلامات",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa113",
+      "category": "جغرافيا مصر",
+      "question": "ما اسم المدينة المصرية عاصمة محافظة البحر الأحمر والمركز السياحي العالمي للغوص؟",
+      "answer": "الغردقة",
+      "explanation": "تعد الغردقة من أشهر مقاصد السياحة الشاطئية والغوص في العالم بفضل شعابها المرجانية وجزر الجفتون.",
+      "difficulty": "easy",
+      "source_name": "محافظة البحر الأحمر",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa114",
+      "category": "جغرافيا مصر",
+      "question": "ما اسم المدينة السياحية المصرية بجنوب سيناء الملقبة بـ 'مدينة السلام'؟",
+      "answer": "شرم الشيخ",
+      "explanation": "شرم الشيخ استضافت العديد من مؤتمرات السلام الدولية والقمم العالمية مثل قمة المناخ COP27.",
+      "difficulty": "easy",
+      "source_name": "الهيئة العامة للاستعلامات",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa115",
+      "category": "جغرافيا مصر",
+      "question": "ما اسم واحة الغروب المصرية المنعزلة بالصحراء الغربية الغنية بالعيون الكبريتية وأشجار الزيتون؟",
+      "answer": "واحة سيوة",
+      "explanation": "واحة سيوة بمحافظة مطروح تحتفظ بتراث لغوي أمازيغي ومعماري فريد بقلعة شالي المبنية من الكرشيف.",
+      "difficulty": "easy",
+      "source_name": "الهيئة العامة للاستعلامات",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa116",
+      "category": "جغرافيا مصر",
+      "question": "ما اسم القلعة الطينية التاريخية الشهيرة التي تتوسط واحة سيوة القديمة؟",
+      "answer": "قلعة شالي",
+      "explanation": "شالي بُنيت في القرن الثالث عشر الميلادي من أحجار الكرشيف (الملح والطين وجذوع النخيل) لحماية الواحة.",
+      "difficulty": "hard",
+      "source_name": "وزارة السياحة والآثار المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa117",
+      "category": "جغرافيا مصر",
+      "question": "إلى أي فرعين رئيسيين يتفرع نهر النيل شمال مدينة القاهرة عند القناطر الخيرية؟",
+      "answer": "فرع دمياط وفرع رشيد",
+      "explanation": "يتشعب النيل عند رأس الدلتا إلى فرع رشيد غرباً وفرع دمياط شرقاً ليصبا في البحر الأبيض المتوسط.",
+      "difficulty": "easy",
+      "source_name": "الهيئة العامة للاستعلامات",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa118",
+      "category": "جغرافيا مصر",
+      "question": "ما اسم البحيرة الطبيعية بمصر التي تعد ملتقى مياه البحر المتوسط وتشتهر بالثروة السمكية في شمال الدلتا؟",
+      "answer": "بحيرة البرلس",
+      "explanation": "تقع بحيرة البرلس في محافظة كفر الشيخ وتعد ثاني أكبر البحيرات الطبيعية الشمالية في مصر.",
+      "difficulty": "medium",
+      "source_name": "وزارة البيئة المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa119",
+      "category": "جغرافيا مصر",
+      "question": "ما اسم رأس المثلث الجغرافي لشبه جزيرة سيناء المحاط بمياه خليجي العقبة والسويس؟",
+      "answer": "رأس محمد",
+      "explanation": "شبه جزيرة سيناء تأخذ شكلاً مثلثاً ترتكز قاعدته على البحر المتوسط شمالاً ورأسه عند محمية رأس محمد جنوباً.",
+      "difficulty": "medium",
+      "source_name": "الهيئة العامة للاستعلامات",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa120",
+      "category": "جغرافيا مصر",
+      "question": "ما اسم الجزيرة النباتية الشهيرة وسط نهر النيل بأسوان التي تحوي أندر الأشجار والنباتات الاستوائية؟",
+      "answer": "جزيرة النباتات (جزيرة كيتشنر)",
+      "explanation": "تعتبر جزيرة النباتات بأسوان متحفاً نباتياً مفتوحاً وسط النيل يضم مئات الأنواع النادرة من النباتات الاستوائية.",
+      "difficulty": "medium",
+      "source_name": "محافظة أسوان",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa121",
+      "category": "أكلات مصرية",
+      "question": "ما هي المكونات الرئيسية التي تجتمع في طبق الكشري المصري الأصيل؟",
+      "answer": "الأرز والعدس البني والمكرونة والحمص والتقلية وصلصة الطماطم والدقة",
+      "explanation": "الكشري هو الطبق الشعبي الوطني الأول في مصر بمزيجه الفريد ونكهة الدقة بالخل والثوم والشطة.",
+      "difficulty": "easy",
+      "source_name": "المطبخ التراثي المصري",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa122",
+      "category": "أكلات مصرية",
+      "question": "ما هي العشبة الخضراء التي تُقلى مع الثوم المفروم والكزبرة الجافة لعمل 'طشة' الملوخية المصرية؟",
+      "answer": "الكزبرة الجافة مع الثوم",
+      "explanation": "طشة الملوخية بالثوم والكزبرة في السمن البلدي هي سر الرائحة والنكهة المصرية التراثية المميزة.",
+      "difficulty": "easy",
+      "source_name": "المطبخ التراثي المصري",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa123",
+      "category": "أكلات مصرية",
+      "question": "ما هو المحصول الأساسي الذي تُصنع منه عجينة الطعمية (الفلافل) في المطبخ المصري؟",
+      "answer": "الفول المدشوش",
+      "explanation": "تتميز الطعمية المصرية عن فلافل بلاد الشام بصنعها من الفول المدشوش والخضروات كالكرات والكزبرة والسمسم.",
+      "difficulty": "easy",
+      "source_name": "المطبخ التراثي المصري",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa124",
+      "category": "أكلات مصرية",
+      "question": "ما اسم الرغيف البلدي المحشو باللحم المفروم المتبل بالبصل والفلفل والمخبوز في الفرن؟",
+      "answer": "الحواوشي",
+      "explanation": "ابتكر جزار مصري يدعى أنور الحواوشي هذه الوجبة الشهية بالقاهرة في سبعينيات القرن العشرين ونُسبت لاسمه.",
+      "difficulty": "easy",
+      "source_name": "المطبخ الشعبي المصري",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa125",
+      "category": "أكلات مصرية",
+      "question": "ما اسم طبق الحلوى المصري الشهير المصنوع من رقائق العجين المخبوزة مع الحليب والمكسرات والقشطة؟",
+      "answer": "أم علي",
+      "explanation": "يرجع طبق أم علي التراثي للعصر المملوكي في مصر وصار من أشهر أطباق الحلوى الساخنة بالمطاعم المصرية.",
+      "difficulty": "easy",
+      "source_name": "المطبخ التراثي المصري",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa126",
+      "category": "أكلات مصرية",
+      "question": "ما اسم الفطير المصري التقليدي المورق والمصنوع بطبقات رقيقة من العجين والسمن البلدي؟",
+      "answer": "الفطير المشلتت",
+      "explanation": "الفطير المشلتت يرجع أصله للمصريين القدماء وكان يسمى 'الملتوت' ويقدم مع العسل الأبيض أو الأسود والجبن القديم.",
+      "difficulty": "easy",
+      "source_name": "المطبخ التراثي المصري",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa127",
+      "category": "أكلات مصرية",
+      "question": "ما هو نوع الحمام المحشو الأكثر شعبية وشهرة في العزائم المصرية التقليدية؟",
+      "answer": "الحمام المحشي بالفريك أو الأرز",
+      "explanation": "يعتبر الحمام المحشي بالفريك الصعيدي البلدي من أفخر الأطباق الشعبية والتراثية في مصر.",
+      "difficulty": "easy",
+      "source_name": "المطبخ التراثي المصري",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa128",
+      "category": "أكلات مصرية",
+      "question": "ما اسم السمك البوري المخمر والمملح الذي يتناوله المصريون في عيد شم النسيم منذ آلاف السنين؟",
+      "answer": "الفسيخ",
+      "explanation": "صناعة الفسيخ سمكاً مملحاً ترجع للعهد الفرعوني وتشتهر به مدن كدسوق ونبروه وبيلا ورشيد.",
+      "difficulty": "easy",
+      "source_name": "المطبخ التراثي المصري",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa129",
+      "category": "أكلات مصرية",
+      "question": "ما اسم الحساء المصري المصنوع من لسان العصفور المحمر مع مرق الدجاج أو اللحم والليمون؟",
+      "answer": "شوربة لسان عصفور",
+      "explanation": "شوربة لسان عصفور هي سيدة السفرة المصرية والمقبلة الأساسية في وجبات الإفطار والغداء.",
+      "difficulty": "easy",
+      "source_name": "المطبخ الشعبي المصري",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa130",
+      "category": "أكلات مصرية",
+      "question": "ما اسم المشروب الرمضاني المصري الأبيض المحضر من الأرز المطحون والحليب وجوز الهند والسكر؟",
+      "answer": "السوبيا",
+      "explanation": "السوبيا مشروب تراثي رمضاني مصري يقدم بارداً مثلجاً بنكهة جوز الهند المميزة.",
+      "difficulty": "easy",
+      "source_name": "المشروبات الشعبية المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa131",
+      "category": "أكلات مصرية",
+      "question": "ما اسم بائع المشروب التراثي الذي يرتدي الطربوش ويحمل إبريقاً زجاجياً ضخماً على ظهره ويقرع الصاجات النحاسية؟",
+      "answer": "بائع العرقسوس",
+      "explanation": "بائع العرقسوس بزيه التقليدي وصاجاته النحاسية الرنانة من أشهر المظاهر الفولكلورية في شوارع مصر وأحيائها التاريخية.",
+      "difficulty": "easy",
+      "source_name": "التراث الشعبي المصري",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa132",
+      "category": "أكلات مصرية",
+      "question": "ما هو المحصول الزراعي المصري الذي تنتشر عصاراته في كل شارع لتقديم عصير طازج وبارد؟",
+      "answer": "قصب السكر",
+      "explanation": "عصير القصب الطازج المثلج هو المشروب الشعبي الأول لملايين المصريين صيفاً وشتاءً في شوارع المحروسة.",
+      "difficulty": "easy",
+      "source_name": "المشروبات الشعبية المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa133",
+      "category": "أكلات مصرية",
+      "question": "ما اسم حلوى العسل والدقيق والسميد الشعبية المغطاة بالشربات الساخن واللوز أو القشطة؟",
+      "answer": "البسبوسة المصرية",
+      "explanation": "البسبوسة المكرملة بالسمن البلدي والمكسرات من أساسيات صواني الحلويات الشرقية في البيوت المصرية.",
+      "difficulty": "easy",
+      "source_name": "المطبخ التراثي المصري",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa134",
+      "category": "أكلات مصرية",
+      "question": "ما اسم الطبق المصري الشعبي المكون من شرائح الباذنجان المقلي والبطاطس والفلفل مع صلصة الطماطم واللحم المفروم؟",
+      "answer": "المسقعة",
+      "explanation": "المسقعة المصرية باللحمة المفرومة وطاجن الفرن أو الخل والثوم من أشهى الأكلات التراثية في البيوت المصرية.",
+      "difficulty": "easy",
+      "source_name": "المطبخ الشعبي المصري",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa135",
+      "category": "أكلات مصرية",
+      "question": "ما اسم الطبق الاحتفالي المصري المكون من الخبز المحمص والأرز واللحم وصلصة الخل والثوم؟",
+      "answer": "الفتة المصرية",
+      "explanation": "الفتة بالخل والثوم والصلصة الحمراء هي الطبق الرئيسي لأول أيام عيد الأضحى والمناسبات السعيدة في مصر.",
+      "difficulty": "easy",
+      "source_name": "المطبخ التراثي المصري",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa136",
+      "category": "تراث ورموز مصرية",
+      "question": "ما اسم الفن المصري العريق القائم على تطريز الخيام والأقمشة بنقوش هندسية وإسلامية متوارثة؟",
+      "answer": "فن الخيامية",
+      "explanation": "شارع الخيامية قرب باب زويلة بالقاهرة هو المركز التاريخي لصناع هذا الفن اليدوي الدقيق الذي يعود للعصر المملوكي.",
+      "difficulty": "easy",
+      "source_name": "وزارة الثقافة المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa137",
+      "category": "تراث ورموز مصرية",
+      "question": "ما اسم فن العرائس الشعبية المصرية التقليدية المدرج على قائمة اليونسكو للتراث الثقافي غير المادي؟",
+      "answer": "الأراجوز المصري",
+      "explanation": "الأراجوز هو دمية قفازية مصرية تقليدية تتحدث بصوت 'الأمانة' المميز وتعبر عن روح الفكاهة والنقد الشعبي.",
+      "difficulty": "medium",
+      "source_name": "منظمة اليونسكو - وزارة الثقافة",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa138",
+      "category": "تراث ورموز مصرية",
+      "question": "ما اسم فن المبارزة بالعصا التقليدي في صعيد مصر والمسجل على قائمة التراث غير المادي لليونسكو؟",
+      "answer": "فن التحطيب",
+      "explanation": "التحطيب رياضة وفن شعبي مصري قديم منقوش على جدران معابد الفراعنة، ويمارسه الصعايدة على نغمات المزمار والبلدي.",
+      "difficulty": "medium",
+      "source_name": "اليونسكو - وزارة الثقافة",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa139",
+      "category": "تراث ورموز مصرية",
+      "question": "ما اسم السيرة الشعبية العربية الطويلة التي يتغنى بها شعراء الربابة في قرى مصر ومدنها؟",
+      "answer": "السيرة الهلالية",
+      "explanation": "السيرة الهلالية تسرد تغريبة بني هلال وأبو زيد الهلالي وهي مسجلة على قوائم التراث الإنساني لليونسكو في مصر.",
+      "difficulty": "medium",
+      "source_name": "اليونسكو - التراث الثقافي",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa140",
+      "category": "تراث ورموز مصرية",
+      "question": "ما هي الحلوى الفولكلورية الشهيرة المصنوعة من السكر الملون التي يشتريها المصريون في المولد النبوي الشريف؟",
+      "answer": "عروسة وحصان المولد",
+      "explanation": "عروسة المولد بفستانها الورقي وحصان المولد المصنوعان من السكر تقليد مصري فاطمي مستمر منذ نحو ألف عام.",
+      "difficulty": "easy",
+      "source_name": "الهيئة العامة لقصور الثقافة",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa141",
+      "category": "تراث ورموز مصرية",
+      "question": "من هي الشخصية التراثية التي تجوب الحارات ليلاً في رمضان لإيقاظ الناس بنقرات الطبلة ونداء 'اصحى يا نايم'؟",
+      "answer": "المسحراتي",
+      "explanation": "المسحراتي وطبلته 'البازة' بأشعاره الشجية مظهر رمضاني مصري أصيل وثقه كبار شعراء العامية كفؤاد حداد.",
+      "difficulty": "easy",
+      "source_name": "التراث الشعبي المصري",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa142",
+      "category": "تراث ورموز مصرية",
+      "question": "في أي قرية بمحافظة الجيزة أسس رمسيس ويصا واصف مركز صناعة السجاد اليدوي الشهير عالمياً؟",
+      "answer": "قرية الحرانية",
+      "explanation": "يشتهر سجاد الحرانية عالمياً بأصالته واعتماده على الإبداع الفطري التلقائي للأطفال والنسّاجين بألوان طبيعية.",
+      "difficulty": "medium",
+      "source_name": "وزارة الثقافة المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa143",
+      "category": "تراث ورموز مصرية",
+      "question": "ما اسم القرية التراثية بمحافظة الفيوم المشهورة عالمياً بورش صناعة الخزف والفخار الفني؟",
+      "answer": "قرية تونس",
+      "explanation": "قرية تونس بالفيوم تطل على بحيرة قارون وحولتها السويسرية إيفلين بوريه إلى مدرسة عالمية لتعليم فنون الفخار والخزف.",
+      "difficulty": "medium",
+      "source_name": "محافظة الفيوم",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa144",
+      "category": "تراث ورموز مصرية",
+      "question": "ما هي الأداة التراثية الفرعونية المكونة من عمود وحبل وثقل مائي لرفع مياه النيل لري الأراضي المرتفعة؟",
+      "answer": "الشادوف",
+      "explanation": "الشادوف والساقية من أقدم أدوات الري اليدوية التي ابتكرها الفلاح المصري القديم ورسمها على جدران المقابر.",
+      "difficulty": "medium",
+      "source_name": "وزارة السياحة والآثار",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa145",
+      "category": "تراث ورموز مصرية",
+      "question": "ما اسم القلادة الفرعونية التي ترمز إلى الحماية والصحة والقوة في العقيدة المصرية القديمة؟",
+      "answer": "عين حورس (أوجات)",
+      "explanation": "عين حورس كانت من أشهر التمائم المصرية القديمة للحماية من الشر والحسد واستعادة الكمال والشفاء.",
+      "difficulty": "easy",
+      "source_name": "وزارة السياحة والآثار المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa146",
+      "category": "تراث ورموز مصرية",
+      "question": "ما اسم الرمز الفرعوني الشهير الذي يتخذه المصريون القدماء رمزاً للبعث وتجدد الحياة المستمر؟",
+      "answer": "الجعران (خنفساء الروث)",
+      "explanation": "الجعران 'خبري' كان يمثل شروق الشمس والولادة الجديدة من العدم ونُحتت منه آلاف التمائم والأختام الأثرية.",
+      "difficulty": "easy",
+      "source_name": "وزارة السياحة والآثار المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa147",
+      "category": "تراث ورموز مصرية",
+      "question": "ما اسم النبات النيلي المقدس الذي استخدمه المصريون القدماء في صناعة أول ورق للكتابة في التاريخ؟",
+      "answer": "نبات البردي",
+      "explanation": "نما نبات البردي بكثافة في مستنقعات دلتا النيل واستخدم سيقانه في صنع الورق والقوارب الخفيفة والحبال.",
+      "difficulty": "easy",
+      "source_name": "وزارة السياحة والآثار المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa148",
+      "category": "تراث ورموز مصرية",
+      "question": "ما اسم الزهرة المائية العطرة التي كانت رمزاً لمصر العليا والجمال وتبعث مع شروق كل شمس؟",
+      "answer": "زهرة اللوتس",
+      "explanation": "زهرة اللوتس المصرية تغلق بتلاتها ليلاً وتطفو وتفتح أزهارها مع إشراق الشمس كل صباح رمزاً للنقاء والتجدد.",
+      "difficulty": "easy",
+      "source_name": "وزارة السياحة والآثار المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa149",
+      "category": "تراث ورموز مصرية",
+      "question": "ما اسم القهوة النوبية التقليدية المجهزة في إناء فخاري مخصص بنكهات الحبهان والزنجبيل والمستكة؟",
+      "answer": "قهوة الجَبَنَة النوبية",
+      "explanation": "قهوة الجَبَنَة هي مشروب الضيافة النوبي الأول وتُحمص حبوبها وتُطحن طازجة وتُغلى في إناء الفخار 'الجبنة'.",
+      "difficulty": "medium",
+      "source_name": "التراث النوبي بأسوان",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa150",
+      "category": "تراث ورموز مصرية",
+      "question": "ما اسم القرية النوبية التراثية الشهيرة على الضفة الغربية للنيل بأسوان ببيوتها الملونة واستضافة التماسيح؟",
+      "answer": "قرية غرب سهيل",
+      "explanation": "تعتبر غرب سهيل قبلة سياحية مبهجة بتصاميم بيوتها وقبابها النوبية الملونة ومطاعمها ومتاجر التوابل والمشغولات اليدوية.",
+      "difficulty": "easy",
+      "source_name": "محافظة أسوان",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa151",
+      "category": "فن وثقافة مصرية",
+      "question": "من هو الأديب المصري الحائز على جائزة نوبل في الآداب عام ١٩٨٨؟",
+      "answer": "نجيب محفوظ",
+      "explanation": "حصل نجيب محفوظ على نوبل تتويجاً لمسيرته الروائية الخالدة مثل الثلاثية وأولاد حارتنا والحرافيش وخان الخليلي.",
+      "difficulty": "easy",
+      "source_name": "مؤسسة نوبل - الهيئة العامة للاستعلامات",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa152",
+      "category": "فن وثقافة مصرية",
+      "question": "من هي سيدة الغناء العربي وكوكب الشرق التي صدح صوتها بـ 'الأطلال' و'أنت عمري'؟",
+      "answer": "أم كلثوم (فاطمة البلتاجي)",
+      "explanation": "أم كلثوم ولدت في قرية طماي الزهايرة بالدقهلية وتعد أعظم قامات الغناء العربي في القرن العشرين.",
+      "difficulty": "easy",
+      "source_name": "دار الأوبرا المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa153",
+      "category": "فن وثقافة مصرية",
+      "question": "من هو الموسيقار المصري الرائد الملقب بـ 'فنان الشعب' ومجدد الموسيقى وملحن النشيد الوطني 'بلادي بلادي'؟",
+      "answer": "سيد درويش",
+      "explanation": "سيد درويش ابن حي كوم الدكة بالإسكندرية نهض بالأغنية والمسرح الغنائي المصري ولحن النشيد الوطني.",
+      "difficulty": "easy",
+      "source_name": "وزارة الثقافة المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa154",
+      "category": "فن وثقافة مصرية",
+      "question": "من هو الموسيقار المصري ومطرب الملوك والأمراء ومطور الموسيقى العربية لسبعة عقود؟",
+      "answer": "محمد عبد الوهاب",
+      "explanation": "محمد عبد الوهاب رائد التجديد الموسيقي والمؤلف والمطرب المبدع لأشهر روائع الطرب والسينما الغنائية المصرية.",
+      "difficulty": "easy",
+      "source_name": "دار الأوبرا المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa155",
+      "category": "فن وثقافة مصرية",
+      "question": "من هو العالم المصري الحائز على جائزة نوبل في الكيمياء عام ١٩٩٩ لابتكاره ميكروسكوب الفيمتو ثانية؟",
+      "answer": "د. أحمد زويل",
+      "explanation": "الدكتور أحمد زويل تخرج في جامعة الإسكندرية وابتكر تصوير التفاعلات الكيميائية بالليزر فائق السرعة بمعهد كالتك.",
+      "difficulty": "easy",
+      "source_name": "مؤسسة نوبل - جامعة أكسفورد / كالتك",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa156",
+      "category": "فن وثقافة مصرية",
+      "question": "من هو جراح القلب المصري العالمي الملقب بـ 'أمير القلوب' ومؤسس مركز أسوان للقلب؟",
+      "answer": "د. مجدي يعقوب",
+      "explanation": "البروفيسور مجدي يعقوب رائد زراعة القلب عالمياً وأسس صرحاً طبياً مجانياً لإنقاذ قلوب الأطفال والفقراء بأسوان.",
+      "difficulty": "easy",
+      "source_name": "مؤسسة مجدي يعقوب للقلب",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa157",
+      "category": "فن وثقافة مصرية",
+      "question": "من هو المفكر والأديب المصري الملقب بـ 'عميد الأدب العربي' ومؤلف كتاب 'الأيام'؟",
+      "answer": "د. طه حسين",
+      "explanation": "طه حسين فقد بصره طفلاً وتحدى الصعاب ليتخرج في الأزهر والسوربون ويقود النهضة الثقافية والتعليم المجاني بمصر.",
+      "difficulty": "easy",
+      "source_name": "وزارة الثقافة المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa158",
+      "category": "فن وثقافة مصرية",
+      "question": "من هو الشاعر المصري الملقب بـ 'أمير الشعراء' وصاحب 'الشوقيات'؟",
+      "answer": "أحمد شوقي",
+      "explanation": "بويع أحمد شوقي أميراً للشعراء بالإجماع عام ١٩٢٧، ومتحفه الحالي 'كرمة ابن هانئ' يطل على نيل الجيزة.",
+      "difficulty": "easy",
+      "source_name": "الهيئة العامة للاستعلامات",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa159",
+      "category": "فن وثقافة مصرية",
+      "question": "من هو الشاعر ورسام الكاريكاتير وفيلسوف العامية المصرية مؤلف 'الرباعيات' وأوبريت 'الليلة الكبيرة'؟",
+      "answer": "صلاح جاهين",
+      "explanation": "صلاح جاهين أبدع الرباعيات الفلسفية الخالدة وأشعار الليلة الكبيرة التي صارت أيقونة البهجة الشعبية المصرية.",
+      "difficulty": "easy",
+      "source_name": "وزارة الثقافة المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa160",
+      "category": "فن وثقافة مصرية",
+      "question": "من هو الاقتصادي المصري الوطني الذي أسس 'بنك مصر' وشركات الغزل والطيران والسينما الوطنية؟",
+      "answer": "طلعت حرب باشا",
+      "explanation": "أنشأ طلعت حرب بنك مصر عام ١٩٢٠ برؤوس أموال مصرية خالصة لتحرير الاقتصاد الوطني من التبعية الأجنبية.",
+      "difficulty": "easy",
+      "source_name": "بنك مصر - الهيئة العامة للاستعلامات",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa161",
+      "category": "فن وثقافة مصرية",
+      "question": "من هو المخرج السينمائي المصري العالمي مخرج 'باب الحديد' و'الأرض' و'المصير' الحائز على جائزة اليوبيل بمهرجان كان؟",
+      "answer": "يوسف شاهين",
+      "explanation": "يوسف شاهين ابن الإسكندرية صنع علامات سينمائية استثنائية ونال جائزة اليوبيل الذهبي لمهرجان كان السينمائي ١٩٩٧.",
+      "difficulty": "medium",
+      "source_name": "الهيئة العامة للاستعلامات",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa162",
+      "category": "فن وثقافة مصرية",
+      "question": "ما اسم الكوميديان المصري الرائد رائد المسرح الفكاهي ومؤسس فرقة الريحاني وشخصية 'كشكش بيه'؟",
+      "answer": "نجيب الريحاني",
+      "explanation": "نجيب الريحاني أحد أعظم رواد المسرح والسينما الكوميدية بمصر وصاحب تحف مثل 'غزل البنات' و'لعبة الست'.",
+      "difficulty": "easy",
+      "source_name": "الهيئة العامة لقصور الثقافة",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa163",
+      "category": "فن وثقافة مصرية",
+      "question": "في أي عام تم افتتاح قناة السويس للملاحة الدولية لأول مرة في حفل أسطوري بحضور ملوك العالم؟",
+      "answer": "عام ١٨٦٩ م",
+      "explanation": "افتُتحت قناة السويس في عهد الخديوي إسماعيل في ١٧ نوفمبر ١٨٦٩ بعد عقد كامل من أعمال الحفر الشاقة.",
+      "difficulty": "medium",
+      "source_name": "هيئة قناة السويس",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa164",
+      "category": "فن وثقافة مصرية",
+      "question": "في أي عام تم تأميم قناة السويس لتصبح شركة مساهمة مصرية خالصة بإعلان الرئيس جمال عبد الناصر؟",
+      "answer": "عام ١٩٥٦ م",
+      "explanation": "أعلن جمال عبد الناصر تأميم القناة في خطابه الشهير بميدان المنشية بالإسكندرية في ٢٦ يوليو ١٩٥٦.",
+      "difficulty": "easy",
+      "source_name": "هيئة قناة السويس",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa165",
+      "category": "فن وثقافة مصرية",
+      "question": "في أي ملحمة عسكرية استطاع الجيش المصري تحطيم خط بارليف وعبور قناة السويس؟",
+      "answer": "حرب السادس من أكتوبر ١٩٧٣ (العاشر من رمضان)",
+      "explanation": "حقق الجيش المصري نصراً استراتيجياً مبهراً بعبور القناة واجتياح الساتر الترابي بالمياه وتحطيم خط بارليف الحصين.",
+      "difficulty": "easy",
+      "source_name": "الهيئة العامة للاستعلامات المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa166",
+      "category": "فن وثقافة مصرية",
+      "question": "ما اسم الصرح الثقافي العالمي الذي أُعيد إحياؤه بالإسكندرية عام ٢٠٠٢ على شكل قرص شمس مائل يشرق من البحر؟",
+      "answer": "مكتبة الإسكندرية الجديدة",
+      "explanation": "مكتبة الإسكندرية صرح معرفي وثقافي معاصر يحيي أمجاد المكتبة القديمة ويضم ملايين الكتب ومتاحف وقبة سماوية.",
+      "difficulty": "easy",
+      "source_name": "مكتبة الإسكندرية الرسمية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa167",
+      "category": "فن وثقافة مصرية",
+      "question": "ما اسم المسرح الغنائي المصري الأول في أفريقيا والشرق الأوسط الذي افتتح عام ١٨٦٩ واحترق عام ١٩٧١؟",
+      "answer": "دار الأوبرا الخديوية",
+      "explanation": "شيد الخديوي إسماعيل دار الأوبرا الخديوية بمناسبة احتفالات قناة السويس، وعُزفت بها أول مرة أوبرا عايدة للموسيقار فيردي.",
+      "difficulty": "medium",
+      "source_name": "دار الأوبرا المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa168",
+      "category": "فن وثقافة مصرية",
+      "question": "من هو العندليب الأسمر وأحد عمالقة الطرب والسينما الرومانسية والغنائية في مصر والعالم العربي؟",
+      "answer": "عبد الحليم حافظ",
+      "explanation": "عبد الحليم حافظ وُلد في قرية الحلوات بالشرقية وأشعل وجدان الجماهير بأغانيه العاطفية والوطنية الخالدة.",
+      "difficulty": "easy",
+      "source_name": "الهيئة العامة للاستعلامات",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa169",
+      "category": "فن وثقافة مصرية",
+      "question": "ما اسم البرج الأيقوني المطل على نيل الجزيرة بالقاهرة والمصمم على شكل زهرة لوتس فرعونية؟",
+      "answer": "برج القاهرة",
+      "explanation": "برج القاهرة صممه المعماري المصري نعوم شبيب وافتتح عام ١٩٦١ بارتفاع ١٨٧ متراً ويزدان بزهرة لوتس مفرغة وشرفة بانورامية.",
+      "difficulty": "easy",
+      "source_name": "الهيئة العامة للاستعلامات",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa170",
+      "category": "فن وثقافة مصرية",
+      "question": "ما اسم العالم المصري الجليل الحائز على قلادة النيل ورائد الجيولوجيا وأبحاث المياه الجوفية بوكالة ناسا؟",
+      "answer": "د. فاروق الباز",
+      "explanation": "الدكتور فاروق الباز قاد اختيار مواقع هبوط رواد فضاء رحلات أبولو على القمر وأشرف على أبحاث الصحاري بالاستشعار عن بعد.",
+      "difficulty": "medium",
+      "source_name": "وكالة ناسا - الهيئة العامة للاستعلامات",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa171",
+      "category": "آثار ومعالم",
+      "question": "في أي موقع تم بناء قلعة قايتباي بالإسكندرية فوق أنقاض إحدى عجائب الدنيا السبع القديمة؟",
+      "answer": "فوق أنقاض فنار الإسكندرية القديم",
+      "explanation": "بنى السلطان المملوكي الأشرف قايتباي قلعته الحصينة عام ٨٨٤ هـ عند الطرف الشرقي لجزيرة فاروس مكان الفنار المنهار.",
+      "difficulty": "easy",
+      "source_name": "وزارة السياحة والآثار المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa172",
+      "category": "آثار ومعالم",
+      "question": "ما اسم القصر الخديوي التاريخي بالقاهرة المتميز بطراز العمارة الإيطالية الذي تحول لمقر رئاسي رسمي؟",
+      "answer": "قصر عابدين",
+      "explanation": "شيده الخديوي إسماعيل عام ١٨٧٣ وجعله مقراً للحكم بدلاً من القلعة، ويحوي اليوم متاحف رئاسية وأسلحة فاخرة.",
+      "difficulty": "medium",
+      "source_name": "رئاسة الجمهورية - وزارة السياحة والآثار",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa173",
+      "category": "آثار ومعالم",
+      "question": "ما اسم القصر الخيالي المستوحى من العمارة الهندية الكمبودية بحي مصر الجديدة بالقاهرة؟",
+      "answer": "قصر البارون إمبان",
+      "explanation": "شيده المليونير البلجيكي البارون إدوارد إمبان مؤسس ضاحية هيليوبوليس، ورُمم حديثاً ليعود تحفة معمارية براقة.",
+      "difficulty": "easy",
+      "source_name": "وزارة السياحة والآثار المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa174",
+      "category": "آثار ومعالم",
+      "question": "ما اسم المتحف المصري الضخم المفتتح جزئياً بجوار أهرامات الجيزة ويعد أكبر متحف آثار لحضارة واحدة في العالم؟",
+      "answer": "المتحف المصري الكبير (GEM)",
+      "explanation": "يقع المتحف المصري الكبير على بعد كيلومترين من أهرامات الجيزة ويضم المجموعة الكاملة لكنوز توت عنخ آمون.",
+      "difficulty": "easy",
+      "source_name": "وزارة السياحة والآثار المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa175",
+      "category": "آثار ومعالم",
+      "question": "ما اسم المتحف القاهري بالفسطاط الذي احتضن المومياوات الملكية المنقولة في الموكب الذهبي المهيب؟",
+      "answer": "المتحف القومي للحضارة المصرية (NMEC)",
+      "explanation": "يقع المتحف القومي للحضارة المصرية بالفسطاط ويقدم نظرة شاملة على الحضارة المصرية من عصور ما قبل التاريخ حتى العصر الحديث.",
+      "difficulty": "easy",
+      "source_name": "المتحف القومي للحضارة المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa176",
+      "category": "آثار ومعالم",
+      "question": "ما اسم المتحف العريق المشيد بميدان التحرير عام ١٩٠٢ ويعد أقدم مبنى صُمم خصيصاً ليكون متحفاً للآثار بالشرق؟",
+      "answer": "المتحف المصري بالتحرير",
+      "explanation": "صممه المعماري الفرنسي مارسيل دورنون على الطراز النيوكلاسيكي وافتتح في عهد الخديوي عباس حلمي الثاني.",
+      "difficulty": "easy",
+      "source_name": "وزارة السياحة والآثار المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa177",
+      "category": "آثار ومعالم",
+      "question": "ما اسم مقياس النيل الأثري العريق الذي شيد بجزيرة الروضة بالقاهرة لقياس منسوب فيضان النهر؟",
+      "answer": "مقياس النيل بالروضة",
+      "explanation": "شيده الخليفة العباسي المتوكل على الله عام ٢٤٧ هـ ويعد من أقدم الآثار الإسلامية الباقية بمصر لقياس ارتفاع مياه النيل وتقدير الخراج.",
+      "difficulty": "medium",
+      "source_name": "وزارة السياحة والآثار المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa178",
+      "category": "آثار ومعالم",
+      "question": "ما اسم البيمارستان والمجموعة المعمارية العظيمة بشارع المعز التي تضم مدرسة وقبة وضريحاً لأحد سلاطين المماليك؟",
+      "answer": "مجموعة السلطان المنصور قلاوون",
+      "explanation": "تعتبر مجموعة المنصور قلاوون بشارع المعز بالقاهرة من أروع نماذج العمارة المملوكية الباقية بنقوشها الرخامية وأخشابها المعشقة.",
+      "difficulty": "hard",
+      "source_name": "وزارة السياحة والآثار المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa179",
+      "category": "آثار ومعالم",
+      "question": "في أي وادٍ أثري بصعيد مصر دُفنت ملكات وأميرات الفراعنة وأشهرهن الملكة نفرتاري؟",
+      "answer": "وادي الملكات بالأقصر",
+      "explanation": "وادي الملكات بالبر الغربي بالأقصر يضم مقبرة نفرتاري ذات الرسوم الجدارية الأبهى والأكثر بريقاً في تاريخ الفن المصري القديم.",
+      "difficulty": "medium",
+      "source_name": "وزارة السياحة والآثار المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa180",
+      "category": "آثار ومعالم",
+      "question": "ما اسم المقابر الصخرية الأثرية الرومانية الفريدة المكونة من ثلاثة طوابق تحت الأرض بالإسكندرية؟",
+      "answer": "مقابر كوم الشقافة",
+      "explanation": "مقابر كوم الشقافة تمثل امتزاجاً نادراً بين الفنون الجنائزية المصرية القديمة واليونانية والرومانية السكندرية.",
+      "difficulty": "medium",
+      "source_name": "وزارة السياحة والآثار المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa181",
+      "category": "جغرافيا مصر",
+      "question": "ما هو المحصول الاستراتيجي المصري طويل التيلة الذي اشتهر عالمياً بنعومته وجودته الفائقة؟",
+      "answer": "القطن المصري (الذهب الأبيض)",
+      "explanation": "القطن المصري فائق الطول يعد الأفضل والأغلى عالمياً وساهم تاريخياً في بناء النهضة الزراعية والصناعية لمصر.",
+      "difficulty": "easy",
+      "source_name": "وزارة الزراعة المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa182",
+      "category": "جغرافيا مصر",
+      "question": "ما اسم الطمي الخصب الذي كان يجلبه فيضان النيل سنوياً ليغذي وادي مصر ودلتاها الخضراء؟",
+      "answer": "طمي النيل",
+      "explanation": "حمل النيل عبر آلاف السنين طمي هضبة الحبشة ليرسبه على ضفافه، مما منح أرض مصر خصوبة أسطورية ومكن الفراعنة من الزراعة.",
+      "difficulty": "easy",
+      "source_name": "الهيئة العامة للاستعلامات",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa183",
+      "category": "جغرافيا مصر",
+      "question": "ما اسم أشهر أنواع الأسماك النيلية العذبة التي تعد غذاءً شعبياً رئيساً في مصر ورمزاً للحياة في النهر؟",
+      "answer": "السمك البلطي النيلي",
+      "explanation": "سمك البلطي النيلي عُرف منذ عهد الفراعنة ورُسم على جدران المعابد كرمز للوفرة والخير في مياه النهر العظيم.",
+      "difficulty": "easy",
+      "source_name": "الهيئة العامة لتنمية الثروة السمكية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa184",
+      "category": "جغرافيا مصر",
+      "question": "ما اسم الطائر النيلي الأبيض الملقب بـ 'صديق الفلاح' لتواجده الدائم بالحقول وتنظيف التربة من الديدان؟",
+      "answer": "أبو قردان (بلشون الماشية)",
+      "explanation": "أبو قردان طائر نهري أليف يلازم الفلاحين والأراضي الزراعية المصرية ويعمل كمكافح حيوي طبيعي للآفات الزراعية.",
+      "difficulty": "easy",
+      "source_name": "وزارة البيئة المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa185",
+      "category": "جغرافيا مصر",
+      "question": "ما اسم الزاحف المائي الضخم الذي عاش في النيل وقدسه المصريون القدماء تحت اسم الإله 'سوبك'؟",
+      "answer": "تمساح النيل",
+      "explanation": "تمساح النيل كان مقدساً في معابد كوم أمبو والفيوم، وتوجد اليوم محمية لمستعمرات التماسيح في بحيرة ناصر جنوب أسوان.",
+      "difficulty": "easy",
+      "source_name": "وزارة البيئة المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa186",
+      "category": "جغرافيا مصر",
+      "question": "ما اسم السد الضخم الذي شيد في عهد الرئيس جمال عبد الناصر جنوب مصر لحمايتها من الفيضان وتوليد الكهرباء؟",
+      "answer": "السد العالي بأسوان",
+      "explanation": "افتُتح السد العالي رسمياً عام ١٩٧١، ووفر لمصر طاقة كهرومائية هائلة وحماها من فترات الجفاف والفيضانات المدمرة.",
+      "difficulty": "easy",
+      "source_name": "هيئة السد العالي وخزان أسوان",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa187",
+      "category": "جغرافيا مصر",
+      "question": "ما اسم خزان المياه التاريخي الحجري المشيد جنوب أسوان عام ١٩٠٢ قبل بناء السد العالي؟",
+      "answer": "خزان أسوان القديم",
+      "explanation": "بُني خزان أسوان في عهد الخديوي عباس حلمي الثاني من الجرانيت المحلي وكان وقتها أضخم سد حجري في العالم.",
+      "difficulty": "medium",
+      "source_name": "وزارة الموارد المائية والري",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa188",
+      "category": "جغرافيا مصر",
+      "question": "ما اسم المحافظة المصرية الواقعة أقصى شمال غرب مصر وعاصمتها مرسى مطروح؟",
+      "answer": "محافظة مطروح",
+      "explanation": "تمتد محافظة مطروح على طول الساحل الشمالي الغربي للبحر المتوسط حتى السلوم وحدود ليبيا غرباً وواحة سيوة جنوباً.",
+      "difficulty": "easy",
+      "source_name": "الجهاز المركزي للتعبئة والإحصاء",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa189",
+      "category": "جغرافيا مصر",
+      "question": "ما اسم المحافظة المصرية الشهيرة بمصايف رأس البر وزراعة الأرز وصناعة الأثاث؟",
+      "answer": "دمياط",
+      "explanation": "مدينة رأس البر بدمياط تشهد نقطة التقاء مياه النيل العذبة بمياه البحر الأبيض المتوسط المالحة في مشهد مهيب.",
+      "difficulty": "easy",
+      "source_name": "محافظة دمياط",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa190",
+      "category": "جغرافيا مصر",
+      "question": "ما اسم الجبل المقدس في سيناء الذي تلقى النبي موسى عليه السلام الوصايا من فوقه؟",
+      "answer": "جبل موسى (الطور)",
+      "explanation": "يصعد آلاف الزوار جبل موسى بسيناء لمشاهدة شروق الشمس والنزول لزيارة دير سانت كاترين التاريخي.",
+      "difficulty": "easy",
+      "source_name": "الهيئة العامة للاستعلامات",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa191",
+      "category": "أكلات مصرية",
+      "question": "ما اسم المشروب الشتوي المصري الدافئ المحضر من مسحوق نشوي يُغلى مع الحليب والسكر والمكسرات والقرفة؟",
+      "answer": "السحلب المصري",
+      "explanation": "السحلب بالمكسرات وجوز الهند والسمسم هو المشروب الدافئ المفضل في مقاهي وبيوت مصر خلال ليالي الشتاء الباردة.",
+      "difficulty": "easy",
+      "source_name": "المشروبات الشعبية المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa192",
+      "category": "أكلات مصرية",
+      "question": "ما اسم الجبن المصري التراثي القديم الحادق والمخمر مع المش والتوابل في أوانٍ فخارية منذ مئات السنين؟",
+      "answer": "الجبن القديم (المش)",
+      "explanation": "المش المصري تراث ريفي فرعوني الأصل يتم تخميره لشهور وسنوات في أوانٍ فخارية (البلاص) ويؤكل مع الفطير والخيار.",
+      "difficulty": "easy",
+      "source_name": "المطبخ التراثي المصري",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa193",
+      "category": "أكلات مصرية",
+      "question": "ما اسم نوع الخبز الشمسي المصري الشهير المخبوز من القمح والمخمّر تحت حرارة الشمس في صعيد مصر؟",
+      "answer": "العيش الشمسي (الملتوت)",
+      "explanation": "العيش الشمسي في صعيد مصر يُخمّر بوضعه تحت أشعة الشمس المباشرة قبل خبزه في الفرن البلدي وله مذاق مميز.",
+      "difficulty": "medium",
+      "source_name": "التراث الشعبي في الصعيد",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa194",
+      "category": "أكلات مصرية",
+      "question": "ما اسم الطبق الصعيدي المفضل المكون من كرات دقيق القمح الممزوجة باللبن الحامض والمجففة في الشمس مع الدجاج؟",
+      "answer": "الكشك الصعيدي",
+      "explanation": "الكشك الصعيدي يصنع من القمح المسلوق واللبن الرايب ويجفف في الشمس لسنوات ويطبخ بالبصل المحمر والدجاج.",
+      "difficulty": "medium",
+      "source_name": "المطبخ التراثي الصعيدي",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa195",
+      "category": "أكلات مصرية",
+      "question": "ما هي الطريقة الشهيرة لتقديم الشاي المصري في المقاهي الشعبية في كوب زجاجي صغير وشفاف؟",
+      "answer": "شاي في الخمسينة",
+      "explanation": "الشاي 'في الخمسينة' بكوب زجاجي صغير مع أوراق النعناع البلدي الطازج هو طقس مصري عريق في المقاهي واللقاءات.",
+      "difficulty": "easy",
+      "source_name": "التراث الشعبي المصري",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa196",
+      "category": "تراث ورموز مصرية",
+      "question": "ما اسم الآلة الإيقاعية الجلدية الشرقية الأسطوانية التي تقود الإيقاع في الموسيقى والاحتفالات الشعبية المصرية؟",
+      "answer": "الطبلة (الدربكة)",
+      "explanation": "الدربكة أو الطبلة الفخارية أو المعدنية بصوتيها 'دوم' و'تك' هي قلب الإيقاع الموسيقي والبهجة في الأفراح المصرية.",
+      "difficulty": "easy",
+      "source_name": "دار الأوبرا المصرية - التراث الموسيقي",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa197",
+      "category": "تراث ورموز مصرية",
+      "question": "ما اسم القبعة الحمراء المصنوعة من الجوخ ذات الشرابة السوداء التي ارتداها وجهاء مصر والمشايخ في العهد الملكي؟",
+      "answer": "الطربوش",
+      "explanation": "كان الطربوش رمزاً للأناقة والرسمية في مصر وظلت ورش 'الطَرَابيشي' بحي الغورية تصنعه يدوياً على قوالب نحاسية.",
+      "difficulty": "easy",
+      "source_name": "الهيئة العامة لقصور الثقافة",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa198",
+      "category": "تراث ورموز مصرية",
+      "question": "ما اسم القارب الخشبي الشراعي التقليدي ذي الشراع المثلث الأبيض الذي يجوب مياه نيل مصر منذ القدم؟",
+      "answer": "الفلوكة النيلية",
+      "explanation": "الفلوكة النيلية بشراعها الأبيض الأنيق هي وسيلة النزهة والاستجمام المفضلة على ضفاف نيل القاهرة والأقصر وأسوان.",
+      "difficulty": "easy",
+      "source_name": "الهيئة العامة للاستعلامات",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa199",
+      "category": "تراث ورموز مصرية",
+      "question": "ما اسم الفانوس المعدني الملون بالزجاج المضاء بالشمعة أو المصباح الذي ارتبط بليالي رمضان في مصر؟",
+      "answer": "فانوس رمضان المصري",
+      "explanation": "فانوس رمضان تقليد مصري فاطمي أصيل امتد لكل العالم الإسلامي، وتشتهر ورش صناعته اليدوية بحي باب الخلق والسيدة زينب.",
+      "difficulty": "easy",
+      "source_name": "الهيئة العامة للاستعلامات",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa200",
+      "category": "تراث ورموز مصرية",
+      "question": "ما اسم الإناء الفخاري التراثي المزود برأس ضيق وقاعدة دائرية لتبريد مياه الشرب وتنقيتها في بيوت مصر؟",
+      "answer": "القُـلّة القناوية",
+      "explanation": "القُلة الفخارية المصنوعة في قنا ترشح الماء وترطبه طبيعياً بفضل مسام الطمي وهي رمز للبساطة والضيافة المصرية.",
+      "difficulty": "easy",
+      "source_name": "الهيئة العامة لقصور الثقافة",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa201",
+      "category": "فن وثقافة مصرية",
+      "question": "من هي سيدة الشاشة العربية ونجمة السينما المصرية بطلة 'دعاء الكروان' و'الحرام'؟",
+      "answer": "فاتن حمامة",
+      "explanation": "فاتن حمامة توجت نجمة للقرن في السينما المصرية وقدمت أعمالاً إنسانية وقضايا اجتماعية للمرأة المصرية.",
+      "difficulty": "easy",
+      "source_name": "الهيئة العامة للاستعلامات",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa202",
+      "category": "فن وثقافة مصرية",
+      "question": "من هو الممثل الكوميدي المصري الملقب بـ 'الأستاذ' وصاحب مدرسة الكوميديا الراقية في المسرح والسينما؟",
+      "answer": "فؤاد المهندس",
+      "explanation": "قدم فؤاد المهندس روائع المسرح مثل 'سيدتي الجميلة' و'سك على بناتك' وبرنامجه الإذاعي الخالد 'كلمتين وبس'.",
+      "difficulty": "easy",
+      "source_name": "وزارة الثقافة المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa203",
+      "category": "فن وثقافة مصرية",
+      "question": "من هو الشاعر الغنائي المصري الملقب بـ 'شاعر الشعب' ورائد شعر العامية في القرن العشرين؟",
+      "answer": "بيرم التونسي",
+      "explanation": "بيرم التونسي ابن الإسكندرية عبر بأشعاره عن البسطاء وكتب روائع أم كلثوم مثل 'هو صحيح الهوى غلاب' و'أهل الهوى'.",
+      "difficulty": "medium",
+      "source_name": "وزارة الثقافة المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa204",
+      "category": "فن وثقافة مصرية",
+      "question": "من هو الشاعر المصري المعروف بـ 'شاعر النيل' ومعاصر أحمد شوقي؟",
+      "answer": "حافظ إبراهيم",
+      "explanation": "حافظ إبراهيم اشتهر بوطنيته الفياضة وترجمته لـ 'البؤساء' وقصيدته الشهيرة 'مصر تتحدث عن نفسها'.",
+      "difficulty": "easy",
+      "source_name": "الهيئة العامة للاستعلامات",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa205",
+      "category": "فن وثقافة مصرية",
+      "question": "ما اسم الرقصة التراثية الصوفية المصرية التي يدور فيها الراقص بثياب ملونة واسعة ترمز لحركة الكواكب والكون؟",
+      "answer": "رقصة التنورة المصرية",
+      "explanation": "التنورة فن استعراضي صوفي مصري عريق يعتمد على الدوران المتواصل في حركات دائرية رمزاً للارتقاء الروحي وتوحيد الخالق.",
+      "difficulty": "easy",
+      "source_name": "وزارة الثقافة المصرية - قبة الغوري",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa206",
+      "category": "آثار ومعالم",
+      "question": "ما اسم المعبد الصخري الأثري في أسوان الذي أنقذته منظمة اليونسكو ونقلته إلى جزيرة أجيليكا لحمايته من الغرق؟",
+      "answer": "معبد فيلة (إيزيس)",
+      "explanation": "نقلت اليونسكو معبد فيلة في حملة دولية كبرى حجرًا حجرًا إلى جزيرة أجيليكا المجاورة عقب بناء السد العالي.",
+      "difficulty": "easy",
+      "source_name": "اليونسكو - وزارة السياحة والآثار",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa207",
+      "category": "آثار ومعالم",
+      "question": "ما اسم هرم الملك زوسر بمدرجاته الستة الذي يعد أقدم بناء حجري ضخم في تاريخ البشرية؟",
+      "answer": "هرم سقارة المدرج",
+      "explanation": "صممه المهندس العبقري إيمحوتب في عهد الأسرة الثالثة بسقارة بالجيزة ليكون أول هرم متدرج بالحجر في العالم.",
+      "difficulty": "easy",
+      "source_name": "وزارة السياحة والآثار المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa208",
+      "category": "آثار ومعالم",
+      "question": "ما اسم الوادي الأثري بالصحراء الغربية الذي يضم مئات المومياوات الرومانية المكتشفة بواحة البحرية؟",
+      "answer": "وادي المومياوات الذهبية",
+      "explanation": "اكتشفه الدكتور زاهي حواس عام ١٩٩٦ بواحة البحرية وضم مومياوات رومانية مغطاة بأقنعة وصفائح ذهبية براقة.",
+      "difficulty": "hard",
+      "source_name": "وزارة السياحة والآثار المصرية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa209",
+      "category": "جغرافيا مصر",
+      "question": "ما اسم المحافظة المصرية الشهيرة بمولد العارف بالله السيد البدوي وحلوى الحمصية؟",
+      "answer": "طنطا (عاصمة محافظة الغربية)",
+      "explanation": "تعد طنطا قلب الدلتا النابض وتشتهر بمسجد السيد أحمد البدوي وحلوى المولد والحمصيات الشهيرة.",
+      "difficulty": "easy",
+      "source_name": "محافظة الغربية",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa210",
+      "category": "أكلات مصرية",
+      "question": "ما اسم وجبة الشارع الإسكندرانية الشهيرة المصنوعة من كبدة مقطعة شرائح رفيعة ومتبلة بالفلفل الحار والثوم والليمون؟",
+      "answer": "الكبدة الإسكندراني",
+      "explanation": "الكبدة الإسكندراني في العيش الفينو بالليمون والفلفل الحار والطحينة هي أشهر أكلات الشارع في عروس البحر المتوسط.",
+      "difficulty": "easy",
+      "source_name": "المطبخ الشعبي المصري",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa211",
+      "category": "تراث ورموز مصرية",
+      "question": "ما اسم العربة الخشبية الشعبية التي تجرها الخيول وتعد وسيلة تنزه سياحية تراثية في شوارع الأقصر وأسوان والإسكندرية؟",
+      "answer": "الحنطور",
+      "explanation": "الحنطور وسيلة تنقل تراثية تاريخية يركبها الزوار للاستمتاع بنسيم كورنيش النيل في الأقصر وأسوان وكورنيش الإسكندرية.",
+      "difficulty": "easy",
+      "source_name": "التراث السياحي المصري",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa212",
+      "category": "تراث ورموز مصرية",
+      "question": "ما اسم العربة اليدوية الخشبية ذات الألوان المزركشة والقدرة الضخمة التي يفطر عليها المصريون صباحاً في كل شارع؟",
+      "answer": "عربية الفول المدمس",
+      "explanation": "عربية الفول المدمس بطبق الفول بالزيت الحار والليمون والكمون والجرجير والبصل هي ملتقى كل فئات الشعب صباحاً.",
+      "difficulty": "easy",
+      "source_name": "التراث الشعبي المصري",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa213",
+      "category": "فن وثقافة مصرية",
+      "question": "من هو الرسام وفنان الكاريكاتير المصري الشهير بصوره المعبرة عن هموم المواطن وطبقات الشعب وصانع شخصية 'المعلم حنفي'؟",
+      "answer": "أحمد رجب ومصطفى حسين",
+      "explanation": "شكل الثنائي الساخر أحمد رجب ومصطفى حسين بجريدة الأخبار أشهر ثنائيات الكاريكاتير في مصر لسنوات طويلة.",
+      "difficulty": "medium",
+      "source_name": "الهيئة العامة للاستعلامات",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa214",
+      "category": "فن وثقافة مصرية",
+      "question": "ما اسم المعرض الدولي السنوي للكتاب بالقاهرة الذي يعد من أكبر وأعرق معارض الكتاب في العالم والشرق الأوسط؟",
+      "answer": "معرض القاهرة الدولي للكتاب",
+      "explanation": "تأسس معرض القاهرة للكتاب عام ١٩٦٩ ويجذب سنوياً ملايين القراء ومئات دور النشر في عرس ثقافي مبهج.",
+      "difficulty": "easy",
+      "source_name": "الهيئة المصرية العامة للكتاب",
+      "verification_status": "approved"
+    },
+    {
+      "id": "qa215",
+      "category": "جغرافيا مصر",
+      "question": "ما هو المضيق المائي الاستراتيجي الذي يربط خليج العقبة بالبحر الأحمر عند مدخل جزيرة تيران المصرية؟",
+      "answer": "مضيق تيران",
+      "explanation": "مضيق تيران ممر بحري دولي استراتيجي في البحر الأحمر يفصل بين شبه جزيرة سيناء وجزيرة تيران.",
+      "difficulty": "hard",
+      "source_name": "الهيئة العامة للاستعلامات",
+      "verification_status": "approved"
+    }
+  ],
+  "visual_symbol_pairs": [
+    {
+      "id": "vs001",
+      "symbol_key": "pyramid",
+      "label_ar": "هرم",
+      "category": "آثار مصرية",
+      "illustration_brief": "رسم أصلي مبسط لهرم مصري على رمال ذهبية"
+    },
+    {
+      "id": "vs002",
+      "symbol_key": "sphinx",
+      "label_ar": "أبو الهول",
+      "category": "آثار مصرية",
+      "illustration_brief": "رسم أصلي مبسط لتمثال أبي الهول"
+    },
+    {
+      "id": "vs003",
+      "symbol_key": "ankh",
+      "label_ar": "عنخ",
+      "category": "رموز مصرية قديمة",
+      "illustration_brief": "رمز عنخ بخطوط واضحة"
+    },
+    {
+      "id": "vs004",
+      "symbol_key": "scarab",
+      "label_ar": "جعران",
+      "category": "رموز مصرية قديمة",
+      "illustration_brief": "جعران زخرفي مصري قديم"
+    },
+    {
+      "id": "vs005",
+      "symbol_key": "eye_of_horus",
+      "label_ar": "عين حورس",
+      "category": "رموز مصرية قديمة",
+      "illustration_brief": "عين حورس برسمة واضحة ومحترمة"
+    },
+    {
+      "id": "vs006",
+      "symbol_key": "papyrus",
+      "label_ar": "بردي",
+      "category": "تراث مصري",
+      "illustration_brief": "لفافة بردي ونبتة بردي"
+    },
+    {
+      "id": "vs007",
+      "symbol_key": "lotus",
+      "label_ar": "زهرة اللوتس",
+      "category": "رموز مصرية قديمة",
+      "illustration_brief": "زهرة لوتس مصرية"
+    },
+    {
+      "id": "vs008",
+      "symbol_key": "falcon",
+      "label_ar": "صقر",
+      "category": "رموز مصرية قديمة",
+      "illustration_brief": "صقر مستوحى من الفن المصري القديم"
+    },
+    {
+      "id": "vs009",
+      "symbol_key": "obelisk",
+      "label_ar": "مسلة",
+      "category": "آثار مصرية",
+      "illustration_brief": "مسلة حجرية مصرية"
+    },
+    {
+      "id": "vs010",
+      "symbol_key": "sailboat_nile",
+      "label_ar": "مركب نيلي",
+      "category": "نهر النيل",
+      "illustration_brief": "مركب شراعي صغير على النيل"
+    },
+    {
+      "id": "vs011",
+      "symbol_key": "water_wheel",
+      "label_ar": "ساقية",
+      "category": "تراث ريفي",
+      "illustration_brief": "ساقية ريفية مصرية"
+    },
+    {
+      "id": "vs012",
+      "symbol_key": "palm_tree",
+      "label_ar": "نخلة",
+      "category": "طبيعة مصرية",
+      "illustration_brief": "نخلة تمر"
+    },
+    {
+      "id": "vs013",
+      "symbol_key": "ibis",
+      "label_ar": "طائر أبو منجل",
+      "category": "طبيعة وتراث",
+      "illustration_brief": "طائر أبو منجل"
+    },
+    {
+      "id": "vs014",
+      "symbol_key": "camel",
+      "label_ar": "جمل",
+      "category": "طبيعة مصرية",
+      "illustration_brief": "جمل بأسلوب رسم لطيف"
+    },
+    {
+      "id": "vs015",
+      "symbol_key": "lotus_crown",
+      "label_ar": "تاج فرعوني",
+      "category": "تراث مصري",
+      "illustration_brief": "تاج مستوحى من الفن المصري القديم دون تقليد قطعة أثرية بعينها"
+    },
+    {
+      "id": "vs016",
+      "symbol_key": "khayamiya",
+      "label_ar": "خيامية",
+      "category": "حرف مصرية",
+      "illustration_brief": "قطعة قماش خيامية بزخارف هندسية أصلية"
+    },
+    {
+      "id": "vs017",
+      "symbol_key": "copper_lantern",
+      "label_ar": "فانوس",
+      "category": "تراث شعبي",
+      "illustration_brief": "فانوس نحاسي بزخارف بسيطة"
+    },
+    {
+      "id": "vs018",
+      "symbol_key": "baladi_bread",
+      "label_ar": "عيش بلدي",
+      "category": "أكلات مصرية",
+      "illustration_brief": "رغيف عيش بلدي"
+    },
+    {
+      "id": "vs019",
+      "symbol_key": "koshari_bowl",
+      "label_ar": "كشري",
+      "category": "أكلات مصرية",
+      "illustration_brief": "طبق كشري مصري"
+    },
+    {
+      "id": "vs020",
+      "symbol_key": "ful_bowl",
+      "label_ar": "فول",
+      "category": "أكلات مصرية",
+      "illustration_brief": "طبق فول مدمس"
+    },
+    {
+      "id": "vs021",
+      "symbol_key": "taameya",
+      "label_ar": "طعمية",
+      "category": "أكلات مصرية",
+      "illustration_brief": "قرص طعمية مصري"
+    },
+    {
+      "id": "vs022",
+      "symbol_key": "molokhia_bowl",
+      "label_ar": "ملوخية",
+      "category": "أكلات مصرية",
+      "illustration_brief": "طبق ملوخية"
+    },
+    {
+      "id": "vs023",
+      "symbol_key": "feteer",
+      "label_ar": "فطير مشلتت",
+      "category": "أكلات مصرية",
+      "illustration_brief": "فطير مشلتت ذهبي"
+    },
+    {
+      "id": "vs024",
+      "symbol_key": "hibiscus_glass",
+      "label_ar": "كركديه",
+      "category": "مشروبات مصرية",
+      "illustration_brief": "كوب كركديه أحمر"
+    },
+    {
+      "id": "vs025",
+      "symbol_key": "cairo_tower",
+      "label_ar": "برج القاهرة",
+      "category": "آثار ومعالم",
+      "illustration_brief": "برج القاهرة برمز زهرة اللوتس المفرغة المطل على نيل القاهرة"
+    },
+    {
+      "id": "vs026",
+      "symbol_key": "qaitbay_citadel",
+      "label_ar": "قلعة قايتباي",
+      "category": "آثار ومعالم",
+      "illustration_brief": "قلعة قايتباي بأسوارها وبرجها المنيف على شاطئ البحر بالإسكندرية"
+    },
+    {
+      "id": "vs027",
+      "symbol_key": "saladin_citadel",
+      "label_ar": "قلعة صلاح الدين",
+      "category": "آثار ومعالم",
+      "illustration_brief": "قلعة الجبل بالقاهرة مع قباب ومآذن جامع محمد علي"
+    },
+    {
+      "id": "vs028",
+      "symbol_key": "karnak_column",
+      "label_ar": "عمود الكرنك",
+      "category": "آثار مصرية",
+      "illustration_brief": "عمود أثري فرعوني بتاج بردي مفتوح من صالة أعمدة الكرنك"
+    },
+    {
+      "id": "vs029",
+      "symbol_key": "nefertiti_bust",
+      "label_ar": "تمثال نفرتيتي",
+      "category": "رموز مصرية قديمة",
+      "illustration_brief": "التمثال النصفي الأيقوني للملكة نفرتيتي بتاجها الأزرق الملكي"
+    },
+    {
+      "id": "vs030",
+      "symbol_key": "tut_mask",
+      "label_ar": "قناع توت عنخ آمون",
+      "category": "رموز مصرية قديمة",
+      "illustration_brief": "القناع الذهبي المخطط باللازورد للملك الشاب توت عنخ آمون"
+    },
+    {
+      "id": "vs031",
+      "symbol_key": "canopic_jar",
+      "label_ar": "آنية كانوبية",
+      "category": "رموز مصرية قديمة",
+      "illustration_brief": "آنية فرعونية برأس صقر أو ابن آوى لحفظ الأواني الطقسية"
+    },
+    {
+      "id": "vs032",
+      "symbol_key": "djed_pillar",
+      "label_ar": "عمود الجد",
+      "category": "رموز مصرية قديمة",
+      "illustration_brief": "رمز الاستقرار والخلود عند قدماء المصريين بأربع طبقات متراكبة"
+    },
+    {
+      "id": "vs033",
+      "symbol_key": "winged_sun",
+      "label_ar": "قرص الشمس المجنح",
+      "category": "رموز مصرية قديمة",
+      "illustration_brief": "قرص الشمس الذهبي بأجنحة الصقر الممدودة رمز الحماية الإلهية"
+    },
+    {
+      "id": "vs034",
+      "symbol_key": "uraeus_cobra",
+      "label_ar": "أفعى الكوبرا الملكية",
+      "category": "رموز مصرية قديمة",
+      "illustration_brief": "كوبرا الصل الفرعوني المنتصبة على تيجان الفراعنة رمزاً للسيادة"
+    },
+    {
+      "id": "vs035",
+      "symbol_key": "cat_bastet",
+      "label_ar": "قطة باستت",
+      "category": "رموز مصرية قديمة",
+      "illustration_brief": "تمثال برونزي أنيق للقطة باستت رمز الرشاقة والحماية والخصوبة"
+    },
+    {
+      "id": "vs036",
+      "symbol_key": "crook_and_flail",
+      "label_ar": "صولجان الحكم والمذبة",
+      "category": "رموز مصرية قديمة",
+      "illustration_brief": "عصا الراعي المعقوفة والمذبة الذهبية رمز الملكية والسلطة"
+    },
+    {
+      "id": "vs037",
+      "symbol_key": "cartouche",
+      "label_ar": "خرطوشة هيروغليفية",
+      "category": "رموز مصرية قديمة",
+      "illustration_brief": "إطار بيضاوي فرعوني محاط بحبل ملكي يحمل حروفا هيروغليفية"
+    },
+    {
+      "id": "vs038",
+      "symbol_key": "rosetta_stone",
+      "label_ar": "حجر رشيد",
+      "category": "آثار مصرية",
+      "illustration_brief": "لوح البازلت الأسود ذو النصوص الثلاثة التي فكت شفرة الهيروغليفية"
+    },
+    {
+      "id": "vs039",
+      "symbol_key": "sun_boat",
+      "label_ar": "مركب الشمس",
+      "category": "آثار مصرية",
+      "illustration_brief": "سفينة خشبية فرعونية بمجاديف ملكية أثرية لخوفو"
+    },
+    {
+      "id": "vs040",
+      "symbol_key": "rams_sphinx",
+      "label_ar": "كبش طريق الكباش",
+      "category": "آثار مصرية",
+      "illustration_brief": "تمثال كبش فرعوني مقدس جاثم يحمي تمثال الملك تحته"
+    },
+    {
+      "id": "vs041",
+      "symbol_key": "abu_simbel_statue",
+      "label_ar": "تمثال رمسيس بأبو سمبل",
+      "category": "آثار مصرية",
+      "illustration_brief": "التمثال الجرانيتي الجالس الشامخ لرمسيس الثاني على واجهة المعبد"
+    },
+    {
+      "id": "vs042",
+      "symbol_key": "hatchepsut_terrace",
+      "label_ar": "معبد حتشبسوت",
+      "category": "آثار مصرية",
+      "illustration_brief": "المدرجات الحجرية والشرفات المعمارية الخالدة للدير البحري"
+    },
+    {
+      "id": "vs043",
+      "symbol_key": "alexandria_library",
+      "label_ar": "مكتبة الإسكندرية",
+      "category": "معالم مصرية",
+      "illustration_brief": "المبنى الدائري المائل للمكتبة وجدار الغرانيت بنقوش لغات العالم"
+    },
+    {
+      "id": "vs044",
+      "symbol_key": "alexandria_lighthouse",
+      "label_ar": "فنار الإسكندرية القديم",
+      "category": "تراث مصري",
+      "illustration_brief": "فنار فاروس الأسطوري بأدواره الثلاثة وشعلة ناره الملاحية"
+    },
+    {
+      "id": "vs045",
+      "symbol_key": "khan_el_khalili",
+      "label_ar": "قنديل خان الخليلي",
+      "category": "تراث مصري",
+      "illustration_brief": "مصباح نحاسي شرقي مفرغ بزجاج معشق من أزقة خان الخليلي"
+    },
+    {
+      "id": "vs046",
+      "symbol_key": "suez_canal",
+      "label_ar": "قناة السويس وسفينة الحاويات",
+      "category": "معالم مصرية",
+      "illustration_brief": "سفينة شحن عملاقة تعبر المجرى الملاحي لقناة السويس بين الضفتين"
+    },
+    {
+      "id": "vs047",
+      "symbol_key": "aswan_high_dam",
+      "label_ar": "السد العالي",
+      "category": "معالم مصرية",
+      "illustration_brief": "جسم السد الضخم وتوربينات توليد الكهرباء فوق نيل أسوان"
+    },
+    {
+      "id": "vs048",
+      "symbol_key": "nubian_house",
+      "label_ar": "بيت نوبي ملون",
+      "category": "تراث نوبي",
+      "illustration_brief": "منزل نوبي بقبة بيضاء وزخارف هندسية وألوان زاهية كالأصفر والأزرق"
+    },
+    {
+      "id": "vs049",
+      "symbol_key": "siwa_dates",
+      "label_ar": "تمور واحة سيوة",
+      "category": "طبيعة مصرية",
+      "illustration_brief": "عذق بلح سيوي ذهبي فاخر بين سعف نخيل الواحة"
+    },
+    {
+      "id": "vs050",
+      "symbol_key": "sinai_mount",
+      "label_ar": "جبال سيناء الملونة",
+      "category": "طبيعة مصرية",
+      "illustration_brief": "سلاسل جبال سيناء الوعرة ذات الصخور الجرانيتية الوردية"
+    },
+    {
+      "id": "vs051",
+      "symbol_key": "st_catherine",
+      "label_ar": "دير سانت كاترين",
+      "category": "آثار ومعالم",
+      "illustration_brief": "أسوار الدير البيزنطي الحصينة تحت سفح جبل موسى"
+    },
+    {
+      "id": "vs052",
+      "symbol_key": "red_sea_coral",
+      "label_ar": "شعاب البحر الأحمر",
+      "category": "طبيعة مصرية",
+      "illustration_brief": "شعاب مرجانية ملونة وأسماك الفراشة في مياه الغردقة وشرم"
+    },
+    {
+      "id": "vs053",
+      "symbol_key": "nile_crocodile",
+      "label_ar": "تمساح النيل",
+      "category": "طبيعة وتراث",
+      "illustration_brief": "تمساح نهري أصيل يطفو في مياه بحيرة ناصر"
+    },
+    {
+      "id": "vs054",
+      "symbol_key": "kingfisher_bird",
+      "label_ar": "طائر الرفراف النيلي",
+      "category": "طبيعة مصرية",
+      "illustration_brief": "طائر الرفراف بريشه الأزرق الزمردي يصطاد سمكة صغيرة على النيل"
+    },
+    {
+      "id": "vs055",
+      "symbol_key": "tilapia_fish",
+      "label_ar": "سمك بلطي نيلي",
+      "category": "طبيعة وتراث",
+      "illustration_brief": "سمكة بلطي فضية زرقاء تسبح في مياه نهر النيل العذبة"
+    },
+    {
+      "id": "vs056",
+      "symbol_key": "shaduf",
+      "label_ar": "شادوف الري التراثي",
+      "category": "تراث ريفي",
+      "illustration_brief": "عمود خشبي وثقل طيني لرفع الماء وسقاية الحقول"
+    },
+    {
+      "id": "vs057",
+      "symbol_key": "qena_pottery",
+      "label_ar": "قلة قناوية فخار",
+      "category": "حرف مصرية",
+      "illustration_brief": "قلة فخار قناوية بلونها الرملي التراثي للشرب البارد"
+    },
+    {
+      "id": "vs058",
+      "symbol_key": "copper_pitcher",
+      "label_ar": "إبريق وطست نحاسي",
+      "category": "حرف مصرية",
+      "illustration_brief": "إبريق وضوء نحاسي منقوش يدوياً بأشكال إسلامية"
+    },
+    {
+      "id": "vs059",
+      "symbol_key": "tarboosh",
+      "label_ar": "طربوش مصري ملكي",
+      "category": "تراث مصري",
+      "illustration_brief": "طربوش أحمر من الجوخ بشرابة حريرية سوداء"
+    },
+    {
+      "id": "vs060",
+      "symbol_key": "oud_instrument",
+      "label_ar": "عود شرقي مصري",
+      "category": "فنون مصرية",
+      "illustration_brief": "آلة العود الخشبية بزخارف الصدف وأوتار الطرب الأصيل"
+    },
+    {
+      "id": "vs061",
+      "symbol_key": "riqq_tambourine",
+      "label_ar": "رق مصري صَدَفي",
+      "category": "فنون مصرية",
+      "illustration_brief": "دف صغير مطعم بالصدف ذو صاجات نحاسية رنانة"
+    },
+    {
+      "id": "vs062",
+      "symbol_key": "tabla_darbuka",
+      "label_ar": "طبلة دربكة مصرية",
+      "category": "فنون مصرية",
+      "illustration_brief": "دربكة إيقاعية مزخرفة بالصدف البحري الأزرق والأبيض"
+    },
+    {
+      "id": "vs063",
+      "symbol_key": "aragoz_puppet",
+      "label_ar": "دمية الأراجوز المصري",
+      "category": "تراث شعبي",
+      "illustration_brief": "دمية الأراجوز الشهيرة بطرطورها الأحمر وثوبها الفولكلوري"
+    },
+    {
+      "id": "vs064",
+      "symbol_key": "halawa_horse",
+      "label_ar": "حصان حلاوة المولد",
+      "category": "تراث شعبي",
+      "illustration_brief": "حصان السكر الفولكلوري الملون براكبه وعلمه الورقي"
+    },
+    {
+      "id": "vs065",
+      "symbol_key": "mesaharaty_drum",
+      "label_ar": "طبلة المسحراتي (البازة)",
+      "category": "تراث شعبي",
+      "illustration_brief": "طبلة المسحراتي الصغيرة بسير جلدي ونقرات إيقاظ الصائمين"
+    },
+    {
+      "id": "vs066",
+      "symbol_key": "ful_cart",
+      "label_ar": "عربية فول بلدي",
+      "category": "تراث شعبي",
+      "illustration_brief": "عربة الفول الشعبية المزركشة بقدرة الفول النحاسية الكبيرة"
+    },
+    {
+      "id": "vs067",
+      "symbol_key": "sugar_cane_juice",
+      "label_ar": "كوب عصير قصب",
+      "category": "مشروبات مصرية",
+      "illustration_brief": "كوب عصير قصب أخضر بارد برغوة طازجة ومصاصة"
+    },
+    {
+      "id": "vs068",
+      "symbol_key": "licorice_dispenser",
+      "label_ar": "إبريق عرقسوس بالصاجات",
+      "category": "مشروبات مصرية",
+      "illustration_brief": "إبريق زجاجي ضخم بحزام أحمر وصاجات نحاسية للقرع"
+    },
+    {
+      "id": "vs069",
+      "symbol_key": "sobeya_cup",
+      "label_ar": "كوب سوبيا مثلجة",
+      "category": "مشروبات مصرية",
+      "illustration_brief": "كأس سوبيا ناصع البياض بجوز الهند وقطع الثلج"
+    },
+    {
+      "id": "vs070",
+      "symbol_key": "mint_tea_glass",
+      "label_ar": "كوباية شاي بنعناع",
+      "category": "مشروبات مصرية",
+      "illustration_brief": "كوب شاي أحمر شفاف بالخمسينة مع عرق نعناع بلدي أخضر"
+    },
+    {
+      "id": "vs071",
+      "symbol_key": "hawawshi",
+      "label_ar": "رغيف حواوشي بلدي",
+      "category": "أكلات مصرية",
+      "illustration_brief": "رغيف خبز بلدي مقرمش محشو باللحم المفروم المتبل بالفرن"
+    },
+    {
+      "id": "vs072",
+      "symbol_key": "om_ali",
+      "label_ar": "طاجن أم علي بالمكسرات",
+      "category": "أكلات مصرية",
+      "illustration_brief": "طاجن فخار يحوي حلوى الرقائق الذهبية بالحليب والقشطة والفستق"
+    },
+    {
+      "id": "vs073",
+      "symbol_key": "basbousa",
+      "label_ar": "صينية بسبوسة مكرملة",
+      "category": "أكلات مصرية",
+      "illustration_brief": "قطع بسبوسة مرملة ذهبية بحبات اللوز والشربات"
+    },
+    {
+      "id": "vs074",
+      "symbol_key": "konafa",
+      "label_ar": "صينية كنافة بالقشطة",
+      "category": "أكلات مصرية",
+      "illustration_brief": "شعيرات الكنافة المحمرة المقرمشة المحشوة بالقشطة والفستق"
+    },
+    {
+      "id": "vs075",
+      "symbol_key": "mahshi",
+      "label_ar": "حلة محشي مشكل",
+      "category": "أكلات مصرية",
+      "illustration_brief": "كوسة وباذنجان وورق عنب محشو بالأرز والخلطة المصرية"
+    },
+    {
+      "id": "vs076",
+      "symbol_key": "hamam_mahshi",
+      "label_ar": "حمام محشي فريك",
+      "category": "أكلات مصرية",
+      "illustration_brief": "طبق حمام بلدي محمر ذهبي محشو بالفريك الصعيدي"
+    },
+    {
+      "id": "vs077",
+      "symbol_key": "feseekh_herring",
+      "label_ar": "فسيخ ورنجة شم النسيم",
+      "category": "أكلات مصرية",
+      "illustration_brief": "أسماك الفسيخ والرنجة المزينة بشرائح الليمون والبصل الأخضر"
+    },
+    {
+      "id": "vs078",
+      "symbol_key": "keshk",
+      "label_ar": "طبق كشك بالتقلية",
+      "category": "أكلات مصرية",
+      "illustration_brief": "كشك مصري ناعم بالدجاج مزين بالبصل المقلي المقرمش"
+    },
+    {
+      "id": "vs079",
+      "symbol_key": "shorbet_lesan_asfour",
+      "label_ar": "شوربة لسان عصفور",
+      "category": "أكلات مصرية",
+      "illustration_brief": "حبات المكرونة المحمرة في مرق ذهبي مع شريحة ليمون"
+    },
+    {
+      "id": "vs080",
+      "symbol_key": "haraneya_tapestry",
+      "label_ar": "سجاد الحرانية المنسوج",
+      "category": "حرف مصرية",
+      "illustration_brief": "قطعة سجاد يدوي بنقوش ريفية ونخيل من إبداع نساجي الحرانية"
+    },
+    {
+      "id": "vs081",
+      "symbol_key": "blown_glass",
+      "label_ar": "زجاج إسلامي منفوخ",
+      "category": "حرف مصرية",
+      "illustration_brief": "قارورة زجاجية يدوية ملونة منفوخة بالنار من خان الخليلي"
+    },
+    {
+      "id": "vs082",
+      "symbol_key": "palm_basket",
+      "label_ar": "سبت خوص وسعف",
+      "category": "حرف مصرية",
+      "illustration_brief": "سلة خوص منسوجة يدوياً من سعف نخيل الصعيد والواحات"
+    },
+    {
+      "id": "vs083",
+      "symbol_key": "nubian_fan",
+      "label_ar": "مهفة نوبية ملونة",
+      "category": "تراث نوبي",
+      "illustration_brief": "مروحة يد خوصية مزدانة بخيوط صوف براقة ونقوش هندسية"
+    },
+    {
+      "id": "vs084",
+      "symbol_key": "handmade_kilim",
+      "label_ar": "كليم صوف يدوي",
+      "category": "حرف مصرية",
+      "illustration_brief": "بساط كليم نوبي وصعيدي منسوج بأنوال يدوية بألوان تراثية"
+    },
+    {
+      "id": "vs085",
+      "symbol_key": "arabesque_wood",
+      "label_ar": "مشربية خشبية وأرابيسك",
+      "category": "تراث معماري",
+      "illustration_brief": "خرط خشب الأرابيسك المتشابك المكون للمشربيات القاهرية العتيقة"
+    },
+    {
+      "id": "vs086",
+      "symbol_key": "cairo_tram",
+      "label_ar": "ترام القاهرة التراثي",
+      "category": "تراث مدني",
+      "illustration_brief": "عربة الترام الكلاسيكية باللونين الأصفر والأخضر بحي مصر الجديدة"
+    },
+    {
+      "id": "vs087",
+      "symbol_key": "black_and_white_taxi",
+      "label_ar": "تاكسي العاصمة الكلاسيكي",
+      "category": "تراث مدني",
+      "illustration_brief": "سيارة تاكسي الأبيض والأسود الشهيرة في شوارع وسط البلد"
+    },
+    {
+      "id": "vs088",
+      "symbol_key": "hantour",
+      "label_ar": "حنطور الكورنيش",
+      "category": "تراث شعبي",
+      "illustration_brief": "عربة حنطور أنيقة بمظلتها الجلدية وفانوسيها الجانبيين"
+    }
+  ]
+}

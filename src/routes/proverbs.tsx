@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { BookOpen, Flame, Sparkles, Trophy, Zap } from "lucide-react";
+import { BookOpen, Flame, Play, Sparkles, Trophy, Zap } from "lucide-react";
 import { Toaster } from "@/components/ui/sonner";
 import { AppHeader } from "@/components/common/AppHeader";
 import { AppFooter } from "@/components/common/AppFooter";
@@ -81,8 +81,11 @@ function ProverbsGamePage() {
   const [settings, setSettings] = useState<Settings | null>(null);
   const [best, setBest] = useState<Best>({ easy: 0, medium: 0, hard: 0 });
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const [setupLevel, setSetupLevel] = useState<Level | null>(null);
+  const [setupDialogOpen, setSetupDialogOpen] = useState(false);
   const [setupOptions, setSetupOptions] = useState<ProverbSetupOptions>(DEFAULT_PROVERB_SETUP);
+
+  // Use 'easy' as default level for simplified flow
+  const DEFAULT_LEVEL: Level = "easy";
 
   useEffect(() => {
     setSettings(loadSettings());
@@ -96,11 +99,9 @@ function ProverbsGamePage() {
   };
 
   const handleStart = (options: ProverbSetupOptions) => {
-    if (!setupLevel) return;
     setSetupOptions(options);
-    const level = setupLevel;
-    setSetupLevel(null);
-    setView({ name: "game", level, setup: options });
+    setSetupDialogOpen(false);
+    setView({ name: "game", level: DEFAULT_LEVEL, setup: options });
   };
 
   const finishRound = (
@@ -166,53 +167,66 @@ function ProverbsGamePage() {
                   </p>
                 </header>
 
-                <div className="grid w-full gap-5 sm:grid-cols-3">
-                  {(Object.keys(LEVELS) as Level[]).map((level, idx) => {
-                    const Icon = LEVEL_ICONS[level];
-                    return (
-                      <motion.button
-                        key={level}
-                        type="button"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.2 + idx * 0.1, duration: 0.4 }}
-                        whileHover={{ y: -6, scale: 1.02 }}
-                        whileTap={{ scale: 0.97 }}
-                        onClick={() => {
-                          sound.unlock();
-                          sound.playClick();
-                          setSetupLevel(level);
-                        }}
-                        className="group relative overflow-hidden rounded-3xl border-2 border-border bg-card p-7 text-center transition-all duration-200 hover:border-primary/60 hover:shadow-xl cursor-pointer"
-                      >
-                        <span className="inline-flex size-16 items-center justify-center rounded-2xl bg-primary/10 text-primary border-2 border-primary/20 transition-transform duration-200 group-hover:scale-110">
-                          <Icon className="size-8" />
-                        </span>
-                        <h3 className="mt-4 text-2xl sm:text-3xl font-extrabold">
-                          {LEVELS[level].label}
+                <div className="w-full max-w-md space-y-4">
+                  <motion.button
+                    type="button"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2, duration: 0.4 }}
+                    whileHover={{ y: -3 }}
+                    whileTap={{ scale: 0.97 }}
+                    onClick={() => {
+                      sound.unlock();
+                      sound.playClick();
+                      setSetupDialogOpen(true);
+                    }}
+                    className="group relative w-full rounded-2xl px-8 py-6 text-center cursor-pointer overflow-hidden bg-gradient-to-r from-quiz-primary via-quiz-primary/90 to-quiz-primary border border-quiz-primary/30 shadow-lg shadow-quiz-primary/25 hover:shadow-xl hover:shadow-quiz-primary/30 transition-all duration-300"
+                  >
+                    {/* Animated shimmer background */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out" />
+                    
+                    {/* Subtle pulse ring */}
+                    <div className="absolute inset-0 rounded-2xl border-2 border-quiz-primary/30 animate-pulse opacity-50 group-hover:opacity-0 transition-opacity duration-500" />
+                    
+                    <div className="relative z-10 flex items-center justify-center gap-3">
+                      {/* Icon with subtle bounce */}
+                      <div className="inline-flex size-12 items-center justify-center rounded-xl bg-white/20 backdrop-blur-sm border border-white/30 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                        <BookOpen className="size-6 text-white" />
+                      </div>
+                      
+                      <div className="text-left">
+                        <h3 className="text-2xl sm:text-3xl font-extrabold text-white drop-shadow-lg">
+                          ابدأ التحدي
                         </h3>
-                        <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                          {LEVELS[level].description}
+                        <p className="mt-1 text-sm sm:text-base text-quiz-primary-foreground/90 font-medium">
+                          اختر عدد الأسئلة (10 / 15 / 20) وابدأ فوراً
                         </p>
-                        <div className="mt-5 inline-flex items-center gap-2 rounded-full bg-secondary/80 px-4 py-2 text-sm font-bold text-secondary-foreground border border-border/50">
-                          <Trophy className="size-4" />
-                          {best[level] > 0 ? `${best[level]} نقطة` : "ابدأ الآن"}
-                        </div>
-                      </motion.button>
-                    );
-                  })}
-                </div>
+                      </div>
+                      
+                      {/* Arrow indicator */}
+                      <div className="inline-flex size-10 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm border border-white/30 group-hover:translate-x-1 transition-transform duration-300 ml-2">
+                        <Play className="size-5 text-white fill-current" />
+                      </div>
+                    </div>
+                    
+                    {/* Badge below button */}
+                    <div className="absolute -bottom-5 left-1/2 -translate-x-1/2 inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-quiz-primary/20 to-quiz-primary/10 px-3 py-1.5 text-xs font-bold text-quiz-primary border border-quiz-primary/30 shadow-md shadow-quiz-primary/10 backdrop-blur-sm">
+                      <Trophy className="size-3.5 animate-bounce" />
+                      <span className="text-quiz-primary-foreground whitespace-nowrap">جميع التصنيفات · أولوية للمصرية</span>
+                    </div>
+                  </motion.button>
 
-                <Button
-                  variant="ghost"
-                  className="mt-10 text-sm font-medium text-muted-foreground"
-                  onClick={() => {
-                    sound.unlock();
-                    setSettingsOpen(true);
-                  }}
-                >
-                  إعدادات الصوت والمحتوى
-                </Button>
+                  <Button
+                    variant="ghost"
+                    className="w-full text-sm font-medium text-muted-foreground"
+                    onClick={() => {
+                      sound.unlock();
+                      setSettingsOpen(true);
+                    }}
+                  >
+                    إعدادات الصوت والمحتوى
+                  </Button>
+                </div>
               </div>
             )}
 
@@ -244,19 +258,16 @@ function ProverbsGamePage() {
 
       <AppFooter />
 
-      {setupLevel && (
+      {setupDialogOpen && (
         <ProverbsSetupDialog
-          open={Boolean(setupLevel)}
-          onOpenChange={(open) => {
-            if (!open) setSetupLevel(null);
-          }}
-          level={setupLevel}
+          open={setupDialogOpen}
+          onOpenChange={setSetupDialogOpen}
           setupOptions={setupOptions}
           onStartQuiz={handleStart}
         />
       )}
 
-      {settings && (
+      {settingsOpen && settings && (
         <SettingsDialog
           open={settingsOpen}
           onOpenChange={setSettingsOpen}

@@ -354,7 +354,7 @@ export function loadSettings(): Settings {
       ? (parsed["openrouterModels"] as string[])
       : [];
 
-    const volume = typeof parsed["volume"] === "number" ? parsed["volume"] : 80;
+    const volume = typeof parsed["volume"] === "number" ? parsed["volume"] : 100;
     const muted = typeof parsed["muted"] === "boolean" ? parsed["muted"] : false;
     const lastUsedModel =
       typeof parsed["lastUsedModel"] === "string" ? parsed["lastUsedModel"] : undefined;
